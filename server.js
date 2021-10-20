@@ -75,9 +75,10 @@ app.get('/', (req, res) => {
 
 
 //*********Example Endpoints, to be deleted*************
-app.get('/mkTestUser', (req, res) => {
-    dbApi.createUser("Robert","Dottingham","billybobjoe@example.com","trololololo");
-    res.send("User Created");
+app.get('/mkTestUsers', (req, res) => {
+    dbApi.createUser("Robert","Dottingham","bob@example.com","notarealhash");
+    dbApi.createUser("John","Doe","jd@example.com","notarealhash");
+    res.send("Users Created");
 })
 app.get('/listUsers', (req, res) => {
     dbApi.allUsers().lean().exec(function (err, users) {
@@ -85,13 +86,13 @@ app.get('/listUsers', (req, res) => {
     });
 })
 app.get('/findByEmail', (req, res) => {
-    var email = "thebigjd@example.com"
+    var email = "jd@example.com"
     dbApi.userByEmail(email).lean().exec(function (err, users) {
         return res.send(JSON.stringify(users));
     });
 })
 app.get('/editUserByEmail', (req, res) => {
-    var email = "thebigjd@example.com"
+    var email = "jd@example.com"
     
     dbApi.updateUserByEmail(email, {firstName: "Johnny"});
     
