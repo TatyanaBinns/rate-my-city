@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/', (req, res) => {
-    res.json({ message: "Welcome to a simple hello-world application." });
+    res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
 })
 
 app.listen(port, () => {
