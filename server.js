@@ -21,16 +21,32 @@ async function dbInit(){
        lastName : String,
        email    : String,
        pwhash   : String,
-       ratings  : [{cityid: String, ratingid: String}]
+       ratings  : [{cityid: String}]
     }));
     const CityData = mongoose.model('CityData', new mongoose.Schema({
        name    : String,
        state   : String,
        country : String,
-       rating  : Number,
+       averageRating  : {
+           entertainment : Number,
+           nature        : Number,
+           cost          : Number,
+           safety        : Number,
+           culture       : Number,
+           transportation: Number,
+           food          : Number
+       },
        ratings : [{
            userid     : String, 
-           rating     : Number,
+           rating     : {
+               entertainment : Number,
+               nature        : Number,
+               cost          : Number,
+               safety        : Number,
+               culture       : Number,
+               transportation: Number,
+               food          : Number
+           },
            description: String,
            time       : Date,
            upvotes: [{userid: String}],
