@@ -37,7 +37,7 @@ async function dbInit(){
            food          : Number
        },
        ratings : [{
-           userid     : String, 
+           userid     : String,
            rating     : {
                entertainment : Number,
                nature        : Number,
@@ -73,7 +73,8 @@ async function dbInit(){
 }
 dbInit().catch(err => console.log(err));
 
-
+var api = require('./api.js');
+api.setApp( app, client );
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -109,9 +110,9 @@ app.get('/findByEmail', (req, res) => {
 })
 app.get('/editUserByEmail', (req, res) => {
     var email = "jd@example.com"
-    
+
     dbApi.updateUserByEmail(email, {firstName: "Johnny"});
-    
+
     res.send("Update Complete");
 })
 //*******************************************************
