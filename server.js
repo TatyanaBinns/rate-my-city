@@ -173,7 +173,7 @@ app.get('/editUserByEmail', (req, res) => {
 })
 app.get('/mkTestCitys', (req, res) => {
     
-    //dbApi.createCity("ExampleVille", "ExampleState", "ExampleCountry");
+    dbApi.createCity("ExampleVille", "ExampleState", "ExampleCountry");
     dbApi.createCity("JaunVille", "ExampleState", "ExampleCountry");
     
     res.send("Update Complete");
