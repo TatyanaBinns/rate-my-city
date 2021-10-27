@@ -185,7 +185,7 @@ app.get('/getCityByName', (req, res) => {
 })
 app.get('/addRating', (req, res) => {
     var cityName = "ExampleVille";
-    var userEmail= "billybobjoe@example.com";
+    var userEmail= "bob@example.com";
     var rating = mkBrRating(3);
     (async() => {
         dbApi.addRating(userEmail, cityName, rating, "Could be worse.");
