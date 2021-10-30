@@ -77,6 +77,9 @@ async function dbInit(){
            }]
         }]
     }));
+
+    module.exports = {UserProfile, CityData};
+
     dbApi.allUsers          = ()     => UserProfile.find();
     dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e}).exec();
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
@@ -130,8 +133,8 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var api = require('./api.js');
-api.setApp( app, UserProfile, CityData );
+//var api = require('./api.js');
+//api.setApp( app, UserProfile, CityData );
 
 
 app.get('/', (req, res) => {
