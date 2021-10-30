@@ -172,7 +172,7 @@ app.post('/api/login', async (req, res, next) =>
     ret = {error:"Login/Password incorrect"};
   }*/
 
-  var ret = { /*id:id*/, firstName:fn, lastName:ln, error:''};
+  var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
   res.status(200).json(ret);
 });
 
