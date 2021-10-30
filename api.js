@@ -1,5 +1,5 @@
 
-exports.setApp = function(app)
+exports.setApp = function(app, UserProfile, CityData)
 {
   app.post('/api/login', async (req, res, next) =>
   {
@@ -12,15 +12,19 @@ exports.setApp = function(app)
 
     //const db = client.db();
     //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
-
-    var id = -1;
+    var result = UserProfile.findOne({email: email, pwhash: password});
+    result.exec(function(err, res){
+      if(err) console.log(err)
+      console.log(res)
+    })
+    /*var id = -1;
     var fn = '';
     var ln = '';
     fn = email;
-    ln = password;
+    ln = password;*/
     /*if( results.length > 0 )
     {
-      //id = results[0].UserId;
+      //id = results[0]._id;
       fn = results[0].firstName;
       ln = results[0].lastName;
 
@@ -39,8 +43,8 @@ exports.setApp = function(app)
       ret = {error:"Login/Password incorrect"};
     }*/
 
-    var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
-    res.status(200).json(ret);
+    //var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
+    //res.status(200).json(ret);
   });
 
   /*app.post('/api/delete', async (req, res, next) =>
@@ -70,6 +74,6 @@ exports.setApp = function(app)
 
     const db = client.db();
 
-    const result = await db.collection('')
+    const result = await db.collection('').find
   });*/
 }
