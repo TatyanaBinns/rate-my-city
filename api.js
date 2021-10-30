@@ -1,20 +1,26 @@
-const {UserProfile, CityData} = require('./server');
-//exports.setApp = function(app, UserProfile, CityData)
-//{
+
+exports.setApp = function(app, dbAPI)
+{
   app.post('/api/login', async (req, res, next) =>
   {
     // incoming: login, password
     // outgoing: id, firstName, lastName, error
+    const { email, password } = req.body;
+    dbApi.userByEmail(email).lean().exec(function (err, users) {
+        return res.send(JSON.stringify(users));
+    });
 
-    var error = '';
+    /*var error = '';
 
     const { email, password } = req.body;
 
-    //const db = client.db();
-    //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
-    UserProfile.findOne({email: email, pwhash: password}).exec(function(err, users){
-      return res.send(JSON.stringify(result));
-    });
+    var results = await UserProfile.findOne({email: email, pwhash: password});
+    results.exec(function (err, users) {
+        if (err)
+          res.send(err);
+        return res.send(JSON.stringify(users));
+    });*/
+
     /*var id = -1;
     var fn = '';
     var ln = '';
@@ -74,4 +80,4 @@ const {UserProfile, CityData} = require('./server');
 
     const result = await db.collection('').find
   });*/
-//}
+}
