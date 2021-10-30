@@ -1,3 +1,6 @@
+
+exports.setApp = function(app, client)
+{
 app.post('/api/login', async (req, res, next) =>
   {
     // incoming: login, password
@@ -68,3 +71,4 @@ app.post('/api/login', async (req, res, next) =>
 
     const result = await db.collection('')
   });*/
+}
