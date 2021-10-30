@@ -130,12 +130,12 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//var api = require('./api.js');
-//api.setApp( app, UserProfile, CityData );
+var api = require('./api.js');
+api.setApp( app, UserProfile, CityData );
 
 
 app.get('/', (req, res) => {
-    res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
+    res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
 })
 
 
