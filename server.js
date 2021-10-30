@@ -78,8 +78,6 @@ async function dbInit(){
         }]
     }));
 
-    module.exports = {UserProfile, CityData};
-
     dbApi.allUsers          = ()     => UserProfile.find();
     dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e}).exec();
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
@@ -134,11 +132,70 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //var api = require('./api.js');
-//api.setApp( app, UserProfile, CityData );
+//api.setApp( app, dbInit );
+//const api = require('./api');
+//app.use("/api", api);
 
 app.get('/', (req, res) => {
     res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
 })
+
+
+
+
+app.post('/api/login', async (req, res, next) =>
+{
+  // incoming: login, password
+  // outgoing: id, firstName, lastName, error
+
+  var error = '';
+
+  const { email, password } = req.body;
+
+  //const db = client.db();
+  //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
+  const results = await UserProfile.findOne({email: email, pwhash: password}).toArray();
+
+  var fn = '';
+  var ln = '';
+  if (results.length > 0)
+  {
+    fn = results[0].firstName;
+    ln = results[0].lastName;
+  }
+  /*results.exec(function(err, users){
+    return res.send(JSON.stringify(result));
+  });*/
+  /*var id = -1;
+  var fn = '';
+  var ln = '';
+  fn = email;
+  ln = password;*/
+  /*if( results.length > 0 )
+  {
+    //id = results[0]._id;
+    fn = results[0].firstName;
+    ln = results[0].lastName;
+
+    /*try
+    {
+      const token = require("./createJWT.js");
+      ret = token.createToken( fn, ln, id );
+    }
+    catch(e)
+    {
+      ret = {error:e.message};
+    }
+  }*/
+  /*else
+  {
+    ret = {error:"Login/Password incorrect"};
+  }*/
+
+  var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
+  res.status(200).json(ret);
+});
+
 
 
 //*********Example Endpoints, to be deleted*************
