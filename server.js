@@ -135,7 +135,7 @@ api.setApp( app, client );
 
 
 app.get('/', (req, res) => {
-    res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
+    res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
 })
 
 
