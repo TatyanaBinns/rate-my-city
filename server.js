@@ -131,7 +131,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var api = require('./api.js');
-api.setApp( app, client );
+api.setApp( app );
 
 
 app.get('/', (req, res) => {
