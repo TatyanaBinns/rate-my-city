@@ -137,7 +137,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //app.use("/api", api);
 
 app.get('/', (req, res) => {
-    res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
+    res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
 })
 
 
@@ -154,15 +154,15 @@ app.post('/api/login', async (req, res, next) =>
 
   //const db = client.db();
   //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
-  const results = await UserProfile.findOne({email: email, pwhash: password}).toArray();
+  var results = await UserProfile.findOne({email: email, pwhash: password});
+  results.exec(function (err, users) {
+      if (err)
+        res.send(err);
+      return res.send(JSON.stringify(users));
+  });
 
-  var fn = '';
-  var ln = '';
-  if (results.length > 0)
-  {
-    fn = results[0].firstName;
-    ln = results[0].lastName;
-  }
+
+
   /*results.exec(function(err, users){
     return res.send(JSON.stringify(result));
   });*/
@@ -193,7 +193,7 @@ app.post('/api/login', async (req, res, next) =>
   }*/
 
   var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
-  res.status(200).json(ret);
+  //res.status(200).json(ret);
 });
 
 
