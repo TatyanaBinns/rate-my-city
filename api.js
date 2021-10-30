@@ -7,8 +7,10 @@ exports.setApp = function(app, dbApi)
     // outgoing: id, firstName, lastName, error
     const { email, password } = req.body;
     dbApi.userByEmail(email).lean().exec(function (err, users) {
-      //if ()
+      if (users.pwhash == password)
         return res.send(JSON.stringify(users));
+      else
+        return res.send(err);
     });
 
     /*var error = '';
