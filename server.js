@@ -143,14 +143,15 @@ app.post('/api/login', async (req, res, next) =>
 
   const { email, password } = req.body;
 
-  const db = client.db();
-  const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
+  //const db = client.db();
+  //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
 
   var id = -1;
   var fn = '';
   var ln = '';
-
-  if( results.length > 0 )
+  fn = email;
+  ln = password;
+  /*if( results.length > 0 )
   {
     //id = results[0].UserId;
     fn = results[0].firstName;
@@ -164,8 +165,8 @@ app.post('/api/login', async (req, res, next) =>
     catch(e)
     {
       ret = {error:e.message};
-    }*/
-  }
+    }
+  }*/
   /*else
   {
     ret = {error:"Login/Password incorrect"};
@@ -176,7 +177,7 @@ app.post('/api/login', async (req, res, next) =>
 });
 
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
     res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
 })
 
