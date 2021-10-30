@@ -137,7 +137,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //app.use("/api", api);
 
 app.get('/', (req, res) => {
-    res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
+    res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
 })
 
 
