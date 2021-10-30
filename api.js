@@ -12,11 +12,9 @@ const {UserProfile, CityData} = require('./server');
 
     //const db = client.db();
     //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
-    var result = UserProfile.findOne({email: email, pwhash: password});
-    result.exec(function(err, res){
-      if(err) console.log(err)
-      console.log(res)
-    })
+    UserProfile.findOne({email: email, pwhash: password}).exec(function(err, users){
+      return res.send(JSON.stringify(result));
+    });
     /*var id = -1;
     var fn = '';
     var ln = '';
