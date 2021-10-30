@@ -79,7 +79,7 @@ async function dbInit(){
     }));
 
     dbApi.allUsers          = ()     => UserProfile.find();
-    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e}).exec();
+    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw)   => {
         const newUser = new UserProfile({
@@ -132,9 +132,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //var api = require('./api.js');
-//api.setApp( app, dbInit );
-//const api = require('./api');
-//app.use("/api", api);
+//api.setApp( app, dbAPI );
+
 
 app.get('/', (req, res) => {
     res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
