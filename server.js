@@ -132,7 +132,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var api = require('./api.js');
-api.setApp( app, dbAPI );
+api.setApp( app, dbApi );
 
 
 app.get('/', (req, res) => {
