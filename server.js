@@ -131,66 +131,13 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//var api = require('./api.js');
-//api.setApp( app, dbAPI );
+var api = require('./api.js');
+api.setApp( app, dbAPI );
 
 
 app.get('/', (req, res) => {
     res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
 })
-
-
-
-
-app.post('/api/login', async (req, res, next) =>
-{
-  // incoming: login, password
-  // outgoing: id, firstName, lastName, error
-  const { email, password } = req.body;
-  dbApi.userByEmail(email).lean().exec(function (err, users) {
-      return res.send(JSON.stringify(users));
-  });
-
-  /*var error = '';
-
-  const { email, password } = req.body;
-
-  var results = await UserProfile.findOne({email: email, pwhash: password});
-  results.exec(function (err, users) {
-      if (err)
-        res.send(err);
-      return res.send(JSON.stringify(users));
-  });*/
-
-  /*var id = -1;
-  var fn = '';
-  var ln = '';
-  fn = email;
-  ln = password;*/
-  /*if( results.length > 0 )
-  {
-    //id = results[0]._id;
-    fn = results[0].firstName;
-    ln = results[0].lastName;
-
-    /*try
-    {
-      const token = require("./createJWT.js");
-      ret = token.createToken( fn, ln, id );
-    }
-    catch(e)
-    {
-      ret = {error:e.message};
-    }
-  }*/
-  /*else
-  {
-    ret = {error:"Login/Password incorrect"};
-  }*/
-
-  //var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
-  //res.status(200).json(ret);
-});
 
 
 
