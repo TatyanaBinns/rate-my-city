@@ -12,16 +12,16 @@ exports.setApp = function(app, UserProfile, CityData)
 
     //const db = client.db();
     //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
-    var result = UserProfile.findOne({email: email, pwhash: password});
+    /*var result = UserProfile.findOne({email: email, pwhash: password});
     result.exec(function(err, res){
       if(err) console.log(err)
       console.log(res)
-    })
-    /*var id = -1;
+    })*/
+    var id = -1;
     var fn = '';
     var ln = '';
     fn = email;
-    ln = password;*/
+    ln = password;
     /*if( results.length > 0 )
     {
       //id = results[0]._id;
@@ -43,8 +43,8 @@ exports.setApp = function(app, UserProfile, CityData)
       ret = {error:"Login/Password incorrect"};
     }*/
 
-    //var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
-    //res.status(200).json(ret);
+    var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
+    res.status(200).json(ret);
   });
 
   /*app.post('/api/delete', async (req, res, next) =>
