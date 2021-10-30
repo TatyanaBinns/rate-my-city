@@ -145,10 +145,14 @@ app.get('/', (req, res) => {
 
 app.post('/api/login', async (req, res, next) =>
 {
+  var e = "jd@example.com"
+  UserProfile.findOne({email: e}).lean().exec(function (err, users) {
+      return res.send(JSON.stringify(users));
+  });
   // incoming: login, password
   // outgoing: id, firstName, lastName, error
 
-  var error = '';
+  /*var error = '';
 
   const { email, password } = req.body;
 
@@ -159,7 +163,7 @@ app.post('/api/login', async (req, res, next) =>
       if (err)
         res.send(err);
       return res.send(JSON.stringify(users));
-  });
+  });*/
 
 
 
