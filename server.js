@@ -130,8 +130,8 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var api = require('./api.js');
-api.setApp( app, client );
+//var api = require('./api.js');
+//api.setApp( app, client );
 
 
 
