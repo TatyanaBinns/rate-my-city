@@ -137,7 +137,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //app.use("/api", api);
 
 app.get('/', (req, res) => {
-    res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
+    res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
 })
 
 
@@ -192,7 +192,7 @@ app.post('/api/login', async (req, res, next) =>
     ret = {error:"Login/Password incorrect"};
   }*/
 
-  var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
+  //var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
   //res.status(200).json(ret);
 });
 
