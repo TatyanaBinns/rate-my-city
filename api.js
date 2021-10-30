@@ -1,6 +1,6 @@
-
-exports.setApp = function(app, UserProfile, CityData)
-{
+const {UserProfile, CityData} = require('./server');
+//exports.setApp = function(app, UserProfile, CityData)
+//{
   app.post('/api/login', async (req, res, next) =>
   {
     // incoming: login, password
@@ -76,4 +76,4 @@ exports.setApp = function(app, UserProfile, CityData)
 
     const result = await db.collection('').find
   });*/
-}
+//}
