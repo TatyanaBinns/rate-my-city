@@ -1,7 +1,7 @@
 
 exports.setApp = function(app, client)
 {
-app.post('/api/login', async (req, res, next) =>
+  app.post('/api/login', async (req, res, next) =>
   {
     // incoming: login, password
     // outgoing: id, firstName, lastName, error
@@ -10,7 +10,7 @@ app.post('/api/login', async (req, res, next) =>
 
     const { email, password } = req.body;
 
-    const db = client.db();
+    /*const db = client.db();
     const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
 
     var id = -1;
@@ -31,15 +31,15 @@ app.post('/api/login', async (req, res, next) =>
       catch(e)
       {
         ret = {error:e.message};
-      } */
+      }
     }
     /*else
     {
       ret = {error:"Login/Password incorrect"};
-    } */
+    } 
 
     var ret = { id:id, firstName:fn, lastName:ln, error:''};
-    res.status(200).json(ret);
+    res.status(200).json(ret);*/
   });
 
   /*app.post('/api/delete', async (req, res, next) =>

@@ -105,7 +105,7 @@ async function dbInit(){
         var cId = city._id;
         var uId = (await dbApi.userByEmail(uEmail))._id;
         var curAvgRating = city.averageRating;
-        
+
         //Should compute something meaningful here
 
         var newAvgRating = curAvgRating;
@@ -133,7 +133,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var api = require('./api.js');
 api.setApp( app, client );
 
-
+ 
 
 
 
@@ -172,14 +172,14 @@ app.get('/editUserByEmail', (req, res) => {
     res.send("Update Complete");
 })
 app.get('/mkTestCitys', (req, res) => {
-    
+
     dbApi.createCity("ExampleVille", "ExampleState", "ExampleCountry");
     dbApi.createCity("JaunVille", "ExampleState", "ExampleCountry");
-    
+
     res.send("Update Complete");
 })
 app.get('/getCityByName', (req, res) => {
-    (async() => 
+    (async() =>
         res.send(JSON.stringify(await dbApi.cityByName("ExampleVille")))
     )();
 })
