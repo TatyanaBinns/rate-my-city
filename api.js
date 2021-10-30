@@ -1,5 +1,5 @@
 
-exports.setApp = function(app, client)
+exports.setApp = function(app)
 {
   app.post('/api/login', async (req, res, next) =>
   {
