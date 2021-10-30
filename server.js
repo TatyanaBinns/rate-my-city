@@ -79,7 +79,7 @@ async function dbInit(){
     }));
 
     dbApi.allUsers          = ()     => UserProfile.find();
-    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e}).exec();
+    dbApi.userByEmail       = (e, pw)    => UserProfile.findOne({email: e}, {pwhash: pw}).exec();
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw)   => {
         const newUser = new UserProfile({
@@ -147,6 +147,10 @@ app.post('/api/login', async (req, res, next) =>
 {
   // incoming: login, password
   // outgoing: id, firstName, lastName, error
+  const { email, password } = req.body;
+  dbApi.userByEmail(email, password).lean().exec(function (err, users) {
+      return res.send(JSON.stringify(users));
+  });
 
   /*var error = '';
 
