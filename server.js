@@ -73,14 +73,13 @@ async function dbInit(){
 }
 dbInit().catch(err => console.log(err));
 
-var api = require('./api.js');
-api.setApp( app, client );
-
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var api = require('./api.js');
+api.setApp( app, client );
 
 
 
