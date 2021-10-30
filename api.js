@@ -10,16 +10,17 @@ exports.setApp = function(app, client)
 
     const { email, password } = req.body;
 
-    /*const db = client.db();
-    const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
+    //const db = client.db();
+    //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
 
     var id = -1;
     var fn = '';
     var ln = '';
-
-    if( results.length > 0 )
+    fn = email;
+    ln = password;
+    /*if( results.length > 0 )
     {
-      id = results[0].UserId;
+      //id = results[0].UserId;
       fn = results[0].firstName;
       ln = results[0].lastName;
 
@@ -32,14 +33,14 @@ exports.setApp = function(app, client)
       {
         ret = {error:e.message};
       }
-    }
+    }*/
     /*else
     {
       ret = {error:"Login/Password incorrect"};
-    } 
+    }*/
 
-    var ret = { id:id, firstName:fn, lastName:ln, error:''};
-    res.status(200).json(ret);*/
+    var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
+    res.status(200).json(ret);
   });
 
   /*app.post('/api/delete', async (req, res, next) =>
