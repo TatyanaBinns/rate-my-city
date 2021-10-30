@@ -143,7 +143,7 @@ app.post('/api/login', async (req, res, next) =>
 
   const { email, password } = req.body;
 
-  const db = client.db();
+  /*const db = client.db();
   const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
 
   var id = -1;
@@ -164,15 +164,15 @@ app.post('/api/login', async (req, res, next) =>
     catch(e)
     {
       ret = {error:e.message};
-    }*/
+    }
   }
   /*else
   {
     ret = {error:"Login/Password incorrect"};
-  }*/
+  }
 
   var ret = { id:id, firstName:fn, lastName:ln, error:''};
-  res.status(200).json(ret);
+  res.status(200).json(ret);*/
 });
 
 
