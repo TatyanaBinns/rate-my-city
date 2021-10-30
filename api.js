@@ -6,7 +6,7 @@ exports.setApp = function(app, dbApi)
     // incoming: login, password
     // outgoing: id, firstName, lastName, error
     const { email, password } = req.body;
-    dbApi.userByEmail(email, password).lean().exec(function (err, users) {
+    dbApi.userByEmail(email).lean().exec(function (err, users) {
       if ()
         return res.send(JSON.stringify(users));
     });
