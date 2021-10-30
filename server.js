@@ -79,7 +79,7 @@ async function dbInit(){
     }));
 
     dbApi.allUsers          = ()     => UserProfile.find();
-    dbApi.userByEmail       = (e, pw)    => UserProfile.findOne({email: e}, {pwhash: pw});
+    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw)   => {
         const newUser = new UserProfile({
