@@ -130,51 +130,8 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//var api = require('./api.js');
-//api.setApp( app, client );
-
-
-app.post('/api/login', async (req, res, next) =>
-{
-  // incoming: login, password
-  // outgoing: id, firstName, lastName, error
-
-  var error = '';
-
-  const { email, password } = req.body;
-
-  //const db = client.db();
-  //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
-
-  var id = -1;
-  var fn = '';
-  var ln = '';
-  fn = email;
-  ln = password;
-  /*if( results.length > 0 )
-  {
-    //id = results[0].UserId;
-    fn = results[0].firstName;
-    ln = results[0].lastName;
-
-    /*try
-    {
-      const token = require("./createJWT.js");
-      ret = token.createToken( fn, ln, id );
-    }
-    catch(e)
-    {
-      ret = {error:e.message};
-    }
-  }*/
-  /*else
-  {
-    ret = {error:"Login/Password incorrect"};
-  }*/
-
-  var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
-  res.status(200).json(ret);
-});
+var api = require('./api.js');
+api.setApp( app, client );
 
 
 app.get('/', (req, res) => {
