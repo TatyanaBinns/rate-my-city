@@ -145,10 +145,6 @@ app.get('/', (req, res) => {
 
 app.post('/api/login', async (req, res, next) =>
 {
-  var e = "jd@example.com"
-  UserProfile.findOne({email: e}).lean().exec(function (err, users) {
-      return res.send(JSON.stringify(users));
-  });
   // incoming: login, password
   // outgoing: id, firstName, lastName, error
 
@@ -156,8 +152,6 @@ app.post('/api/login', async (req, res, next) =>
 
   const { email, password } = req.body;
 
-  //const db = client.db();
-  //const results = await db.collection('UserProfile').find({email:email,pwhash:password}).toArray();
   var results = await UserProfile.findOne({email: email, pwhash: password});
   results.exec(function (err, users) {
       if (err)
@@ -165,11 +159,6 @@ app.post('/api/login', async (req, res, next) =>
       return res.send(JSON.stringify(users));
   });*/
 
-
-
-  /*results.exec(function(err, users){
-    return res.send(JSON.stringify(result));
-  });*/
   /*var id = -1;
   var fn = '';
   var ln = '';
