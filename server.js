@@ -131,11 +131,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var api = require('./api.js');
-api.setApp( app );
+api.setApp( app, UserProfile, CityData );
 
 
 app.get('/', (req, res) => {
-    res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
+    res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
 })
 
 
