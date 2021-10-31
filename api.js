@@ -71,17 +71,17 @@ exports.setApp = function(app, dbApi)
     const {firstName, lastName, userName, email, password} = req.body;
 
     dbApi.userByEmail(email).lean().exec(function (err, user) {
-      if (user == null)
+      if (user != null)
       {
         ret = {error: "Email is being used in another account"};
         res.status(200).json(ret);
       }
+      else {
+        dbApi.createUser(firstName, lastName, userName, email, password);
+        ret = {error: ""};
+        res.status(200).json(ret);
+      }
     });
-
-    dbApi.createUser(firstName, lastName, userName, email, password);
-    ret = {error: ""};
-    res.status(200).json(ret);
-
   });
 
   /*app.post('/api/delete', async (req, res, next) =>
