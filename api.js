@@ -1,6 +1,7 @@
 
 exports.setApp = function(app, dbApi)
 {
+  var passwordHash = require('password-hash');
   app.post('/api/login', async (req, res, next) =>
   {
     // incoming: login, password
@@ -8,7 +9,7 @@ exports.setApp = function(app, dbApi)
     var ret;
     const { email, password } = req.body;
     dbApi.userByEmail(email).lean().exec(function (err, users) {
-      if (users.pwhash == password)
+      if (passwordHash.verify(users.pwhash, password))
       {
         ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, error:''};
         res.status(200).json(ret);
@@ -76,8 +77,9 @@ exports.setApp = function(app, dbApi)
         ret = {error: "Email is being used in another account"};
         res.status(200).json(ret);
       }
+      //NEED TO CHECK IF USERNAME TAKEN!!!!!!!!!!!!!!!
       else {
-        dbApi.createUser(firstName, lastName, userName, email, password);
+        dbApi.createUser(firstName, lastName, userName, email, passwordHash.generate(password));
         ret = {error: ""};
         res.status(200).json(ret);
       }
