@@ -5,13 +5,17 @@ exports.setApp = function(app, dbApi)
   {
     // incoming: login, password
     // outgoing: id, firstName, lastName, error
+    var ret;
     const { email, password } = req.body;
     dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users.pwhash == password)
-        return res.send(JSON.stringify(users));
+      {
+        ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, error:''}
+        res.status(200).json(ret);
+      }
       else
       {
-        var ret = {error : "Login/Password incorrect"};
+        ret = {error : "Login/Password incorrect"};
         res.status(200).json(ret);
       }
     });
