@@ -10,7 +10,10 @@ exports.setApp = function(app, dbApi)
       if (users.pwhash == password)
         return res.send(JSON.stringify(users));
       else
-        return res.send(err);
+      {
+        var ret = {error : "Login/Password incorrect"};
+        res.status(200).json(ret);
+      }
     });
 
     /*var error = '';
