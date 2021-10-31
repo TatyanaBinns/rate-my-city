@@ -71,7 +71,7 @@ exports.setApp = function(app, dbApi)
     const {firstName, lastName, userName, email, password} = req.body;
 
     dbApi.userByEmail(email).lean().exec(function (err, user) {
-      if (user)
+      if (user == null)
       {
         ret = {error: "Email is being used in another account"};
         return res.status(200).json(ret);
