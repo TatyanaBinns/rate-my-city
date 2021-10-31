@@ -8,7 +8,7 @@ exports.setApp = function(app, dbApi)
     var ret;
     const { email, password } = req.body;
     dbApi.userByEmail(email).lean().exec(function (err, users) {
-      if (users.pwhash == password)
+      if (users && users.pwhash == password)
       {
         ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
         res.status(200).json(ret);
@@ -100,9 +100,9 @@ exports.setApp = function(app, dbApi)
 
     var ret = { result:"${result.deletedCount} document was deleted.", error:error};
     res.status(200).json(ret);
-  });
+  });*/
 
-  app.post('/api/search', async (req, res, next) =>
+  /*app.post('/api/search', async (req, res, next) =>
   {
     //incoming:
 
