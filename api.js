@@ -10,7 +10,7 @@ exports.setApp = function(app, dbApi)
     dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users.pwhash == password)
       {
-        ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, error:''}
+        ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, error:''};
         res.status(200).json(ret);
       }
       else
@@ -59,6 +59,29 @@ exports.setApp = function(app, dbApi)
 
     //var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
     //res.status(200).json(ret);
+  });
+
+  app.post('/api/register', async (req, res, next) =>
+  {
+    //incoming: firstName, lastName, userName, email, password
+    //outgoing: message
+
+    var ret;
+
+    const {firstName, lastName, userName, email, password} = req.body;
+
+    dbApi.userByEmail(email).lean().exec(function (err, user) {
+      if (user != null)
+      {
+        ret = {error: "Email is being used in another account"};
+        return res.status(200).json(ret);
+      }
+    });
+
+    dbApi.createUser(firstName, lastName, userName, email, password);
+    ret = {error: ""};
+    return res.status(200).json(ret);
+
   });
 
   /*app.post('/api/delete', async (req, res, next) =>
