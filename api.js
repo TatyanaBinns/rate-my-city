@@ -74,13 +74,13 @@ exports.setApp = function(app, dbApi)
       if (user == null)
       {
         ret = {error: "Email is being used in another account"};
-        return res.status(200).json(ret);
+        res.status(200).json(ret);
       }
     });
 
     dbApi.createUser(firstName, lastName, userName, email, password);
     ret = {error: ""};
-    return res.status(200).json(ret);
+    res.status(200).json(ret);
 
   });
 
