@@ -4,6 +4,7 @@
   "description": "Rate My City! With this app you can rate your city.",
   "main": "server.js",
   "scripts": {
+    "start": "react-scripts start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
