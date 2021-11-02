@@ -80,6 +80,7 @@ async function dbInit(){
 
     dbApi.allUsers          = ()     => UserProfile.find();
     dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e});
+    dbApi.userByUserName    = (u)    => UserProfile.findOne({userName: u});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw)   => {
         const newUser = new UserProfile({
@@ -100,6 +101,19 @@ async function dbInit(){
             country : cCountry,
             averageRating  : mkBrRating(5)
         }).save();
+    };
+    dbApi.deleteRating = async (uEmail, cityName) => {
+        var city = (await dbApi.cityByName(cityName));
+        var cId = city._id;
+        var uId = (await dbApi.userByEmail(uEmail))._id;
+        
+        console.log("Attempting to pull rating from city "+cId+" by user "+uId);
+        
+        CityData.updateOne({_id: cId}, {
+            "$pull": { "ratings" : {userid: uId}}
+        }, { safe: true, multi:true }, (err, obj)=>{
+            console.log(err);
+        });
     };
     dbApi.addRating = async (uEmail, cityName, uRating, review) => {
         var city = (await dbApi.cityByName(cityName));
@@ -143,8 +157,8 @@ app.get('/', (req, res) => {
 
 //*********Example Endpoints, to be deleted*************
 app.get('/mkTestUsers', (req, res) => {
-    dbApi.createUser("Robert","Dottingham","bob@example.com","notarealhash");
-    dbApi.createUser("John","Doe","jd@example.com","notarealhash");
+    dbApi.createUser("Robert","Dottingham","bobuser","bob@example.com","notarealhash");
+    dbApi.createUser("John","Doe", "johnuser","jd@example.com","notarealhash");
     res.send("Users Created");
 })
 app.get('/listUsers', (req, res) => {
@@ -187,7 +201,15 @@ app.get('/addRating', (req, res) => {
     var userEmail= "bob@example.com";
     var rating = mkBrRating(3);
     (async() => {
-        dbApi.addRating(userEmail, cityName, rating, "Could be worse.");
+        await dbApi.addRating(userEmail, cityName, rating, "Could be worse.");
+        res.send(JSON.stringify(await dbApi.cityByName("ExampleVille"))+"<br />Update Complete");
+    })();
+})
+app.get('/deleteRating', (req, res) => {
+    var cityName = "ExampleVille";
+    var userEmail= "bob@example.com";
+    (async() => {
+        await dbApi.deleteRating(userEmail, cityName);
         res.send(JSON.stringify(await dbApi.cityByName("ExampleVille"))+"<br />Update Complete");
     })();
 })
