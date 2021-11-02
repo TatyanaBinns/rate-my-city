@@ -150,8 +150,7 @@ api.setApp( app, dbApi );
 
 
 app.get('/', (req, res) => {
-    // res.json({ message: "Welcome to a simple hello-world application..", additional: "This is additional text."});
-    windows.location.href='/src/app.js';
+    res.json({ message: "Welcome to a simple hello-world application..", additional: "This is additional text."});
 })
 
 
