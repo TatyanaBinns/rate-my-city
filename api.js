@@ -76,7 +76,7 @@ exports.setApp = function(app, dbApi)
     // HASH PASSWORD
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
 
-    var regex = new RegExp(“^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$”);
+    var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
 
     if (password != confirmpassword)
     {
