@@ -5,6 +5,8 @@ exports.setApp = function(app, dbApi)
   {
     // incoming: login, password
     // outgoing: id, firstName, lastName, error
+
+    // HASH PASSWORD VERIFY
     var ret;
     const { email, password } = req.body;
     dbApi.userByEmail(email).lean().exec(function (err, users) {
@@ -67,7 +69,8 @@ exports.setApp = function(app, dbApi)
     //outgoing: message
 
     var ret;
-
+    // ADD EMAIL VERIFICATION
+    // HASH PASSWORD
     const {firstName, lastName, userName, email, password} = req.body;
 
     dbApi.userByEmail(email).lean().exec(function (err, user) {
@@ -85,22 +88,20 @@ exports.setApp = function(app, dbApi)
     });
   });
 
-  /*app.post('/api/delete', async (req, res, next) =>
+  app.post('/api/delete', async (req, res, next) =>
   {
     //incoming: userId, postId
     // outgoing: error
 
     var error = '';
 
-    const { userId, postId } = req.body;
+    const { email, city } = req.body;
 
-    const db = client.db();
+    await dpApi.deleteRating(email, city);
 
-    const result = await db.collection('UserProfile').deleteOne({cityid:postId});
-
-    var ret = { result:"${result.deletedCount} document was deleted.", error:error};
+    var ret = await dbApi.cityByName(city);
     res.status(200).json(ret);
-  });*/
+  });
 
   /*app.post('/api/search', async (req, res, next) =>
   {
