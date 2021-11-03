@@ -99,7 +99,8 @@ exports.setApp = function(app, dbApi)
 
     await dpApi.deleteRating(email, city);
 
-    res.send(JSON.stringify(await dbApi.cityByName(city)));
+    var ret = { error : "" };
+    res.status(200).json(ret);
   });
 
   /*app.post('/api/search', async (req, res, next) =>
