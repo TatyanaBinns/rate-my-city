@@ -100,7 +100,7 @@ exports.setApp = function(app, dbApi)
     await dpApi.deleteRating(email, city);
 
     await dbApi.cityByName(city).exec(function (err, cityinfo) {
-      res.status(200).json(cityinfo);
+      res.send(JSON.stringify(cityinfo));
     });
   });
 
