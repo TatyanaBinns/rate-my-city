@@ -1,7 +1,6 @@
 
 exports.setApp = function(app, dbApi)
 {
-  var passwordHash = require ('password-hash');
 
   app.post('/api/login', async (req, res, next) =>
   {
@@ -11,6 +10,7 @@ exports.setApp = function(app, dbApi)
     // MAKE SURE EMAIL IS CASE INSENSITIVE
     // HASH PASSWORD VERIFY
     var ret;
+    var passwordHash = require('./lib/password-hash');
     const { email, password } = req.body;
     dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users && passwordHash.verify(users.pwhash, password))
@@ -70,7 +70,7 @@ exports.setApp = function(app, dbApi)
   {
     //incoming: firstName, lastName, userName, email, password
     //outgoing: message
-
+    var passwordHash = require ('password-hash');
     var ret;
     // ADD EMAIL VERIFICATION
     // HASH PASSWORD
