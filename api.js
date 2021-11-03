@@ -7,13 +7,12 @@ exports.setApp = function(app, dbApi)
     // incoming: login, password
     // outgoing: id, firstName, lastName, error
 
-    // MAKE SURE EMAIL IS CASE INSENSITIVE
     // HASH PASSWORD VERIFY
     var ret;
     //var passwordHash = require('./lib/password-hash');
     const { email, password } = req.body;
     dbApi.userByEmail(email).lean().exec(function (err, users) {
-      if (users /*&& passwordHash.verify(users.pwhash, password)*/)
+      if (users && users.pwhash == password/*&& passwordHash.verify(users.pwhash, password)*/)
       {
         ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
         res.status(200).json(ret);
@@ -95,7 +94,6 @@ exports.setApp = function(app, dbApi)
           ret = {error: "Email is being used in another account"};
           res.status(200).json(ret);
         }
-        //NEED TO CHECK IF USERNAME TAKEN!!!!!!!!!!!!!!!
         else {
           //var hashedPassword = passwordHash.generate(password);
           dbApi.userByUserName(userName).lean().exec(function (err, user) {
