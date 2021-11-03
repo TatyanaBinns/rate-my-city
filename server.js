@@ -79,7 +79,7 @@ async function dbInit(){
     }));
 
     dbApi.allUsers          = ()     => UserProfile.find();
-    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e});
+    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: { $regex : new RegExp(e, "i") }});
     dbApi.userByUserName    = (u)    => UserProfile.findOne({userName: u});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw)   => {
@@ -106,9 +106,9 @@ async function dbInit(){
         var city = (await dbApi.cityByName(cityName));
         var cId = city._id;
         var uId = (await dbApi.userByEmail(uEmail))._id;
-        
+
         console.log("Attempting to pull rating from city "+cId+" by user "+uId);
-        
+
         CityData.updateOne({_id: cId}, {
             "$pull": { "ratings" : {userid: uId}}
         }, { safe: true, multi:true }, (err, obj)=>{
