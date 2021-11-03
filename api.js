@@ -98,9 +98,19 @@ exports.setApp = function(app, dbApi)
         //NEED TO CHECK IF USERNAME TAKEN!!!!!!!!!!!!!!!
         else {
           //var hashedPassword = passwordHash.generate(password);
-          dbApi.createUser(firstName, lastName, userName, email, password);
-          ret = {error: ""};
-          res.status(200).json(ret);
+          dbApi.userByUserName(userName).lean().exec(function (err, user) {
+            if (user != null)
+            {
+              ret = {error: "Username is taken."};
+              res.status(200).json(ret);
+            }
+            else
+            {
+              dbApi.createUser(firstName, lastName, userName, email, password);
+              ret = {error: ""};
+              res.status(200).json(ret);
+            }
+          });
         }
       });
     }
