@@ -74,22 +74,36 @@ exports.setApp = function(app, dbApi)
     var ret;
     // ADD EMAIL VERIFICATION
     // HASH PASSWORD
-    const {firstName, lastName, userName, email, password} = req.body;
+    const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
 
-    dbApi.userByEmail(email).lean().exec(function (err, user) {
-      if (user != null)
-      {
-        ret = {error: "Email is being used in another account"};
-        res.status(200).json(ret);
-      }
-      //NEED TO CHECK IF USERNAME TAKEN!!!!!!!!!!!!!!!
-      else {
-        var hashedPassword = passwordHash.generate(password);
-        dbApi.createUser(firstName, lastName, userName, email, hashedPassword);
-        ret = {error: ""};
-        res.status(200).json(ret);
-      }
-    });
+    var regex = new RegExp(“^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)”+“(?=.*[-+_!@#$%^&*., ?]).+$”);
+
+    if (password != confirmpassword)
+    {
+      ret = {error : "Passwords do not match."};
+      res.status(200).json(ret);
+    }
+    else if (password.length < 8 || regex.test(password) === false)
+    {
+      ret = {error: "Password requirements not met. Please check requirements below."};
+      res.status(200).json(ret);
+    }
+    else {
+      dbApi.userByEmail(email).lean().exec(function (err, user) {
+        if (user != null)
+        {
+          ret = {error: "Email is being used in another account"};
+          res.status(200).json(ret);
+        }
+        //NEED TO CHECK IF USERNAME TAKEN!!!!!!!!!!!!!!!
+        else {
+          var hashedPassword = passwordHash.generate(password);
+          dbApi.createUser(firstName, lastName, userName, email, hashedPassword);
+          ret = {error: ""};
+          res.status(200).json(ret);
+        }
+      });
+    }
   });
 
   app.post('/api/delete', async (req, res, next) =>
