@@ -79,7 +79,7 @@ async function dbInit(){
     }));
 
     dbApi.allUsers          = ()     => UserProfile.find();
-    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: {$regex : new RegExp(e, "i") }});
+    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e});
     dbApi.userByUserName    = (u)    => UserProfile.findOne({userName: u});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw)   => {
@@ -150,7 +150,7 @@ api.setApp( app, dbApi );
 
 
 app.get('/', (req, res) => {
-     res.json({ message: "Welcome to a simple hello-world application.", additional: "This is additional text."});
+     res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
 })
 
 
