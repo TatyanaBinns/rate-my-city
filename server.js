@@ -144,6 +144,8 @@ dbInit().catch(err => console.log(err));
 app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+// Serve up static content from the public subdirectory
+app.use(express.static("public"));
 
 var api = require('./api.js');
 api.setApp( app, dbApi );
