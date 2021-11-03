@@ -79,7 +79,7 @@ async function dbInit(){
     }));
 
     dbApi.allUsers          = ()     => UserProfile.find();
-    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: { $regex : new RegExp(e, "i") }});
+    dbApi.userByEmail       = (e)    => UserProfile.findOne({email: {$regex : new RegExp(e, "i") }});
     dbApi.userByUserName    = (u)    => UserProfile.findOne({userName: u});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw)   => {
