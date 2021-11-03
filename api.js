@@ -119,14 +119,15 @@ exports.setApp = function(app, dbApi)
     //incoming: userId, postId
     // outgoing: error
 
-    var error = '';
-
     const { email, city } = req.body;
 
-    dpApi.deleteRating(email, city);
+    //await dpApi.deleteRating(email, city);
 
-    var ret = { error : "" };
-    res.status(200).json(ret);
+    (async() => {
+        await dbApi.deleteRating(email, city);
+        res.send(JSON.stringify(await dbApi.cityByName(city))+"<br />Update Complete");
+    })();
+    
   });
 
   /*app.post('/api/search', async (req, res, next) =>
