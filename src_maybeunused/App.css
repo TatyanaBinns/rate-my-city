@@ -1,3 +1,23 @@
+.container {
+  background-image: url(./background-city-image.png);
+  height: 200px;
+}
+
+.icon-play {
+  background-image: url(./hamburger.png);
+  background-size: cover;
+  display: inline-block;
+  margin-top: 8px;
+  margin-left: 0px;
+  margin-right: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
 .App {
   text-align: center;
 }
