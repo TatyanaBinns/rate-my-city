@@ -1,16 +1,19 @@
 
 exports.setApp = function(app, dbApi)
 {
+  var passwordHash = require ('password-hash');
+
   app.post('/api/login', async (req, res, next) =>
   {
     // incoming: login, password
     // outgoing: id, firstName, lastName, error
 
+    // MAKE SURE EMAIL IS CASE INSENSITIVE
     // HASH PASSWORD VERIFY
     var ret;
     const { email, password } = req.body;
     dbApi.userByEmail(email).lean().exec(function (err, users) {
-      if (users && users.pwhash == password)
+      if (users && passwordHash.verify(users.pwhash, password))
       {
         ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
         res.status(200).json(ret);
@@ -81,7 +84,8 @@ exports.setApp = function(app, dbApi)
       }
       //NEED TO CHECK IF USERNAME TAKEN!!!!!!!!!!!!!!!
       else {
-        dbApi.createUser(firstName, lastName, userName, email, password);
+        var hashedPassword = passwordHash.generate(password);
+        dbApi.createUser(firstName, lastName, userName, email, hashedPassword);
         ret = {error: ""};
         res.status(200).json(ret);
       }
@@ -97,7 +101,7 @@ exports.setApp = function(app, dbApi)
 
     const { email, city } = req.body;
 
-    await dpApi.deleteRating(email, city);
+    dpApi.deleteRating(email, city);
 
     var ret = { error : "" };
     res.status(200).json(ret);
