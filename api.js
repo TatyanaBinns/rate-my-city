@@ -14,55 +14,25 @@ exports.setApp = function(app, dbApi)
     dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users && users.pwhash == password/*&& passwordHash.verify(users.pwhash, password)*/)
       {
-        ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
-        res.status(200).json(ret);
+        //ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
+        //res.status(200).json(ret);
+        try
+        {
+          const token = require("./createJWT.js");
+          ret = token.createToken( users.firstName, users.lastName, users._id );
+        }
+        catch(e)
+        {
+          ret = {error:e.message};
+        }
       }
       else
       {
         ret = {error : "Login/Password incorrect"};
-        res.status(200).json(ret);
+        //res.status(200).json(ret);
       }
+      res.status(200).json(ret);
     });
-
-    /*var error = '';
-
-    const { email, password } = req.body;
-
-    var results = await UserProfile.findOne({email: email, pwhash: password});
-    results.exec(function (err, users) {
-        if (err)
-          res.send(err);
-        return res.send(JSON.stringify(users));
-    });*/
-
-    /*var id = -1;
-    var fn = '';
-    var ln = '';
-    fn = email;
-    ln = password;*/
-    /*if( results.length > 0 )
-    {
-      //id = results[0]._id;
-      fn = results[0].firstName;
-      ln = results[0].lastName;
-
-      /*try
-      {
-        const token = require("./createJWT.js");
-        ret = token.createToken( fn, ln, id );
-      }
-      catch(e)
-      {
-        ret = {error:e.message};
-      }
-    }*/
-    /*else
-    {
-      ret = {error:"Login/Password incorrect"};
-    }*/
-
-    //var ret = { /*id:id,*/ firstName:fn, lastName:ln, error:''};
-    //res.status(200).json(ret);
   });
 
   app.post('/api/register', async (req, res, next) =>
@@ -74,6 +44,20 @@ exports.setApp = function(app, dbApi)
     // ADD EMAIL VERIFICATION
     // HASH PASSWORD
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
+
+    /*try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }*/
 
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
 
@@ -112,6 +96,18 @@ exports.setApp = function(app, dbApi)
         }
       });
     }
+
+    /*var refreshedToken = null;
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }*/
+
+
   });
 
   app.post('/api/delete', async (req, res, next) =>
@@ -122,12 +118,42 @@ exports.setApp = function(app, dbApi)
     const { email, city } = req.body;
 
     //await dpApi.deleteRating(email, city);
+    var error;
+
+    try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
 
     (async() => {
         await dbApi.deleteRating(email, city);
-        res.send(JSON.stringify(await dbApi.cityByName(city))+"<br />Update Complete");
+        //res.send(JSON.stringify(await dbApi.cityByName(city))+"<br />Update Complete");
+        error = "";
     })();
-    
+
+    var refreshedToken = null;
+
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
+    var ret = { error: error, jwtToken: refreshedToken };
+
+    res.status(200).json(ret);
   });
 
   /*app.post('/api/search', async (req, res, next) =>
