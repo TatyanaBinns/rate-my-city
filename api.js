@@ -23,7 +23,7 @@ exports.setApp = function(app, dbApi)
         }
         catch(e)
         {
-          ret = {error:e.message};
+          ret = {error:e.message+" here"};
         }
       }
       else
