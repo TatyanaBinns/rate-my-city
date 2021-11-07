@@ -115,7 +115,7 @@ exports.setApp = function(app, dbApi)
     //incoming: userId, postId
     // outgoing: error
 
-    const { email, city } = req.body;
+    const { email, city, jwtToken } = req.body;
 
     //await dpApi.deleteRating(email, city);
     var error;
