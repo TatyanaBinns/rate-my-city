@@ -10,7 +10,7 @@ exports.setApp = function(app, dbApi)
     // HASH PASSWORD VERIFY
     var ret;
 
-    //const bcrypt = require('bcrypt');
+    const bcrypt = require('bcrypt');
     const { email, password } = req.body;
 
     dbApi.userByEmail(email).lean().exec(function (err, users) {
@@ -23,7 +23,7 @@ exports.setApp = function(app, dbApi)
             res.status(200).json(ret);
           //}
 
-        });
+        //});
         /*try
         {
           const token = require("./createJWT.js");
