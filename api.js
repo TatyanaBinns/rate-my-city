@@ -1,6 +1,8 @@
 
 exports.setApp = function(app, dbApi)
 {
+  const bcrypt = require('bcrypt');
+  const saltRounds = 10;
 
   app.post('/api/login', async (req, res, next) =>
   {
@@ -9,14 +11,21 @@ exports.setApp = function(app, dbApi)
 
     // HASH PASSWORD VERIFY
     var ret;
-    //var passwordHash = require('./lib/password-hash');
+
     const { email, password } = req.body;
+
     dbApi.userByEmail(email).lean().exec(function (err, users) {
-      if (users && users.pwhash == password/*&& passwordHash.verify(users.pwhash, password)*/)
+      if (users)
       {
-        //ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
-        //res.status(200).json(ret);
-        try
+        bcrypt.compare(password, users.pwhash, function(err, res) {
+          if (res == true)
+          {
+            ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
+            res.status(200).json(ret);
+          }
+
+        });
+        /*try
         {
           const token = require("./createJWT.js");
           ret = token.createToken( users.firstName, users.lastName, users._id );
@@ -24,7 +33,7 @@ exports.setApp = function(app, dbApi)
         catch(e)
         {
           ret = {error:e.message+" here"};
-        }
+        }*/
       }
       else
       {
@@ -39,7 +48,7 @@ exports.setApp = function(app, dbApi)
   {
     //incoming: firstName, lastName, userName, email, password
     //outgoing: message
-    //var passwordHash = require ('password-hash');
+
     var ret;
     // ADD EMAIL VERIFICATION
     // HASH PASSWORD
@@ -79,7 +88,6 @@ exports.setApp = function(app, dbApi)
           res.status(200).json(ret);
         }
         else {
-          //var hashedPassword = passwordHash.generate(password);
           dbApi.userByUserName(userName).lean().exec(function (err, user) {
             if (user != null)
             {
@@ -88,8 +96,13 @@ exports.setApp = function(app, dbApi)
             }
             else
             {
-              dbApi.createUser(firstName, lastName, userName, email, password);
-              ret = {error: ""};
+              bcrypt.genSalt(saltRounds, (err, salt) => {
+                bcrypt.hash(yourPassword, salt, (err, hash) => {
+                  // Now we can store the password hash in db.
+                  dbApi.createUser(firstName, lastName, userName, email, hash);
+                  ret = {error: "", hashpassword: hash};
+                });
+              });
               res.status(200).json(ret);
             }
           });
