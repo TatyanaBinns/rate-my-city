@@ -1,8 +1,6 @@
 
 exports.setApp = function(app, dbApi)
 {
-  const bcrypt = require('bcrypt');
-  const saltRounds = 10;
 
   app.post('/api/login', async (req, res, next) =>
   {
@@ -12,6 +10,7 @@ exports.setApp = function(app, dbApi)
     // HASH PASSWORD VERIFY
     var ret;
 
+    const bcrypt = require('bcrypt');
     const { email, password } = req.body;
 
     dbApi.userByEmail(email).lean().exec(function (err, users) {
@@ -53,7 +52,8 @@ exports.setApp = function(app, dbApi)
     // ADD EMAIL VERIFICATION
     // HASH PASSWORD
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
-
+    const bcrypt = require('bcrypt');
+    const saltRounds = 10;
     /*try
     {
       if( token.isExpired(jwtToken))
