@@ -21,7 +21,9 @@
   "homepage": "https://github.com/TatyanaBinns/rate-my-city#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.11",
     "password-hash": "^1.2.2"
   }
