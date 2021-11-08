@@ -17,12 +17,12 @@ exports.setApp = function(app, dbApi)
         //bcrypt.compare(password, users.pwhash, function(err, result) {
           //if (result == true)
           //{
-          var result = await bcrypt.compare(password, users.pwhash);
-          if (result)
-          {
+          //var result = await bcrypt.compare(password, users.pwhash);
+          //if (result)
+          //{
             ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
             res.status(200).json(ret);
-          }
+          //}
           //}
 
         //});
@@ -99,8 +99,8 @@ exports.setApp = function(app, dbApi)
               //bcrypt.genSalt(saltRounds, (err, salt) => {
                 //bcrypt.hash(password, salt, (err, hash) => {
                   // Now we can store the password hash in db.
-                  var hashed = await bcrypt.hash(password, 10);
-                  dbApi.createUser(firstName, lastName, userName, email, hashed);
+                  //var hashed = await bcrypt.hash(password, 10);
+                  dbApi.createUser(firstName, lastName, userName, email, password);
                   ret = {error: ""};
                   res.status(200).json(ret);
                 //});
