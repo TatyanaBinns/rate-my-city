@@ -16,14 +16,14 @@ exports.setApp = function(app, dbApi)
     dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users)
       {
-        //bcrypt.compare(password, users.pwhash, function(err, result) {
+        bcrypt.compare(password, users.pwhash, function(err, result) {
           //if (result == true)
           //{
             ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
             res.status(200).json(ret);
           //}
 
-        //});
+        });
         /*try
         {
           const token = require("./createJWT.js");
