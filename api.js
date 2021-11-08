@@ -16,14 +16,18 @@ exports.setApp = function(app, dbApi)
     dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users)
       {
-        bcrypt.compare(password, users.pwhash, function(err, result) {
+        //bcrypt.compare(password, users.pwhash, function(err, result) {
           //if (result == true)
           //{
+          var result = await bcrypt.compare(password, users.pwhash);
+          if (result)
+          {
             ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
             res.status(200).json(ret);
+          }
           //}
 
-        });
+        //});
         /*try
         {
           const token = require("./createJWT.js");
@@ -53,7 +57,6 @@ exports.setApp = function(app, dbApi)
     // HASH PASSWORD
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
     const bcrypt = require('bcrypt');
-    const saltRounds = 10;
     /*try
     {
       if( token.isExpired(jwtToken))
@@ -96,14 +99,15 @@ exports.setApp = function(app, dbApi)
             }
             else
             {
-              bcrypt.genSalt(saltRounds, (err, salt) => {
-                bcrypt.hash(password, salt, (err, hash) => {
+              //bcrypt.genSalt(saltRounds, (err, salt) => {
+                //bcrypt.hash(password, salt, (err, hash) => {
                   // Now we can store the password hash in db.
-                  dbApi.createUser(firstName, lastName, userName, email, hash);
+                  var hashed = await bcrypt.hash(password, 10);
+                  dbApi.createUser(firstName, lastName, userName, email, hashed);
                   ret = {error: ""};
                   res.status(200).json(ret);
-                });
-              });
+                //});
+              //});
             }
           });
         }
