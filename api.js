@@ -131,7 +131,7 @@ exports.setApp = function(app, dbApi)
     }
     catch(e)
     {
-      console.log(e.message);
+      console.log(e.message + "here2");
     }
 
     (async() => {
@@ -148,7 +148,7 @@ exports.setApp = function(app, dbApi)
     }
     catch(e)
     {
-      console.log(e.message);
+      console.log(e.message + "here");
     }
 
     var ret = { error: error, jwtToken: refreshedToken };
