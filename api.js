@@ -14,7 +14,7 @@ exports.setApp = function(app, dbApi)
     dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users)
       {
-        if (bcrypt.compare(passsword, users.pwhash))
+        if (await bcrypt.compare(passsword, users.pwhash))
         {
             ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
             //res.status(200).json(ret);
