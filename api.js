@@ -17,7 +17,7 @@ exports.setApp = function(app, dbApi)
         if (bcrypt.compareSync(passsword, users.pwhash))
         {
             ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
-            res.status(200).json(ret);
+            //res.status(200).json(ret);
         }
         else {
             ret = {error : "Login/Password incorrect"};
