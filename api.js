@@ -96,15 +96,10 @@ exports.setApp = function(app, dbApi)
               //bcrypt.genSalt(saltRounds, (err, salt) => {
                 //bcrypt.hash(password, salt, (err, hash) => {
                   // Now we can store the password hash in db.
-                  async function hashIt(password){
-                    const salt = await bcrypt.genSalt(6);
-                    const hashed = await bcrypt.hash(password, salt);
-                    console.log(hashed)
-                  }
-                  hashIt(password);
+                  var hashed = await bcrypt.hash('mpassword', 10)
                   //dbApi.createUser(firstName, lastName, userName, email, password);
-                  //ret = {hashed: hashed, error: ""};
-                  //res.status(200).json(ret);
+                  ret = {hashed: hashed, error: ""};
+                  res.status(200).json(ret);
             }
           });
         }
