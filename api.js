@@ -167,7 +167,7 @@ exports.setApp = function(app, dbApi)
       console.log(e.message + "here");
     }*/
 
-    var ret = { error: error, jwtToken: refreshedToken };
+    //var ret = { error: error, jwtToken: refreshedToken };
 
     res.status(200).json(ret);
   });
