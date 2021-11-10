@@ -16,7 +16,16 @@ exports.setApp = function(app, dbApi)
       {
         if (bcrypt.compareSync(password, users.pwhash))
         {
-            ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
+            //ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
+            try
+            {
+              const token = require("./createJWT.js");
+              ret = token.createToken( users.firstName, users.lastName, users._id );
+            }
+            catch(e)
+            {
+              ret = {error:e.message};
+            }
             //res.status(200).json(ret);
         }
         else {
@@ -126,7 +135,6 @@ exports.setApp = function(app, dbApi)
 
     const { email, city, jwtToken } = req.body;
 
-    //await dpApi.deleteRating(email, city);
     var error;
 
     try
@@ -145,7 +153,6 @@ exports.setApp = function(app, dbApi)
 
     (async() => {
         await dbApi.deleteRating(email, city);
-        //res.send(JSON.stringify(await dbApi.cityByName(city))+"<br />Update Complete");
         error = "";
     })();
 
