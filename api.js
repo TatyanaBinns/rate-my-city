@@ -99,12 +99,12 @@ exports.setApp = function(app, dbApi)
                   async function hashIt(password){
                     const salt = await bcrypt.genSalt(6);
                     const hashed = await bcrypt.hash(password, salt);
-                    ret = {hashed: hashed}
+                    console.log(hashed)
                   }
                   hashIt(password);
                   //dbApi.createUser(firstName, lastName, userName, email, password);
                   //ret = {hashed: hashed, error: ""};
-                  res.status(200).json(ret);
+                  //res.status(200).json(ret);
             }
           });
         }
