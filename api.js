@@ -14,14 +14,14 @@ exports.setApp = function(app, dbApi)
     dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users)
       {
-        //if (await bcrypt.compare(passsword, users.pwhash))
-        //{
+        if (await bcrypt.compareSync(passsword, users.pwhash))
+        {
             ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
-            //res.status(200).json(ret);
-        //}
-        //else {
-            //ret = {error : "Login/Password incorrect"};
-        //}
+            res.status(200).json(ret);
+        }
+        else {
+            ret = {error : "Login/Password incorrect"};
+        }
         //});
         /*try
         {
@@ -96,7 +96,7 @@ exports.setApp = function(app, dbApi)
               //bcrypt.genSalt(saltRounds, (err, salt) => {
                 //bcrypt.hash(password, salt, (err, hash) => {
                   // Now we can store the password hash in db.
-                  var hashed = bcrypt.hashSync('mpassword', 10)
+                  var hashed = bcrypt.hashSync(password, 10)
                   //dbApi.createUser(firstName, lastName, userName, email, password);
                   ret = {hashed: hashed, error: ""};
                   res.status(200).json(ret);
