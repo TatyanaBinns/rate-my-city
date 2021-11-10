@@ -96,7 +96,11 @@ exports.setApp = function(app, dbApi)
               //bcrypt.genSalt(saltRounds, (err, salt) => {
                 //bcrypt.hash(password, salt, (err, hash) => {
                   // Now we can store the password hash in db.
-                  var hashed = bcrypt.hash(password, 10);
+                  var hashed;
+                  bcrypt.hash(password, 10, function(err, hash) {
+                    // Store hash in database here
+                    hashed = hash;
+                  });
                   //dbApi.createUser(firstName, lastName, userName, email, password);
                   ret = {hashed: hashed, error: ""};
                   res.status(200).json(ret);
