@@ -133,9 +133,9 @@ exports.setApp = function(app, dbApi)
     //incoming: userId, postId
     // outgoing: error
 
-    const { email, city, jwtToken } = req.body;
+    const { email, /*city,*/ jwtToken } = req.body;
 
-    var error;
+    var error = "";
 
     try
     {
@@ -151,7 +151,7 @@ exports.setApp = function(app, dbApi)
       console.log(e.message + "here2");
     }
 
-    (async() => {
+    /*(async() => {
         await dbApi.deleteRating(email, city);
         error = "";
     })();
@@ -165,7 +165,7 @@ exports.setApp = function(app, dbApi)
     catch(e)
     {
       console.log(e.message + "here");
-    }
+    }*/
 
     var ret = { error: error, jwtToken: refreshedToken };
 
