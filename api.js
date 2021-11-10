@@ -14,7 +14,7 @@ exports.setApp = function(app, dbApi)
     dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users)
       {
-        if (await bcrypt.compareSync(passsword, users.pwhash))
+        if (bcrypt.compareSync(passsword, users.pwhash))
         {
             ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
             res.status(200).json(ret);
@@ -97,7 +97,7 @@ exports.setApp = function(app, dbApi)
                 //bcrypt.hash(password, salt, (err, hash) => {
                   // Now we can store the password hash in db.
                   var hashed = bcrypt.hashSync(password, 10)
-                  //dbApi.createUser(firstName, lastName, userName, email, password);
+                  dbApi.createUser(firstName, lastName, userName, email, hashed);
                   ret = {hashed: hashed, error: ""};
                   res.status(200).json(ret);
             }
