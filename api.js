@@ -132,6 +132,7 @@ exports.setApp = function(app, dbApi)
   {
     //incoming: userId, postId
     // outgoing: error
+    var token = require('./createJWT.js');
 
     const { email, /*city,*/ jwtToken } = req.body;
 
@@ -148,13 +149,13 @@ exports.setApp = function(app, dbApi)
     }
     catch(e)
     {
-      console.log(e.message + "here2");
+      console.log(e.message);
     }
 
     /*(async() => {
         await dbApi.deleteRating(email, city);
         error = "";
-    })();
+    })();*/
 
     var refreshedToken = null;
 
@@ -164,10 +165,10 @@ exports.setApp = function(app, dbApi)
     }
     catch(e)
     {
-      console.log(e.message + "here");
-    }*/
+      console.log(e.message);
+    }
 
-    //var ret = { error: error, jwtToken: refreshedToken };
+    var ret = { error: error, jwtToken: refreshedToken };
 
     res.status(200).json(ret);
   });
