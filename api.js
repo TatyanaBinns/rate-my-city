@@ -4,10 +4,9 @@ exports.setApp = function(app, dbApi)
   const bcrypt = require('bcrypt');
   app.post('/api/login', async (req, res, next) =>
   {
-    // incoming: login, password
-    // outgoing: id, firstName, lastName, error
+    // incoming: email, password
+    // outgoing: token/error message
 
-    // HASH PASSWORD VERIFY
     var ret;
     const { email, password } = req.body;
 
@@ -26,26 +25,14 @@ exports.setApp = function(app, dbApi)
             {
               ret = {error:e.message};
             }
-            //res.status(200).json(ret);
         }
         else {
             ret = {error : "Login/Password incorrect"};
         }
-        //});
-        /*try
-        {
-          const token = require("./createJWT.js");
-          ret = token.createToken( users.firstName, users.lastName, users._id );
-        }
-        catch(e)
-        {
-          ret = {error:e.message+" here"};
-        }*/
       }
       else
       {
         ret = {error : "Login/Password incorrect"};
-        //res.status(200).json(ret);
       }
       res.status(200).json(ret);
     });
@@ -53,26 +40,12 @@ exports.setApp = function(app, dbApi)
 
   app.post('/api/register', async (req, res, next) =>
   {
-    //incoming: firstName, lastName, userName, email, password
-    //outgoing: message
+    //incoming: firstName, lastName, userName, email, password, confirmpassword
+    //outgoing: error message
 
     var ret;
     // ADD EMAIL VERIFICATION
-    // HASH PASSWORD
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
-    /*try
-    {
-      if( token.isExpired(jwtToken))
-      {
-        var r = {error:'The JWT is no longer valid', jwtToken: ''};
-        res.status(200).json(r);
-        return;
-      }
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }*/
 
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
 
@@ -102,13 +75,10 @@ exports.setApp = function(app, dbApi)
             }
             else
             {
-              //bcrypt.genSalt(saltRounds, (err, salt) => {
-                //bcrypt.hash(password, salt, (err, hash) => {
-                  // Now we can store the password hash in db.
-                  var hashed = bcrypt.hashSync(password, 10)
-                  //dbApi.createUser(firstName, lastName, userName, email, hashed);
-                  ret = {hashed: hashed, error: ""};
-                  res.status(200).json(ret);
+              var hashed = bcrypt.hashSync(password, 10)
+              dbApi.createUser(firstName, lastName, userName, email, hashed);
+              ret = {error: ""};
+              res.status(200).json(ret);
             }
           });
         }
@@ -130,11 +100,11 @@ exports.setApp = function(app, dbApi)
 
   app.post('/api/delete', async (req, res, next) =>
   {
-    //incoming: userId, postId
-    // outgoing: error
+    // incoming: email, city, jwtToken
+    // outgoing: error, refreshedToken
     var token = require('./createJWT.js');
 
-    const { email, /*city,*/ jwtToken } = req.body;
+    const { email, city, jwtToken } = req.body;
 
     var error = "";
 
@@ -152,10 +122,10 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
-    /*(async() => {
+    (async() => {
         await dbApi.deleteRating(email, city);
         error = "";
-    })();*/
+    })();
 
     var refreshedToken = null;
 
