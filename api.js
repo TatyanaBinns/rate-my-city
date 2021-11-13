@@ -2,7 +2,7 @@
 exports.setApp = function(app, dbApi)
 {
   const bcrypt = require('bcrypt');
-  app.post('/api/login', /*async*/ (req, res) =>
+  app.post('/api/login', async (req, res, next) =>
   {
     // incoming: email, password
     // outgoing: token/error message
@@ -10,7 +10,7 @@ exports.setApp = function(app, dbApi)
     var ret;
     const { email, password } = req.body;
 
-    dbApi.userByEmail(email).lean().exec(function (err, users) {
+    await dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users != null)
       {
         if (bcrypt.compareSync(password, users.pwhash))
