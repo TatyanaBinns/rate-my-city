@@ -120,8 +120,8 @@ async function dbInit(){
         var cId = city._id;
         var uId = (await dbApi.userByEmail(uEmail))._id;
         var curAvgRating = city.averageRating;
-
-	//***
+	
+	/*
 	var curNumRatings = city.ratings.length;
 	var newNumRatings = curNumRatings + 1;
 	    
@@ -161,10 +161,10 @@ async function dbInit(){
             newTranspAvgRating,
             newFoodAvgRating
             );
-	//***
+	*/
 
 
-        //var newAvgRating = curAvgRating;
+        var newAvgRating = curAvgRating;
         UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
