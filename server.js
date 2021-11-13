@@ -120,11 +120,11 @@ async function dbInit(){
         var cId = city._id;
         var uId = (await dbApi.userByEmail(uEmail))._id;
         var curAvgRating = city.averageRating;
-	
+
 	/*
 	var curNumRatings = city.ratings.length;
 	var newNumRatings = curNumRatings + 1;
-	    
+
 	// Old Average ratings
 	var curEntertainmentAvgRating = curAvgRating.entertainment;
 	var curNatureAvgRating = curAvgRating.nature;
@@ -133,7 +133,7 @@ async function dbInit(){
         var curCultureAvgRating = curAvgRating.culture;
         var curTranspAvgRating = curAvgRating.transportation;
         var curFoodAvgRating = curAvgRating.food;
-	    
+
 	// New user rating to add to new average
         var userEntertainmentRating = uRating.entertainment;
         var userNatureRating = uRating.nature;
@@ -142,7 +142,7 @@ async function dbInit(){
         var userCultureRating = uRating.culture;
         var userTranspRating = uRating.transportation;
         var userFoodRating = uRating.food;
-	    
+
 	// Add new user rating to old average and compute new average
         var newEntertainmentAvgRating = ((curEntertainmentAvgRating * curNumRatings) + userEntertainmentRating) / newNumRatings;
         var newNatureAvgRating = ((curNatureAvgRating * curNumRatings) + userNatureRating) / newNumRatings;
@@ -151,7 +151,7 @@ async function dbInit(){
         var newCultureAvgRating = ((curCultureAvgRating * curNumRatings) + userCultureRating) / newNumRatings;
         var newTranspAvgRating = ((curTranspAvgRating * curNumRatings) + userTranspRating) / newNumRatings;
         var newFoodAvgRating = ((curFoodAvgRating * curNumRatings) + userFoodRating) / newNumRatings;
-	    
+
 	var newAvgRating = mkRating(
             newEntertainmentAvgRating,
             newNatureAvgRating,
@@ -164,7 +164,7 @@ async function dbInit(){
 	*/
 
 
-        var newAvgRating = curAvgRating;
+        //var newAvgRating = curAvgRating;
         UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
