@@ -10,7 +10,7 @@ exports.setApp = function(app, dbApi)
     var ret;
     const { email, password } = req.body;
 
-    dbApi.userByEmail(email).lean().exec(function (err, users) {
+    await dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users != null)
       {
         if (bcrypt.compareSync(password, users.pwhash))
