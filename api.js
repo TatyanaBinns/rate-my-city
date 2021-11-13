@@ -2,7 +2,7 @@
 exports.setApp = function(app, dbApi)
 {
   const bcrypt = require('bcrypt');
-  app.post('/api/login', async (req, res, next) =>
+  app.post('/api/login', /*async*/ (req, res) =>
   {
     // incoming: email, password
     // outgoing: token/error message
