@@ -77,12 +77,13 @@ async function dbInit(){
            }]
         }]
     }));
-    
+
 
     dbApi.allUsers          = ()     => UserProfile.find();
     dbApi.userByEmail       = (e)    => UserProfile.findOne({email: { $regex : new RegExp(e, "i") }});
     dbApi.userByUserName    = (u)    => UserProfile.findOne({userName: u});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
+    dbApi.updateUserBySetting = (id, u) => UserProfile.findOneAndUpdate({_id: id}, { "$set": u}, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw)   => {
         const newUser = new UserProfile({
             firstName: f,
@@ -96,7 +97,7 @@ async function dbInit(){
     dbApi.allCities    = ()        => CityData.find();
     dbApi.searchCities = (query)   => {
         let regex = new RegExp(query,'i');
-        return CityData.find({$or: [{name: regex }, 
+        return CityData.find({$or: [{name: regex },
                                     {state: regex},
                                     {country: regex},]
                              });
@@ -198,8 +199,8 @@ async function dbInit(){
             }}
         }, ()=>{});
     };
-    
-    
+
+
 }
 dbInit().catch(err => console.log(err));
 
