@@ -168,23 +168,14 @@ exports.setApp = function(app, dbApi)
   {
     //var token = require('./createJWT.js');
     var ret;
-    const {userId, firstName, lastName, userName, email, password, confirmpassword, jwtToken} = req.body;
+    const {userId, firstName, lastName, userName, password, confirmpassword, jwtToken} = req.body;
 
-     dbApi.userByUserName(userName).lean().exec(function (err, user) {
-      if (user != null /*&& user._id != userId*/)
-      {
-        ret = {error: "Username is taken."};
-        return res.status(400).json(ret);
-      }
-    });
-
-     dbApi.userByEmail(email).lean().exec(function(err, user) {
-      if (user != null /*&& user._id != userId*/)
-      {
-        ret = {error: "Email is being used in another account"};
-        return res.status(400).json(ret);
-      }
-    });
+    const user = await dbApi.userByUserName(userName)
+    if (user != null /*&& user._id != userId*/)
+    {
+      ret = {error: "Username is taken."};
+      return res.status(400).json(ret);
+    }
 
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
 
