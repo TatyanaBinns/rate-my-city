@@ -166,7 +166,7 @@ exports.setApp = function(app, dbApi)
 
   app.post('api/settings', async (req, res, next) =>
   {
-    var token = require('./createJWT.js');
+    //var token = require('./createJWT.js');
     var ret;
     const {userId, firstName, lastName, userName, email, password, confirmpassword, jwtToken} = req.body;
 
@@ -191,13 +191,13 @@ exports.setApp = function(app, dbApi)
     if (password != confirmpassword)
     {
       ret = {error : "Passwords do not match."};
-      return res.status(400).json(ret);
+      return res.status(200).json(ret);
     }
 
     if (password.length < 8 || regex.test(password) === false)
     {
       ret = {error: "Password requirements not met. Please check requirements below."};
-      return res.status(400).json(ret);
+      return res.status(200).json(ret);
     }
 
     /*var setting = { firstName: firstName, lastName: lastName, userName: userName, email: email, pwhash: password};
