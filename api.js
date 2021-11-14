@@ -170,7 +170,7 @@ exports.setApp = function(app, dbApi)
     var ret;
     const {userId, firstName, lastName, userName, email, password, confirmpassword, jwtToken} = req.body;
 
-    await dbApi.userByUserName(userName).lean().exec(function (err, user) {
+     dbApi.userByUserName(userName).lean().exec(function (err, user) {
       if (user != null /*&& user._id != userId*/)
       {
         ret = {error: "Username is taken."};
@@ -178,7 +178,7 @@ exports.setApp = function(app, dbApi)
       }
     });
 
-    await dbApi.userByEmail(email).lean().exec(function(err, user) {
+     dbApi.userByEmail(email).lean().exec(function(err, user) {
       if (user != null /*&& user._id != userId*/)
       {
         ret = {error: "Email is being used in another account"};
