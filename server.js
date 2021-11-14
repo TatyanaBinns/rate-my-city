@@ -77,12 +77,12 @@ async function dbInit(){
            }]
         }]
     }));
+    
 
     dbApi.allUsers          = ()     => UserProfile.find();
     dbApi.userByEmail       = (e)    => UserProfile.findOne({email: { $regex : new RegExp(e, "i") }});
     dbApi.userByUserName    = (u)    => UserProfile.findOne({userName: u});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
-    dbApi.updateUserBySetting = (id, u) => UserProfile.findOneAndUpdate({_id: id}, { "$set": u}, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw)   => {
         const newUser = new UserProfile({
             firstName: f,
@@ -93,7 +93,14 @@ async function dbInit(){
         }).save();
     };
 
-    dbApi.allCities   = ()         => CityData.find();
+    dbApi.allCities    = ()        => CityData.find();
+    dbApi.searchCities = (query)   => {
+        let regex = new RegExp(query,'i');
+        return CityData.find({$or: [{name: regex }, 
+                                    {state: regex},
+                                    {country: regex},]
+                             });
+    };
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
         var states = await CityData.find().select('state -_id');
@@ -274,6 +281,12 @@ app.get('/deleteRating', (req, res) => {
 app.get('/allStates', (req, res) => {
     (async() =>
         res.send(JSON.stringify(await dbApi.allStates()))
+    )();
+})
+app.get('/findCities', (req, res) => {
+    var q = "exam";
+    (async() =>
+        res.send(JSON.stringify(await dbApi.searchCities(q)))
     )();
 })
 //*******************************************************
