@@ -22,6 +22,7 @@ exports.setApp = function(app, dbApi)
               ret = token.createToken( users.firstName, users.lastName, users._id );
               ret.firstName = users.firstName;
               ret.lastName = users.lastName;
+              ret.id = users._id;
             }
             catch(e)
             {
@@ -157,4 +158,61 @@ exports.setApp = function(app, dbApi)
 
     const result = await db.collection('').find
   });*/
+
+  app.get('api/listStates', async (req, res, next) =>
+  {
+
+  });
+
+  app.post('api/settings', async (req, res, next) =>
+  {
+    var token = require('./createJWT.js');
+
+    const {userId, firstName, lastName, userName, email, password, confirmpassword, jwtToken} = req.body;
+
+    await dbApi.userByUserName(userName).lean().exec(function (err, user) {
+      if (user != null && user._id != userId)
+      {
+        ret = {error: "Username is taken."};
+        return res.status(400).json(ret);
+      }
+    });
+
+    await dbApi.userByEmail(email).lean().exec(function(err, user) {
+      if (user != null && user._id != userId)
+      {
+        ret = {error: "Email is being used in another account"};
+        return res.status(400).json(ret);
+      }
+    });
+
+    var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
+
+    if (password != confirmpassword)
+    {
+      ret = {error : "Passwords do not match."};
+      return res.status(400).json(ret);
+    }
+
+    if (password.length < 8 || regex.test(password) === false)
+    {
+      ret = {error: "Password requirements not met. Please check requirements below."};
+      return res.status(400).json(ret);
+    }
+
+    /*var setting = { firstName: firstName, lastName: lastName, userName: userName, email: email, pwhash: password};
+
+    await dbApi.updateUserBySetting(userId, setting);
+
+    await dbApi.userByEmail(email).lean().exec(function(err, user) {
+      if (user != null)
+      {
+        return res.status(200).json(user);
+      }
+      else {
+        ret = {error: "Didn't update successfully"};
+        return res.status(400).json(ret);
+      }
+    })*/
+  });
 }
