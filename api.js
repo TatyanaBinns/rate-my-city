@@ -20,6 +20,8 @@ exports.setApp = function(app, dbApi)
             {
               const token = require("./createJWT.js");
               ret = token.createToken( users.firstName, users.lastName, users._id );
+              ret.firstName = users.firstName;
+              ret.lastName = users.lastName;
             }
             catch(e)
             {
