@@ -94,6 +94,18 @@ async function dbInit(){
     };
 
     dbApi.allCities   = ()         => CityData.find();
+    dbApi.allStates   = async ()   => {
+        //Get the raw state data from Mongo
+        var states = await CityData.find().select('state -_id');
+        //De-duplicate it
+        var distinct = new Set();
+        for (a of states)
+            distinct.add(a.state);
+        //Format it in an array for the result
+        var res = [];
+        distinct.forEach(k => res.push(k));
+        return res;
+    };
     dbApi.cityByName  = (n)        => CityData.findOne({name: n});
     dbApi.createCity  = (cName, cState, cCountry)  => {
         const newCity = new CityData({
@@ -179,6 +191,8 @@ async function dbInit(){
             }}
         }, ()=>{});
     };
+    
+    
 }
 dbInit().catch(err => console.log(err));
 
@@ -256,6 +270,11 @@ app.get('/deleteRating', (req, res) => {
         await dbApi.deleteRating(userEmail, cityName);
         res.send(JSON.stringify(await dbApi.cityByName("ExampleVille"))+"<br />Update Complete");
     })();
+})
+app.get('/allStates', (req, res) => {
+    (async() =>
+        res.send(JSON.stringify(await dbApi.allStates()))
+    )();
 })
 //*******************************************************
 
