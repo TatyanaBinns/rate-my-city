@@ -178,13 +178,13 @@ exports.setApp = function(app, dbApi)
       }
     });*/
 
-    await dbApi.userByEmail(email).lean().exec(function(err, user) {
+    /*await dbApi.userByEmail(email).lean().exec(function(err, user) {
       if (user != null && user._id != userId)
       {
         ret = {error: "Email is being used in another account"};
         return res.status(400).json(ret);
       }
-    });
+    });*/
 
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
 
