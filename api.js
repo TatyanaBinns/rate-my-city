@@ -22,6 +22,7 @@ exports.setApp = function(app, dbApi)
               ret = token.createToken( users.firstName, users.lastName, users._id );
               ret.firstName = users.firstName;
               ret.lastName = users.lastName;
+              ret.userName = users.userName;
               ret.id = users._id;
             }
             catch(e)
