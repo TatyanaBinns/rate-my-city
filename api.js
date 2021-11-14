@@ -169,7 +169,7 @@ exports.setApp = function(app, dbApi)
   {
     //var token = require('./createJWT.js');
     var ret;
-    const {userId, firstName, lastName, userName, password, confirmpassword, jwtToken} = req.body;
+    const {userId, firstName, lastName, userName, email, password, confirmpassword, jwtToken} = req.body;
 
     const user = await dbApi.userByUserName(userName)
     if (user != null && user._id != userId)
