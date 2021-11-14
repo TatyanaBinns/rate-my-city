@@ -167,7 +167,7 @@ exports.setApp = function(app, dbApi)
   app.post('api/settings', async (req, res, next) =>
   {
     var token = require('./createJWT.js');
-
+    var ret;
     const {userId, firstName, lastName, userName, email, password, confirmpassword, jwtToken} = req.body;
 
     await dbApi.userByUserName(userName).lean().exec(function (err, user) {
