@@ -172,7 +172,7 @@ exports.setApp = function(app, dbApi)
     const {userId, firstName, lastName, userName, password, confirmpassword, jwtToken} = req.body;
 
     const user = await dbApi.userByUserName(userName)
-    if (user != null /*&& user._id != userId*/)
+    if (user != null && user._id != userId)
     {
       ret = {error: "Username is taken."};
       return res.status(400).json(ret);
@@ -192,19 +192,12 @@ exports.setApp = function(app, dbApi)
       return res.status(400).json(ret);
     }
 
-    /*var setting = { firstName: firstName, lastName: lastName, userName: userName, email: email, pwhash: password};
+    var hashed = bcrypt.hashSync(password, 10);
+    var setting = { firstName: firstName, lastName: lastName, userName: userName, pwhash: hashed};
 
     await dbApi.updateUserBySetting(userId, setting);
 
-    await dbApi.userByEmail(email).lean().exec(function(err, user) {
-      if (user != null)
-      {
-        return res.status(200).json(user);
-      }
-      else {
-        ret = {error: "Didn't update successfully"};
-        return res.status(400).json(ret);
-      }
-    })*/
+    const newUser = await dbApi.userByEmail(email);
+    return res.status(200).json(newUser);
   });
 }
