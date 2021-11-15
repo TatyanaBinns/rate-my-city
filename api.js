@@ -205,7 +205,7 @@ exports.setApp = function(app, dbApi)
     try {
       const user = await dbApi.userByEmail(email).clone();
       ret = {id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email};
-      return res.status(200).json(user);
+      return res.status(200).json(ret);
     } catch(err) {
       return res.status(200).json({message: err.message})
     }
