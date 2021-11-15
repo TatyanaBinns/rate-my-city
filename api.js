@@ -196,7 +196,7 @@ exports.setApp = function(app, dbApi)
     var setting = { firstName: firstName, lastName: lastName, userName: userName, pwhash: hashed};
 
     try {
-      await dbApi.updateUserBySetting(userId, setting);
+      await dbApi.updateUserBySetting(userId, setting).clone();
     }
     catch (err) {
       return res.status(200).json({message: err.message})
