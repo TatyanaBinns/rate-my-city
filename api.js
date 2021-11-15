@@ -195,9 +195,18 @@ exports.setApp = function(app, dbApi)
     var hashed = bcrypt.hashSync(password, 10);
     var setting = { firstName: firstName, lastName: lastName, userName: userName, pwhash: hashed};
 
-    await dbApi.updateUserBySetting(userId, setting);
+    try {
+      await dbApi.updateUserBySetting(userId, setting);
+    }
+    catch (err) {
+      return res.status(200).json({message: err.message})
+    }
 
-    const newUser = await dbApi.userByEmail(email);
-    return res.status(200).json(newUser);
+    try {
+      const newUser = await dbApi.userByEmail(email);
+      return res.status(200).json(newUser);
+    } catch(err) {
+      return res.status(200).json({message: err.message})
+    }
   });
 }
