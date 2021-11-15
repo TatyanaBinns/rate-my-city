@@ -167,9 +167,24 @@ exports.setApp = function(app, dbApi)
 
   app.post('/api/settings', async (req, res, next) =>
   {
-    //var token = require('./createJWT.js');
+    var token = require('./createJWT.js');
+
     var ret;
     const {userId, firstName, lastName, userName, email, password, confirmpassword, jwtToken} = req.body;
+
+    try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
 
     const user = await dbApi.userByUserName(userName)
     if (user != null && user._id != userId)
@@ -199,15 +214,27 @@ exports.setApp = function(app, dbApi)
       await dbApi.updateUserBySetting(userId, setting).clone();
     }
     catch (err) {
-      return res.status(200).json({message: err.message})
+      return res.status(200).json({error: err.message})
     }
 
     try {
       const user = await dbApi.userByEmail(email).clone();
-      ret = {id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email};
-      return res.status(200).json(ret);
     } catch(err) {
-      return res.status(200).json({message: err.message})
+      return res.status(200).json({error: err.message})
     }
+
+    var refreshedToken = null;
+
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
+    ret = {error: "", id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, jwtToken: refreshedToken };
+    return res.status(200).json(ret);
   });
 }
