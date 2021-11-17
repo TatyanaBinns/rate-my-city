@@ -234,8 +234,7 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
-    ret = {error: ""};
-    //ret = {error: "", id: updatedUser._id, firstName: updatedUser.firstName, lastName: updatedUser.lastName, userName: updatedUser.userName, email: updatedUser.email, jwtToken: refreshedToken };
+    ret = {error: "", id: updatedUser._id, firstName: updatedUser.firstName, lastName: updatedUser.lastName, userName: updatedUser.userName, email: updatedUser.email, jwtToken: refreshedToken };
     return res.status(200).json(ret);
   });
 }
