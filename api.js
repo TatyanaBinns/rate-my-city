@@ -217,8 +217,9 @@ exports.setApp = function(app, dbApi)
       return res.status(200).json({error: err.message})
     }
 
+    const updatedUser;
     try {
-      const updatedUser = await dbApi.userByEmail(email);
+      updatedUser = await dbApi.userByEmail(email);
     } catch(err) {
       return res.status(200).json({error: err.message})
     }
