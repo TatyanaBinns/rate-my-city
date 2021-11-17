@@ -63,14 +63,14 @@ exports.setApp = function(app, dbApi)
       res.status(200).json(ret);
     }
     else {
-      await dbApi.userByEmail(email).lean().exec(function (err, user) {
+      dbApi.userByEmail(email).lean().exec(function (err, user) {
         if (user != null)
         {
           ret = {error: "Email is being used in another account"};
           res.status(200).json(ret);
         }
         else {
-          await dbApi.userByUserName(userName).lean().exec(function (err, user) {
+          dbApi.userByUserName(userName).lean().exec(function (err, user) {
             if (user != null)
             {
               ret = {error: "Username is taken."};
