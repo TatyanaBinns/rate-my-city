@@ -80,12 +80,7 @@ exports.setApp = function(app, dbApi)
             {
               var hashed = bcrypt.hashSync(password, 10);
 
-              try {
-                await dbApi.createUser(firstName, lastName, userName, email, hashed);
-              }
-              catch(err) {
-                return res.status(200).json({error: err.message})
-              }
+              dbApi.createUser(firstName, lastName, userName, email, hashed);
 
               ret = {error: ""};
               //const newUser = await dbApi.userByEmail(email);
