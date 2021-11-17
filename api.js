@@ -218,7 +218,7 @@ exports.setApp = function(app, dbApi)
     }
 
     try {
-      const user = await dbApi.userByEmail(email).clone();
+      const updatedUser = await dbApi.userByEmail(email).clone();
     } catch(err) {
       return res.status(200).json({error: err.message})
     }
@@ -234,7 +234,7 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
-    ret = {error: "", id: user._id, firstName: user.firstName, lastName: user.lastName, userName: user.userName, email: user.email, jwtToken: refreshedToken };
+    ret = {error: "", id: updatedUser._id, firstName: updatedUser.firstName, lastName: updatedUser.lastName, userName: updatedUser.userName, email: updatedUser.email, jwtToken: refreshedToken };
     return res.status(200).json(ret);
   });
 }
