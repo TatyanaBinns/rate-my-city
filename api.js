@@ -89,18 +89,6 @@ exports.setApp = function(app, dbApi)
         }
       });
     }
-
-    /*var refreshedToken = null;
-    try
-    {
-      refreshedToken = token.refresh(jwtToken);
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }*/
-
-
   });*/
 
   app.post('/api/delete', async (req, res, next) =>
