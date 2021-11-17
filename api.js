@@ -62,18 +62,18 @@ exports.setApp = function(app, dbApi)
       res.status(200).json(ret);
     }
     else {
-      dbApi.userByEmail(email).lean().exec(function (err, user) {
+      await dbApi.userByEmail(email).lean().exec(function (err, user) {
         if (user != null)
         {
           ret = {error: "Email is being used in another account"};
-          res.status(200).json(ret);
+          return res.status(200).json(ret);
         }
         else {
-          dbApi.userByUserName(userName).lean().exec(function (err, user) {
+          await dbApi.userByUserName(userName).lean().exec(function (err, user) {
             if (user != null)
             {
               ret = {error: "Username is taken."};
-              res.status(200).json(ret);
+              return res.status(200).json(ret);
             }
             else
             {
@@ -83,7 +83,7 @@ exports.setApp = function(app, dbApi)
               ret = {error: ""}
               //const newUser = await dbApi.userByEmail(email);
               //ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
-              res.status(200).json(ret);
+              return res.status(200).json(ret);
             }
           });
         }
