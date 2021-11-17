@@ -41,7 +41,7 @@ exports.setApp = function(app, dbApi)
     });
   });
 
-  /*app.post('/api/register', async (req, res, next) =>
+  app.post('/api/register', async (req, res, next) =>
   {
     //incoming: firstName, lastName, userName, email, password, confirmpassword
     //outgoing: error message
@@ -63,14 +63,14 @@ exports.setApp = function(app, dbApi)
       res.status(200).json(ret);
     }
     else {
-      dbApi.userByEmail(email).lean().exec(function (err, user) {
+      await dbApi.userByEmail(email).lean().exec(function (err, user) {
         if (user != null)
         {
           ret = {error: "Email is being used in another account"};
           res.status(200).json(ret);
         }
         else {
-          dbApi.userByUserName(userName).lean().exec(function (err, user) {
+          await dbApi.userByUserName(userName).lean().exec(function (err, user) {
             if (user != null)
             {
               ret = {error: "Username is taken."};
@@ -79,7 +79,7 @@ exports.setApp = function(app, dbApi)
             else
             {
               var hashed = bcrypt.hashSync(password, 10);
-              dbApi.createUser(firstName, lastName, userName, email, hashed);
+              //await dbApi.createUser(firstName, lastName, userName, email, hashed);
 
               ret = {error: ""};
               //const newUser = await dbApi.userByEmail(email);
@@ -90,7 +90,7 @@ exports.setApp = function(app, dbApi)
         }
       });
     }
-  });*/
+  });
 
   app.post('/api/delete', async (req, res, next) =>
   {
