@@ -55,42 +55,39 @@ exports.setApp = function(app, dbApi)
     if (password != confirmpassword)
     {
       ret = {error : "Passwords do not match."};
-      res.status(200).json(ret);
+      return res.status(200).json(ret);
     }
     else if (password.length < 8 || regex.test(password) === false)
     {
       ret = {error: "Password requirements not met. Please check requirements below."};
-      res.status(200).json(ret);
+      return res.status(200).json(ret);
     }
     else {
       dbApi.userByEmail(email).lean().exec(function (err, user) {
         if (user != null)
         {
           ret = {error: "Email is being used in another account"};
-          res.status(200).json(ret);
+          return res.status(200).json(ret);
         }
         else {
           dbApi.userByUserName(userName).lean().exec(function (err, user) {
             if (user != null)
             {
               ret = {error: "Username is taken."};
-              res.status(200).json(ret);
-            }
-            else
-            {
-              var hashed = bcrypt.hashSync(password, 10);
-
-              dbApi.createUser(firstName, lastName, userName, email, hashed);
-
-              //ret = {error: ""};
-              const newUser = dbApi.userByEmail(email);
-              ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
-              res.status(200).json(ret);
+              return res.status(200).json(ret);
             }
           });
         }
       });
     }
+      var hashed = bcrypt.hashSync(password, 10);
+
+      await dbApi.createUser(firstName, lastName, userName, email, hashed);
+
+      //ret = {error: ""};
+      const newUser = await dbApi.userByEmail(email);
+      ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
+      res.status(200).json(ret);
   });
 
   app.post('/api/delete', async (req, res, next) =>
