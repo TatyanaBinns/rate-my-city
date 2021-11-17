@@ -15,6 +15,7 @@ exports.setApp = function(app, dbApi)
       {
         if (bcrypt.compareSync(password, users.pwhash))
         {
+            try
             {
               const token = require("./createJWT.js");
               ret = token.createToken( users.firstName, users.lastName, users._id );
