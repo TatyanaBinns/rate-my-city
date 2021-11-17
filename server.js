@@ -279,11 +279,11 @@ app.get('/deleteRating', (req, res) => {
         res.send(JSON.stringify(await dbApi.cityByName("ExampleVille"))+"<br />Update Complete");
     })();
 })
-/*app.get('/allStates', (req, res) => {
+app.get('/allStates', (req, res) => {
     (async() =>
         res.send(JSON.stringify(await dbApi.allStates()))
     )();
-})*/
+})
 app.get('/findCities', (req, res) => {
     var q = "exam";
     (async() =>
