@@ -81,7 +81,7 @@ exports.setApp = function(app, dbApi)
             {
               var hashed = bcrypt.hashSync(password, 10)
               dbApi.createUser(firstName, lastName, userName, email, hashed);
-              ret = {error: ""};
+              ret = {firstName: firstName, lastName: lastName, error: ""};
               res.status(200).json(ret);
             }
           });
@@ -234,7 +234,7 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
-    ret = {error: "", id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, jwtToken: refreshedToken };
+    ret = {error: "", id: user._id, firstName: user.firstName, lastName: user.lastName, userName: user.userName, email: user.email, jwtToken: refreshedToken };
     return res.status(200).json(ret);
   });
 }
