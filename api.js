@@ -40,7 +40,7 @@ exports.setApp = function(app, dbApi)
     });
   });
 
-  app.post('/api/register', async (req, res, next) =>
+  /*app.post('/api/register', async (req, res, next) =>
   {
     //incoming: firstName, lastName, userName, email, password, confirmpassword
     //outgoing: error message
@@ -77,10 +77,10 @@ exports.setApp = function(app, dbApi)
             }
             else
             {
-              var hashed = bcrypt.hashSync(password, 10)
+              var hashed = bcrypt.hashSync(password, 10);
               dbApi.createUser(firstName, lastName, userName, email, hashed);
 
-              ret = {error: ""}
+              ret = {error: ""};
               //const newUser = await dbApi.userByEmail(email);
               //ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
               res.status(200).json(ret);
@@ -101,7 +101,7 @@ exports.setApp = function(app, dbApi)
     }*/
 
 
-  });
+  });*/
 
   app.post('/api/delete', async (req, res, next) =>
   {
