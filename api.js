@@ -15,8 +15,6 @@ exports.setApp = function(app, dbApi)
       {
         if (bcrypt.compareSync(password, users.pwhash))
         {
-            //ret = { id:users._id, firstName:users.firstName, lastName:users.lastName, userName: users.userName, pwhash: users.pwhash, error:''};
-            try
             {
               const token = require("./createJWT.js");
               ret = token.createToken( users.firstName, users.lastName, users._id );
@@ -80,8 +78,10 @@ exports.setApp = function(app, dbApi)
             else
             {
               var hashed = bcrypt.hashSync(password, 10)
-              dbApi.createUser(firstName, lastName, userName, email, hashed);
-              ret = {firstName: firstName, lastName: lastName, error: ""};
+              await dbApi.createUser(firstName, lastName, userName, email, hashed);
+
+              const newUser = await dbApi.userByEmail(email);
+              ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
               res.status(200).json(ret);
             }
           });
