@@ -217,11 +217,11 @@ exports.setApp = function(app, dbApi)
       return res.status(200).json({error: err.message})
     }
 
-    /*try {
-      const updatedUser = await dbApi.userByEmail(email).clone();
+    try {
+      const updatedUser = await dbApi.userByEmail(email);
     } catch(err) {
       return res.status(200).json({error: err.message})
-    }*/
+    }
 
     var refreshedToken = null;
 
