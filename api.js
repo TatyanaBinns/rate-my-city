@@ -4,7 +4,7 @@ exports.setApp = function(app, dbApi)
   const bcrypt = require('bcrypt');
   // Used to send email for verification and/or reset password
   //const nodemailer = require('nodemailer');
-  
+
   app.post('/api/login', async (req, res, next) =>
   {
     // incoming: email, password
@@ -92,7 +92,7 @@ exports.setApp = function(app, dbApi)
       ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
       res.status(200).json(ret);
   });
-  
+
   /*
   // Forgot password, reset
   app.post('api/resetPassword', async (req, res) =>
@@ -103,16 +103,16 @@ exports.setApp = function(app, dbApi)
       res.status(400).json(ret);
       // or res.status(400).send(ret);
     }
-    
+
     var user = (await dbApi.userByEmail(req.body.email));
-    
+
     if (user == null)
     {
       ret = {error: "Email was not found in our records."};
       res.status(400).json(ret);
-      console.log("email not found in database."); 
+      console.log("email not found in database.");
     }
-    
+
     else
     {
       var crypto;
@@ -124,14 +124,14 @@ exports.setApp = function(app, dbApi)
       {
         console.log('crypto support is disabled.');
       }
-      
+
       const token = crypto.randomBytes(20).toString('hex');
       user.update(
         {
           resetPasswordToken: token,
           resetPasswordExpires: Date.now() + 400000,
         });
-      
+
       const transporter = nodemailer.createTransport(
         {
           service: 'gmail',
@@ -141,8 +141,8 @@ exports.setApp = function(app, dbApi)
             pass: `${process.env.EMAIL_PASSWORD}`,
           },
         });
-          
-      const mailOptions = 
+
+      const mailOptions =
             {
               from: 'rate-my-city-admin@gmail.com',
               to: `${user.email}`,
@@ -152,7 +152,7 @@ exports.setApp = function(app, dbApi)
                 + '`http://localhost:3000/reset/${token}\n\n`'
                 + 'Link might not work right now.',
             };
-      
+
       transporter.sendMail(mailOptions, (err, response) =>
       {
         if (err)
@@ -224,7 +224,9 @@ exports.setApp = function(app, dbApi)
 
   app.get('/api/listStates', async (req, res, next) =>
   {
-
+    (async() =>
+        res.send(JSON.stringify(await dbApi.allStates()))
+    )();
   });
 
   app.post('/api/settings', async (req, res, next) =>
