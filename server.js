@@ -95,12 +95,49 @@ async function dbInit(){
     };
 
     dbApi.allCities    = ()        => CityData.find();
-    dbApi.searchCities = (query)   => {
-        let regex = new RegExp(query,'i');
+    dbApi.searchCities = (userId, city, state)   => {
+        l/*et regex = new RegExp(query,'i');
         return CityData.find({$or: [{name: regex },
                                     {state: regex},
                                     {country: regex},]
-                             });
+                             });*/
+                        try {CityData.aggregate([
+                         {
+                           "$match": {
+                             $and: [
+                             {"ratings": {
+                               "$elemMatch": {
+                                 "userid": userId
+                               }
+                             }},
+                             {"name" : { "$regex": new RegExp(city, 'i' )}},
+                             {"state" : {"$regex": new RegExp(state, 'i')}}
+                           ]}
+                         },
+                         {
+                           "$project": {
+                             "name" : 1,
+                             "state" : 1,
+                             "ratings": {
+                               "$filter": {
+                                 "input": "$ratings",
+                                 "as": "ratings",
+                                 "cond": {
+                                   "$eq": [
+                                     "$$ratings.userid",
+                                     userId
+                                   ]
+                                 }
+                               }
+                             }
+                           }
+                         }
+                       ]).exec(function(err, result) {
+                         res.json(result)
+                       })}
+                       catch (err) {
+                         res.json({message: err.message})
+                       }
     };
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
