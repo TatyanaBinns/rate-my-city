@@ -209,18 +209,18 @@ exports.setApp = function(app, dbApi)
     res.status(200).json(ret);
   });
 
-  /*app.post('/api/search', async (req, res, next) =>
+  app.post('/api/search', async (req, res, next) =>
   {
-    //incoming:
+    //incoming: city, state, userName
 
     var error = '';
 
-    const { city, state, country, firstName, lastName} = req.body;
+    const { city, state, userName} = req.body;
 
-    const db = client.db();
+    const user = await dbApi.userByUserName(userName);
 
-    const result = await db.collection('').find
-  });*/
+    dbApi.searchCities(user._id, city, state)
+  });
 
   app.get('/api/listStates', async (req, res, next) =>
   {
