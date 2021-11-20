@@ -105,7 +105,7 @@ async function dbInit(){
                          {
                            "$match": {
                              $and: [
-                             {"ratings": {
+                             {"ratings": { 
                                "$elemMatch": {
                                  "userid": userId
                                }
