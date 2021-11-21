@@ -245,7 +245,8 @@ exports.setApp = function(app, dbApi)
   app.get('/api/listStates', async (req, res, next) =>
   {
     (async() =>
-        res.send(JSON.stringify(await dbApi.allStates()))
+        //res.send(JSON.stringify(await dbApi.allStates()))
+        res.status(200).json(await dbApi.allStates())
     )();
   });
 
