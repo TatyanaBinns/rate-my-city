@@ -245,7 +245,6 @@ exports.setApp = function(app, dbApi)
   app.get('/api/listStates', async (req, res, next) =>
   {
     (async() =>
-        //res.send(JSON.stringify(await dbApi.allStates()))
         res.status(200).json(await dbApi.allStates())
     )();
   });
@@ -253,14 +252,14 @@ exports.setApp = function(app, dbApi)
   app.get('/api/listCities', async (req, res, next) =>
   {
     (async() =>
-        res.send(JSON.stringify(await dbApi.allCities()))
+        res.status(200).json(await dbApi.allCities())
     )();
   });
 
   app.get('/api/listUsername', async (req, res, next) =>
   {
     (async() =>
-        res.send(JSON.stringify(await dbApi.allUsers()))
+        res.status(200).json(await dbApi.allUsers())
     )();
   })
 
