@@ -254,7 +254,7 @@ async function dbInit(){
 
             
 
-        var newAvgRating = curAvgRating;
+        //var newAvgRating = curAvgRating;
         UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
