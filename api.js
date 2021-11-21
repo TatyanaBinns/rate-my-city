@@ -219,10 +219,15 @@ exports.setApp = function(app, dbApi)
 
     //const user = await dbApi.userByUserName(userName);
 
-    dbApi.searchCities(userName, city, state)
+    dbApi.searchCities(userName, city, state).exec(function(err, result) {
+      res.json(result)
+    })}
+    catch (err) {
+      res.json({message: err.message})
+    }
   });
 
-  app.get('/api/listStates', async (req, res, next) => 
+  app.get('/api/listStates', async (req, res, next) =>
   {
     (async() =>
         res.send(JSON.stringify(await dbApi.allStates()))
