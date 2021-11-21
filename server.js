@@ -94,7 +94,7 @@ async function dbInit(){
         }).save();
     };
 
-    dbApi.allCities    = ()        => CityData.find();
+    dbApi.allCities    = ()        => CityData.find().sort({"name": 1});
     dbApi.searchCityAndState = (city, state) => {
       return CityData.find({$and: [{name: {$regex: new RegExp(city, 'i')}},
                             {state: {$regex: new RegExp(state, 'i')}}
