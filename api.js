@@ -254,6 +254,13 @@ exports.setApp = function(app, dbApi)
     (async() =>
         res.send(JSON.stringify(await dbApi.allCities()))
     )();
+  });
+
+  app.get('/api/listUsername', async (req, res, next) =>
+  {
+    (async() =>
+        res.send(JSON.stringify(await dbApi.allUsers()))
+    )();
   })
 
   app.post('/api/settings', async (req, res, next) =>
