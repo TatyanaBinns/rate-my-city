@@ -222,7 +222,7 @@ exports.setApp = function(app, dbApi)
     dbApi.searchCities(userName, city, state)
   });
 
-  app.get('/api/listStates', async (req, res, next) =>
+  app.get('/api/listStates', async (req, res, next) => 
   {
     (async() =>
         res.send(JSON.stringify(await dbApi.allStates()))
