@@ -105,7 +105,7 @@ async function dbInit(){
                          {
                            "$match": {
                              $and: [
-                             {"ratings": { 
+                             {"ratings": {
                                "$elemMatch": {
                                  "userid": userId
                                }
@@ -134,7 +134,7 @@ async function dbInit(){
                          }
                        ]).exec(function(err, result) {
                          res.json(result)
-                       })}
+                       })
                        catch (err) {
                          res.json({message: err.message})
                        }
