@@ -94,7 +94,7 @@ async function dbInit(){
         }).save();
     };
 
-    dbApi.allCities    = ()        => CityData.find().sort({"name": 1});
+    //dbApi.allCities    = ()        => CityData.find().sort({"name": 1});
     dbApi.searchCityAndState = (city, state) => {
       return CityData.find({$and: [{name: {$regex: new RegExp(city, 'i')}},
                             {state: {$regex: new RegExp(state, 'i')}}
@@ -150,6 +150,18 @@ async function dbInit(){
         var res = [];
         distinct.forEach(k => res.push(k));
         return res;
+    };
+    dbApi.allCities = async () => {
+      //Get the raw state data from Mongo
+      var cities = await CityData.find().select('name -_id').sort({"name": 1});
+      //De-duplicate it
+      var distinct = new Set();
+      for (a of cities)
+          distinct.add(a.name);
+      //Format it in an array for the result
+      var res = [];
+      distinct.forEach(k => res.push(k));
+      return res;
     };
     dbApi.cityByName  = (n)        => CityData.findOne({name: n});
     dbApi.createCity  = (cName, cState, cCountry)  => {
