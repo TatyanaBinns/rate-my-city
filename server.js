@@ -101,7 +101,7 @@ async function dbInit(){
                                     {state: regex},
                                     {country: regex},]
                              });*/
-                        try {CityData.aggregate([
+                        CityData.aggregate([
                          {
                            "$match": {
                              $and: [
