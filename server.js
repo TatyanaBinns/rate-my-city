@@ -160,9 +160,23 @@ async function dbInit(){
       return newArr;
     };
     dbApi.allUsers = async () => {
-      //Get the raw user data from Mongo
+      //Get the raw state data from Mongo
+      /*var users = await UserProfile.find().select('userName -_id').sort({"userName": 1});
+      //De-duplicate it
+      var distinct = new Set();
+      for (a of users)
+      {
+          if (a.userName != null)
+            distinct.add(a.userName);
+      }
+      //Format it in an array for the result
+      var res = [];
+      distinct.forEach(k => res.push(k));
+      return res;*/
+
       var users = await UserProfile.find().select('userName -_id').sort({"userName": 1})
-      let arraySerialized = users.map(e => JSON.stringify(e));
+      var realUsers = users.filter(function (e) {return e.userName != null});
+      let arraySerialized = realUsers.map(e => JSON.stringify(e));
       const setSerialized = new Set(arraySerialized);
       const newArrSerialized = [...setSerialized];
       const newArr = newArrSerialized.map(e => JSON.parse(e));
