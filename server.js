@@ -163,6 +163,18 @@ async function dbInit(){
       distinct.forEach(k => res.push(k));
       return res;
     };
+    dbApi.allUsers = async () => {
+      //Get the raw state data from Mongo
+      var users = await UserProfile.find().select('userName -_id').sort({"userName": 1});
+      //De-duplicate it
+      var distinct = new Set();
+      for (a of users)
+          distinct.add(a.userName);
+      //Format it in an array for the result
+      var res = [];
+      distinct.forEach(k => res.push(k));
+      return res;
+    };
     dbApi.cityByName  = (n)        => CityData.findOne({name: n});
     dbApi.createCity  = (cName, cState, cCountry)  => {
         const newCity = new CityData({
