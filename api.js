@@ -217,9 +217,9 @@ exports.setApp = function(app, dbApi)
 
     const { city, state, userName} = req.body;
 
-    //const user = await dbApi.userByUserName(userName);
+    const user = await dbApi.userByUserName(userName);
 
-    try {dbApi.searchCities(userName, city, state).exec(function(err, result) {
+    try {dbApi.searchCities(user._id, city, state).exec(function(err, result) {
       res.json(result)
     })}
     catch (err) {
