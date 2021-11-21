@@ -224,7 +224,7 @@ exports.setApp = function(app, dbApi)
     })}
     catch (err) {
       res.json({message: err.message})
-    }
+    } 
   });
 
   app.get('/api/listStates', async (req, res, next) =>
