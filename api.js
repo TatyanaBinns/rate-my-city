@@ -209,7 +209,7 @@ exports.setApp = function(app, dbApi)
     res.status(200).json(ret);
   });
 
-  app.post('/api/search', async (req, res, next) =>
+  app.post('/api/searchUsername', async (req, res, next) =>
   {
     //incoming: city, state, userName
 
