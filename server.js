@@ -141,7 +141,7 @@ async function dbInit(){
     };
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
-        var states = await CityData.find().select('state -_id');
+        var states = await CityData.find().select('state -_id').sort({"state": 1});
         //De-duplicate it
         var distinct = new Set();
         for (a of states)
@@ -289,8 +289,9 @@ app.get('/editUserByEmail', (req, res) => {
 })
 app.get('/mkTestCitys', (req, res) => {
 
-    dbApi.createCity("ExampleVille", "ExampleState", "ExampleCountry");
-    dbApi.createCity("JaunVille", "ExampleState", "ExampleCountry");
+    //dbApi.createCity("ExampleVille", "ExampleState", "ExampleCountry");
+    //dbApi.createCity("JaunVille", "ExampleState", "ExampleCountry");
+    dbApi.createCity("West Palm Beach", "Florida", "USA");
 
     res.send("Update Complete");
 })
