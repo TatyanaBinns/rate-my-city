@@ -213,11 +213,13 @@ exports.setApp = function(app, dbApi)
   {
     //incoming: city, state, userName
 
-    var error = '';
-
     const { city, state, userName} = req.body;
 
     const user = await dbApi.userByUserName(userName);
+    if (user == null)
+    {
+      return res.json({error: "User does not exist"})
+    }
     const id = String(user._id);
     //res.json({id: user._id})
     try {dbApi.searchCities(id, city, state).exec(function(err, result) {
@@ -227,6 +229,11 @@ exports.setApp = function(app, dbApi)
       res.json({message: err.message})
     }
   });
+
+  app.post('/api/searchCityState', async (req, res, next) =>
+  {
+
+  })
 
   app.get('/api/listStates', async (req, res, next) =>
   {
