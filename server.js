@@ -96,7 +96,7 @@ async function dbInit(){
 
     dbApi.allCities    = ()        => CityData.find();
     dbApi.searchCities = (userId, city, state)   => {
-        l/*et regex = new RegExp(query,'i');
+        /*let regex = new RegExp(query,'i');
         return CityData.find({$or: [{name: regex },
                                     {state: regex},
                                     {country: regex},]
