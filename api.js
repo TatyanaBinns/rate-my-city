@@ -249,6 +249,13 @@ exports.setApp = function(app, dbApi)
     )();
   });
 
+  app.get('/api/listCities', async (req, res, next) =>
+  {
+    (async() =>
+        res.send(JSON.stringify(await dbApi.allCities()))
+    )();
+  })
+
   app.post('/api/settings', async (req, res, next) =>
   {
     var token = require('./createJWT.js');
