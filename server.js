@@ -169,7 +169,10 @@ async function dbInit(){
       //De-duplicate it
       var distinct = new Set();
       for (a of users)
-          distinct.add(a.userName);
+      {
+          if (a.userName != null)
+            distinct.add(a.userName);
+      }
       //Format it in an array for the result
       var res = [];
       distinct.forEach(k => res.push(k));
