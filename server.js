@@ -134,7 +134,7 @@ async function dbInit(){
                          }
                        ]).exec(function(err, result) {
                          res.json(result)
-                       })
+                       })}
                        catch (err) {
                          res.json({message: err.message})
                        }
