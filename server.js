@@ -141,42 +141,33 @@ async function dbInit(){
     };
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
-        var states = await CityData.find().select('state -_id').sort({"state": 1});
-        //De-duplicate it
-        var distinct = new Set();
-        for (a of states)
-            distinct.add(a.state);
-        //Format it in an array for the result
-        var res = [];
-        distinct.forEach(k => res.push(k));
-        return res;
+        var states = await CityData.find().select('state -_id').sort({"state": 1})
+        let arraySerialized = states.map(e => JSON.stringify(e));
+        const setSerialized = new Set(arraySerialized);
+        const newArrSerialized = [...setSerialized];
+        const newArr = newArrSerialized.map(e => JSON.parse(e));
+
+        return newArr;
     };
     dbApi.allCities = async () => {
-      //Get the raw state data from Mongo
-      var cities = await CityData.find().select('name -_id').sort({"name": 1});
-      //De-duplicate it
-      var distinct = new Set();
-      for (a of cities)
-          distinct.add(a.name);
-      //Format it in an array for the result
-      var res = [];
-      distinct.forEach(k => res.push(k));
-      return res;
+      //Get the raw city data from Mongo
+      var cities = await CityData.find().select('name -_id').sort({"name": 1})
+      let arraySerialized = cities.map(e => JSON.stringify(e));
+      const setSerialized = new Set(arraySerialized);
+      const newArrSerialized = [...setSerialized];
+      const newArr = newArrSerialized.map(e => JSON.parse(e));
+
+      return newArr;
     };
     dbApi.allUsers = async () => {
-      //Get the raw state data from Mongo
-      var users = await UserProfile.find().select('userName -_id').sort({"userName": 1});
-      //De-duplicate it
-      var distinct = new Set();
-      for (a of users)
-      {
-          if (a.userName != null)
-            distinct.add(a.userName);
-      }
-      //Format it in an array for the result
-      var res = [];
-      distinct.forEach(k => res.push(k));
-      return res;
+      //Get the raw user data from Mongo
+      var users = await UserProfile.find().select('userName -_id').sort({"userName": 1})
+      let arraySerialized = users.map(e => JSON.stringify(e));
+      const setSerialized = new Set(arraySerialized);
+      const newArrSerialized = [...setSerialized];
+      const newArr = newArrSerialized.map(e => JSON.parse(e));
+
+      return newArr;
     };
     dbApi.cityByName  = (n)        => CityData.findOne({name: n});
     dbApi.createCity  = (cName, cState, cCountry)  => {
