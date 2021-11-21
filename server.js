@@ -291,7 +291,8 @@ app.get('/mkTestCitys', (req, res) => {
 
     //dbApi.createCity("ExampleVille", "ExampleState", "ExampleCountry");
     //dbApi.createCity("JaunVille", "ExampleState", "ExampleCountry");
-    dbApi.createCity("West Palm Beach", "Florida", "USA");
+    //dbApi.createCity("West Palm Beach", "Florida", "USA");
+    dbApi.createCity("Hello", "California", "USA")
 
     res.send("Update Complete");
 })
