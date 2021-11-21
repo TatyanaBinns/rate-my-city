@@ -95,7 +95,12 @@ async function dbInit(){
     };
 
     dbApi.allCities    = ()        => CityData.find();
-    dbApi.searchCities = (userId, city, state)   => {
+    dbApi.searchCityAndState = (city, state) => {
+      CityData.find({$and: [{name: {$regex: new RegExp(city, 'i')}},
+                            {state: {$regex: new RegExp(state, 'i')}}
+                            ]})
+    };
+    dbApi.searchUsername = (userId, city, state)   => {
         /*let regex = new RegExp(query,'i');
         return CityData.find({$or: [{name: regex },
                                     {state: regex},
@@ -316,12 +321,12 @@ app.get('/allStates', (req, res) => {
         res.send(JSON.stringify(await dbApi.allStates()))
     )();
 })
-app.get('/findCities', (req, res) => {
+/*app.get('/findCities', (req, res) => {
     var q = "exam";
     (async() =>
         res.send(JSON.stringify(await dbApi.searchCities(q)))
     )();
-})
+})*/
 //*******************************************************
 
 
