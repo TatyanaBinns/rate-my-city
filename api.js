@@ -222,7 +222,7 @@ exports.setApp = function(app, dbApi)
     }
     const id = String(user._id);
     //res.json({id: user._id})
-    try {dbApi.searchCities(id, city, state).exec(function(err, result) {
+    try {dbApi.searchUsername(id, city, state).exec(function(err, result) {
       res.json(result)
     })}
     catch (err) {
@@ -232,6 +232,13 @@ exports.setApp = function(app, dbApi)
 
   app.post('/api/searchCityState', async (req, res, next) =>
   {
+    const {city, state} = req.body;
+    try {
+    const result = await dbApi.searchCityAndState(city, state);
+    res.json(result)
+  } catch(err) {
+    res.json({message: err.message})
+  }
 
   })
 
