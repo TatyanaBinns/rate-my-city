@@ -164,6 +164,50 @@ exports.setApp = function(app, dbApi)
   });
   */
 
+  app.post('/api/createCity', async (req, res, next) =>
+  {
+    // incoming: cityname, state, country
+    // outgoing: error, refreshedToken
+
+    var token = require('./createJWT.js');
+    const { name, state, country, jwtToken } = req.body;
+    var error = "";
+
+    try
+    {
+      if (token.isExpired(jwtToken))
+      {
+        var r = {error: 'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
+    (async() => {
+      await dbApi.createCity(name, state, country);
+      error = "";
+    })();
+
+    var refreshedToken = null;
+
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
+    var ret = { error: error, jwtToken: refreshedToken };
+
+    res.status(200).json(ret);
+  });
+
   app.post('/api/addRating', async (req, res, next) =>
   {
     // incoming: email, city, rating, review, jwtToken
