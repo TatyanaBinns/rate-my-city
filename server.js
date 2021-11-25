@@ -205,6 +205,19 @@ async function dbInit(){
             console.log(err);
         });
     };
+    
+    dbApi.addComment = async (cityName, ratingUserName, timePosted, uEmail, uComment) => {
+        var uId = (await dbApi.userByEmail(uEmail))._id;
+
+        CityData.findOneAndUpdate({"name" : cityName, "ratings.userid" : rating_uId, "ratings.time" : timePosted}, {
+            $push: {comments : {
+                userid:     uId,
+                comment:    uComment,
+                time:       new Date().toISOString()
+            }}
+        }, ()=>{});
+    };
+
     dbApi.addRating = async (uEmail, cityName, uRating, review) => {
         var city = (await dbApi.cityByName(cityName));
         var cId = city._id;

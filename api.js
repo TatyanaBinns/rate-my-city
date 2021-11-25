@@ -297,6 +297,52 @@ exports.setApp = function(app, dbApi)
     res.status(200).json(ret);
   });
 
+  app.post('/api/addComment', async (req, res, next) =>
+  {
+    // incoming: city, ratingUsername, timePosted, email, comment, jwtToken
+    // outgoing: error, refreshedToken
+    // userName is user that posted the original rating.
+    // email is user that wants to post a comment on the rating.
+
+    var token = require('./createJWT.js');
+    const { city, userName, time, email, comment, jwtToken } = req.body;
+    var error = "";
+
+    try
+    {
+      if (token.isExpired(jwtToken))
+      {
+        var r = {error: 'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
+    (async() => {
+      await dbApi.addComment(city, userName, time, email, comment);
+      error = "";
+    })();
+
+    var refreshedToken = null;
+
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
+    var ret = { error: error, jwtToken: refreshedToken };
+
+    res.status(200).json(ret);
+  });
+
   app.post('/api/searchUsername', async (req, res, next) =>
   {
     //incoming: city, state, userName
