@@ -108,15 +108,15 @@ async function dbInit(){
               console.log("Result: "+JSON.stringify(user));
               if(user == null)
                   rating.userdetails = {
-                     firstName: user.firstName,
-                     lastName: user.lastName,
-                     userName: user.userName
-                  };
-              else
-                  rating.userdetails = {
                      firstName: "",
                      lastName: "",
                      userName: ""
+                  };
+              else
+                  rating.userdetails = {
+                     firstName: user.firstName,
+                     lastName: user.lastName,
+                     userName: user.userName
                   };
           }
       return res;
