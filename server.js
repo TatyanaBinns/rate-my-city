@@ -144,6 +144,7 @@ async function dbInit(){
                            "$project": {
                              "name" : 1,
                              "state" : 1,
+                             "averageRating" : 1,
                              "ratings": {
                                "$filter": {
                                  "input": "$ratings",
@@ -226,7 +227,7 @@ async function dbInit(){
             console.log(err);
         });
     };
-    
+
     dbApi.addComment = async (cityName, ratingUserName, timePosted, uEmail, uComment) => {
         var uId = (await dbApi.userByEmail(uEmail))._id;
 
@@ -245,7 +246,7 @@ async function dbInit(){
         var uId = (await dbApi.userByEmail(uEmail))._id;
         var curAvgRating = city.averageRating;
 
-        
+
 	    var curNumRatings = city.ratings.length;
 	    var newNumRatings = curNumRatings + 1;
 
@@ -286,7 +287,7 @@ async function dbInit(){
             newFoodAvgRating
             );
 
-            
+
 
         //var newAvgRating = curAvgRating;
         UserProfile.findOneAndUpdate({email: uEmail}, {
