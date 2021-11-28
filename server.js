@@ -103,7 +103,7 @@ async function dbInit(){
       for (city of res)
           for (rating of city.ratings){
               var userid = rating.userid;
-              var user = await UserProfile.findOne({_id: userid});
+              var user = await UserProfile.findOne({_id: userid}).lean();
               rating.userdetails = {
                  firstName: user.firstName,
                  lastName: user.lastName,
