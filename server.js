@@ -106,11 +106,18 @@ async function dbInit(){
               console.log("Finding user with id "+userid);
               var user = await UserProfile.findOne({_id: userid}).lean();
               console.log("Result: "+JSON.stringify(user));
-              rating.userdetails = {
-                 firstName: user.firstName,
-                 lastName: user.lastName,
-                 userName: user.userName
-              };
+              if(user == null)
+                  rating.userdetails = {
+                     firstName: user.firstName,
+                     lastName: user.lastName,
+                     userName: user.userName
+                  };
+              else
+                  rating.userdetails = {
+                     firstName: "",
+                     lastName: "",
+                     userName: ""
+                  };
           }
       return res;
     };
