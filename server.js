@@ -95,10 +95,22 @@ async function dbInit(){
     };
 
     //dbApi.allCities    = ()        => CityData.find().sort({"name": 1});
-    dbApi.searchCityAndState = (city, state) => {
-      return CityData.find({$and: [{name: {$regex: new RegExp(city, 'i')}},
+    dbApi.searchCityAndState = async (city, state) => {
+      var res = await CityData.find({$and: [
+                            {name: {$regex: new RegExp(city, 'i')}},
                             {state: {$regex: new RegExp(state, 'i')}}
-                            ]})
+                            ]}).lean();
+      for (city of res)
+          for (rating of city.ratings){
+              var userid = rating.userid;
+              var user = await UserProfile.findOne({_id: userid});
+              rating.userdetails = {
+                 firstName: user.firstName,
+                 lastName: user.lastName,
+                 userName: user.userName
+              };
+          }
+      return res;
     };
     dbApi.searchUsername = (userId, city, state)   => {
         /*let regex = new RegExp(query,'i');
@@ -368,12 +380,12 @@ app.get('/allStates', (req, res) => {
         res.send(JSON.stringify(await dbApi.allStates()))
     )();
 })
-/*app.get('/findCities', (req, res) => {
+app.get('/searchCityAndState', (req, res) => {
     var q = "exam";
     (async() =>
-        res.send(JSON.stringify(await dbApi.searchCities(q)))
+        res.send(JSON.stringify(await dbApi.searchCityAndState("","")))
     )();
-})*/
+})
 //*******************************************************
 
 
