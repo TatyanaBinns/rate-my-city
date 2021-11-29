@@ -121,45 +121,64 @@ async function dbInit(){
           }
       return res;
     };
-    dbApi.searchUsername = (userId, city, state)   => {
+    dbApi.searchUsername = async (userId, city, state)   => {
         /*let regex = new RegExp(query,'i');
         return CityData.find({$or: [{name: regex },
                                     {state: regex},
                                     {country: regex},]
-                             });*/
-                        return CityData.aggregate([
-                         {
-                           "$match": {
-                             $and: [
-                             {"ratings": {
-                               "$elemMatch": {
-                                 "userid": userId
-                               }
-                             }},
-                             {"name" : { "$regex": new RegExp(city, 'i' )}},
-                             {"state" : {"$regex": new RegExp(state, 'i')}}
-                           ]}
-                         },
-                         {
-                           "$project": {
-                             "name" : 1,
-                             "state" : 1,
-                             "averageRating" : 1,
-                             "ratings": {
-                               "$filter": {
-                                 "input": "$ratings",
-                                 "as": "ratings",
-                                 "cond": {
-                                   "$eq": [
-                                     "$$ratings.userid",
-                                     userId
-                                   ]
-                                 }
-                               }
-                             }
-                           }
-                         }
-                       ])
+         });*/
+        var res =  await CityData.aggregate([
+            {
+            "$match": {
+             $and: [
+             {"ratings": {
+               "$elemMatch": {
+                 "userid": userId
+               }
+             }},
+             {"name" : { "$regex": new RegExp(city, 'i' )}},
+             {"state" : {"$regex": new RegExp(state, 'i')}}
+            ]}
+            },
+            {
+            "$project": {
+             "name" : 1,
+             "state" : 1,
+             "ratings": {
+               "$filter": {
+                 "input": "$ratings",
+                 "as": "ratings",
+                 "cond": {
+                   "$eq": [
+                     "$$ratings.userid",
+                     userId
+                   ]
+                 }
+               }
+             }
+            }
+            }
+        ]).lean();
+        for (city of res)
+          for (rating of city.ratings){
+              var userid = rating.userid;
+              console.log("Finding user with id "+userid);
+              var user = await UserProfile.findOne({_id: userid}).lean();
+              console.log("Result: "+JSON.stringify(user));
+              if(user == null)
+                  rating.userdetails = {
+                     firstName: "",
+                     lastName: "",
+                     userName: ""
+                  };
+              else
+                  rating.userdetails = {
+                     firstName: user.firstName,
+                     lastName: user.lastName,
+                     userName: user.userName
+                  };
+          }
+      return res;
     };
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
