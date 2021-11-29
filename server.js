@@ -158,7 +158,7 @@ async function dbInit(){
              }
             }
             }
-        ]).lean();
+        ])
         for (city of res)
           for (rating of city.ratings){
               var userid = rating.userid;
