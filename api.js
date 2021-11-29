@@ -365,11 +365,12 @@ exports.setApp = function(app, dbApi)
     }
     const id = String(user._id);
     //res.json({id: user._id})
-    try {dbApi.searchUsername(id, city, state).exec(function(err, result) {
-      res.json(result)
-    })}
+    try{
+      const result = await dbApi.searchUsername(id, city, state);
+      res.json(result);
+    }
     catch (err) {
-      res.json({message: err.message})
+      res.json({message: err.message});
     }
   });
 
@@ -378,9 +379,9 @@ exports.setApp = function(app, dbApi)
     const {city, state} = req.body;
     try {
     const result = await dbApi.searchCityAndState(city, state);
-    res.json(result)
+    res.json(result);
   } catch(err) {
-    res.json({message: err.message})
+    res.json({message: err.message});
   }
 
   })
