@@ -91,7 +91,7 @@ exports.setApp = function(app, dbApi)
       const newUser = await dbApi.userByEmail(email);
       ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
       res.status(200).json(ret);
-  });
+  }); 
 
   /*
   // Forgot password, reset
