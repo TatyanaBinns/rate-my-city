@@ -297,7 +297,16 @@ async function dbInit(){
         var newTranspAvgRating = ((curTranspAvgRating * curNumRatings) + userTranspRating) / newNumRatings;
         var newFoodAvgRating = ((curFoodAvgRating * curNumRatings) + userFoodRating) / newNumRatings;
 
-	    var newAvgRating = mkRating(
+	    var newAvgRating =
+      {
+        entertainment : newEntertainmentAvgRating,
+        nature        : newNatureAvgRating,
+        cost          : newCostAvgRating,
+        safety        : newSafetyAvgRating,
+        culture       : newCultureAvgRating,
+        transportation: newTranspAvgRating,
+        food          : newFoodAvgRating
+      }/* mkRating(
             newEntertainmentAvgRating,
             newNatureAvgRating,
             newCostAvgRating,
@@ -305,7 +314,7 @@ async function dbInit(){
             newCultureAvgRating,
             newTranspAvgRating,
             newFoodAvgRating
-            );
+          );*/
 
 
 
