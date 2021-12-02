@@ -238,9 +238,9 @@ async function dbInit(){
         }).save();
     };
     dbApi.deleteRating = async (uEmail, cityName) => {
-        var city = (dbApi.cityByName(cityName));
+        var city = (await dbApi.cityByName(cityName));
         var cId = city._id;
-        var user = (dbApi.userByEmail(uEmail));
+        var user = (await dbApi.userByEmail(uEmail));
         var uId = user._id;
         var curAvgRating = city.averageRating;
 
@@ -323,12 +323,12 @@ async function dbInit(){
 
         console.log("Attempting to pull rating from city "+cId+" by user "+uId);
 
-        CityData.updateOne({_id: cId}, {
+        await CityData.updateOne({_id: cId}, {
             "$pull": { "ratings" : {userid: uId}}
         }, { safe: true, multi:true }, (err, obj)=>{
             console.log(err);
         });
-        CityData.findOneAndUpdate({_id: cId}, {
+        await CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating
         }, ()=>{});
     };
@@ -346,9 +346,9 @@ async function dbInit(){
     };
 
     dbApi.addRating = async (uEmail, cityName, uRating, review) => {
-        var city = (dbApi.cityByName(cityName));
+        var city = (await dbApi.cityByName(cityName));
         var cId = city._id;
-        var uId = (dbApi.userByEmail(uEmail))._id;
+        var uId = (await dbApi.userByEmail(uEmail))._id;
         var curAvgRating = city.averageRating;
 
 
@@ -395,10 +395,10 @@ async function dbInit(){
 
 
         //var newAvgRating = curAvgRating;
-        UserProfile.findOneAndUpdate({email: uEmail}, {
+        await UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
-        CityData.findOneAndUpdate({_id: cId}, {
+        await CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating,
             $push: {ratings : {
                 userid:       uId,
