@@ -329,6 +329,46 @@ exports.setApp = function(app, dbApi)
     res.status(200).json(ret);
   });
 
+  app.post('/api/editRating', async(req, res, next) => {
+    var token = require('./createJWT.js');
+    const { email, city, rating, review, jwtToken } = req.body;
+    var error = "";
+
+    try
+    {
+      if (token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
+    (async() => {
+      await dbApi.editRating(email, city, rating, review);
+      error = "";
+    })();
+
+    var refreshedToken = null;
+
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
+    var ret = { error: error, jwtToken: refreshedToken };
+
+    res.status(200).json(ret);
+  })
+
   app.post('/api/delete', async (req, res, next) =>
   {
     // incoming: email, city, jwtToken
