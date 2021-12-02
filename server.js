@@ -184,6 +184,7 @@ async function dbInit(){
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
         var states = await CityData.find().select('state -_id').sort({"state": 1})
+        var realStates = states.filter(function (e) {return e.state != null});
         let arraySerialized = states.map(e => JSON.stringify(e));
         const setSerialized = new Set(arraySerialized);
         const newArrSerialized = [...setSerialized];
@@ -194,7 +195,8 @@ async function dbInit(){
     dbApi.allCities = async () => {
       //Get the raw city data from Mongo
       var cities = await CityData.find().select('name -_id').sort({"name": 1})
-      let arraySerialized = cities.map(e => JSON.stringify(e));
+      var realCities = cities.filter(function (e) {return e.name != null});
+      let arraySerialized = realCities.map(e => JSON.stringify(e));
       const setSerialized = new Set(arraySerialized);
       const newArrSerialized = [...setSerialized];
       const newArr = newArrSerialized.map(e => JSON.parse(e));
