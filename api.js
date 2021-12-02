@@ -264,6 +264,12 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
+    var city = await cityByName(name);
+    if (city != null)
+    {
+      return res.status(400).json("This city has already been added to the database");
+    }
+
     (async() => {
       await dbApi.createCity(name, state, country);
       error = "";
