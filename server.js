@@ -566,8 +566,8 @@ app.get('/mkTestCitys', (req, res) => {
 app.get('/getCityByName', (req, res) => {
     (async() =>
         //res.send(JSON.stringify(await dbApi.cityByName("Los Angeles")))
-        var city = JSON.stringify(await dbApi.cityByName("Los Angeles"));
-        if (city != null)
+        /*var city = JSON.stringify(await dbApi.cityByName("Los Angeles"));
+        if (city != null)*/
         return res.json("City exists")
     )();
 })
