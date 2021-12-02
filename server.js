@@ -239,7 +239,86 @@ async function dbInit(){
     dbApi.deleteRating = async (uEmail, cityName) => {
         var city = (await dbApi.cityByName(cityName));
         var cId = city._id;
-        var uId = (await dbApi.userByEmail(uEmail))._id;
+        var user = (await dbApi.userByEmail(uEmail));
+        var uId = user._id;
+        var curAvgRating = city.averageRating;
+
+
+        var curNumRatings = city.ratings.length;
+        var newNumRatings = curNumRatings + 1;
+
+        var oldEntertainmentAvgRating;
+  	    var oldNatureAvgRating;
+          var oldCostAvgRating;
+          var oldSafetyAvgRating;
+          var oldCultureAvgRating;
+          var oldTranspAvgRating;
+          var oldFoodAvgRating;
+
+        for (a of city.ratings)
+        {
+          if (a.userid == uId)
+          {
+            oldEntertainmentAvgRating = a.rating.entertainment;
+      	    oldNatureAvgRating = a.rating.nature;
+            oldCostAvgRating = a.rating.cost;
+            oldSafetyAvgRating = a.rating.safety;
+            oldCultureAvgRating = a.rating.culture;
+            oldTranspAvgRating = a.rating.transportation;
+            oldFoodAvgRating = a.rating.food;
+          }
+        }
+  	    // Old Average ratings
+  	    var curEntertainmentAvgRating = curAvgRating.entertainment;
+  	    var curNatureAvgRating = curAvgRating.nature;
+          var curCostAvgRating = curAvgRating.cost;
+          var curSafetyAvgRating = curAvgRating.safety;
+          var curCultureAvgRating = curAvgRating.culture;
+          var curTranspAvgRating = curAvgRating.transportation;
+          var curFoodAvgRating = curAvgRating.food;
+
+          var newEntertainmentAvgRating;
+          var newNatureAvgRating;
+          var newCostAvgRating;
+          var newSafetyAvgRating;
+          var newCultureAvgRating;
+          var newTranspAvgRating;
+          var newFoodAvgRating;
+
+          var newAvgRating;
+
+          if (newNumRatings != 0)
+          {
+  	    // Delete user rating from old average and compute new average
+           newEntertainmentAvgRating = ((curEntertainmentAvgRating * curNumRatings) - oldEntertainmentAvgRating) / newNumRatings;
+           newNatureAvgRating = ((curNatureAvgRating * curNumRatings) - oldNatureAvgRating) / newNumRatings;
+           newCostAvgRating = ((curCostAvgRating * curNumRatings) - oldCostAvgRating) / newNumRatings;
+           newSafetyAvgRating = ((curSafetyAvgRating * curNumRatings) - oldSafetyAvgRating) / newNumRatings;
+           newCultureAvgRating = ((curCultureAvgRating * curNumRatings) - oldCultureAvgRating) / newNumRatings;
+           newTranspAvgRating = ((curTranspAvgRating * curNumRatings) - oldTranspAvgRating) / newNumRatings;
+           newFoodAvgRating = ((curFoodAvgRating * curNumRatings) - oldFoodAvgRating) / newNumRatings;
+
+            newAvgRating = mkRating(
+                 newEntertainmentAvgRating,
+                 newNatureAvgRating,
+                 newCostAvgRating,
+                 newSafetyAvgRating,
+                 newCultureAvgRating,
+                 newTranspAvgRating,
+                 newFoodAvgRating
+               );
+          }
+          else {
+            newAvgRating = mkRating(
+                 0,
+                 0,
+                 0,
+                 0,
+                 0,
+                 0,
+                 0
+               );
+          }
 
         console.log("Attempting to pull rating from city "+cId+" by user "+uId);
 
@@ -248,6 +327,9 @@ async function dbInit(){
         }, { safe: true, multi:true }, (err, obj)=>{
             console.log(err);
         });
+        CityData.findOneAndUpdate({_id: cId}, {
+            averageRating: newAvgRating
+        }, ()=>{});
     };
 
     dbApi.addComment = async (cityName, ratingUserName, timePosted, uEmail, uComment) => {
