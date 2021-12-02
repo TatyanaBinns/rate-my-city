@@ -325,7 +325,7 @@ async function dbInit(){
             }}
         }, ()=>{});
     };
-    /*dbApi.editRating = async(uEmail, cityName, uRating, review) => {
+    dbApi.editRating = async(uEmail, cityName, uRating, review) => {
       var city = (await dbApi.cityByName(cityName));
       var cId = city._id;
       var user = (await dbApi.userByEmail(uEmail));
@@ -375,21 +375,21 @@ async function dbInit(){
         var userFoodRating = uRating.food;
 
 	    // Add new user rating to old average and compute new average
-        var newEntertainmentAvgRating = ((curEntertainmentAvgRating * curNumRatings) - oldEntertainmentRating) / newNumRatings;
-        var newNatureAvgRating = ((curNatureAvgRating * curNumRatings) - oldNatureRating) / newNumRatings;
-        var newCostAvgRating = ((curCostAvgRating * curNumRatings) - oldCostRating) / newNumRatings;
-        var newSafetyAvgRating = ((curSafetyAvgRating * curNumRatings) - oldSafetyRating) / newNumRatings;
-        var newCultureAvgRating = ((curCultureAvgRating * curNumRatings) - oldCultureRating) / newNumRatings;
-        var newTranspAvgRating = ((curTranspAvgRating * curNumRatings) - oldTranspRating) / newNumRatings;
-        var newFoodAvgRating = ((curFoodAvgRating * curNumRatings) - oldFoodRating) / newNumRatings;
+        var newEntertainmentAvgRating = ((curEntertainmentAvgRating * curNumRatings) - oldEntertainmentAvgRating) / newNumRatings;
+        var newNatureAvgRating = ((curNatureAvgRating * curNumRatings) - oldNatureAvgRating) / newNumRatings;
+        var newCostAvgRating = ((curCostAvgRating * curNumRatings) - oldCostAvgRating) / newNumRatings;
+        var newSafetyAvgRating = ((curSafetyAvgRating * curNumRatings) - oldSafetyAvgRating) / newNumRatings;
+        var newCultureAvgRating = ((curCultureAvgRating * curNumRatings) - oldCultureAvgRating) / newNumRatings;
+        var newTranspAvgRating = ((curTranspAvgRating * curNumRatings) - oldTranspAvgRating) / newNumRatings;
+        var newFoodAvgRating = ((curFoodAvgRating * curNumRatings) - oldFoodAvgRating) / newNumRatings;
 
-        newEntertainmentAvgRating = ((curEntertainmentAvgRating * curNumRatings) + userEntertainmentRating) / curNumRatings;
-        newNatureAvgRating = ((curNatureAvgRating * curNumRatings) + userNatureRating) / curNumRatings;
-        newCostAvgRating = ((curCostAvgRating * curNumRatings) + userCostRating) / curNumRatings;
-        newSafetyAvgRating = ((curSafetyAvgRating * curNumRatings) + userSafetyRating) /curNumRatings;
-        newCultureAvgRating = ((curCultureAvgRating * curNumRatings) + userCultureRating) / curNumRatings;
-        newTranspAvgRating = ((curTranspAvgRating * curNumRatings) + userTranspRating) / curNumRatings;
-        newFoodAvgRating = ((curFoodAvgRating * curNumRatings) + userFoodRating) / curNumRatings;
+        newEntertainmentAvgRating = ((newEntertainmentAvgRating * newNumRatings) + userEntertainmentRating) / curNumRatings;
+        newNatureAvgRating = ((newNatureAvgRating * newNumRatings) + userNatureRating) / curNumRatings;
+        newCostAvgRating = ((newCostAvgRating * newNumRatings) + userCostRating) / curNumRatings;
+        newSafetyAvgRating = ((newSafetyAvgRating * newNumRatings) + userSafetyRating) /curNumRatings;
+        newCultureAvgRating = ((newCultureAvgRating * newNumRatings) + userCultureRating) / curNumRatings;
+        newTranspAvgRating = ((newTranspAvgRating * newNumRatings) + userTranspRating) / curNumRatings;
+        newFoodAvgRating = ((newFoodAvgRating * newNumRatings) + userFoodRating) / curNumRatings;
 
 	    var newAvgRating = mkRating(
             newEntertainmentAvgRating,
@@ -401,7 +401,11 @@ async function dbInit(){
             newFoodAvgRating
           );
 
-
+          CityData.updateOne({_id: cId}, {
+              "$pull": { "ratings" : {userid: uId}}
+          }, { safe: true, multi:true }, (err, obj)=>{
+              console.log(err);
+          });
 
         //var newAvgRating = curAvgRating;
         UserProfile.findOneAndUpdate({email: uEmail}, {
@@ -417,7 +421,7 @@ async function dbInit(){
             }}
         }, ()=>{});
 
-    }*/
+    }
 
 }
 dbInit().catch(err => console.log(err));
