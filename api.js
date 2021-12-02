@@ -394,7 +394,7 @@ exports.setApp = function(app, dbApi)
     }
 
     (async() => {
-        var ret = await dbApi.deleteRating(email, city);
+        await dbApi.deleteRating(email, city);
         error = "";
     })();
 
@@ -409,8 +409,7 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
-    //var ret = { error: error, jwtToken: refreshedToken };
-    ret.jwtToken = refreshedToken;
+    var ret = { error: error, jwtToken: refreshedToken };
     res.status(200).json(ret);
   });
 
