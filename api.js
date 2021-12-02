@@ -241,14 +241,14 @@ exports.setApp = function(app, dbApi)
           return res.status(200).json(ret);
         }
     )();*/
-     /*await dbApi.cityByName(name).lean().exec(function (err, city)
+     await dbApi.cityByName(name).lean().exec(function (err, city)
      {
        if (city != null)
        {
          ret = {error: "This city has already been added to our database."};
          return res.status(200).json(ret);
        }
-     });*/
+     });
 
     try
     {
