@@ -233,6 +233,14 @@ exports.setApp = function(app, dbApi)
     const { name, state, country, jwtToken } = req.body;
     var error = "";
 
+    (async() =>
+        const city = await dbApi.cityByName(name);
+        if (city != null)
+        {
+          ret = {error: "This city has already been added to our database."};
+          return res.status(200).json(ret);
+        }
+    )();
      /*dbApi.cityByName(name).lean().exec(function (err, city)
      {
        if (city != null)
