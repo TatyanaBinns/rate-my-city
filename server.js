@@ -253,7 +253,7 @@ async function dbInit(){
     dbApi.addComment = async (cityName, ratingUserName, timePosted, uEmail, uComment) => {
         var uId = (await dbApi.userByEmail(uEmail))._id;
 
-        CityData.findOneAndUpdate({$and: [{name : cityName}, {ratings.userid : uId}, {ratings.time : timePosted}]}, {
+        CityData.findOneAndUpdate({"name" : cityName, "ratings.userid" : rating_uId, "ratings.time" : timePosted}, {
             $push: {comments : {
                 userid:     uId,
                 comment:    uComment,
@@ -325,7 +325,99 @@ async function dbInit(){
             }}
         }, ()=>{});
     };
+    /*dbApi.editRating = async(uEmail, cityName, uRating, review) => {
+      var city = (await dbApi.cityByName(cityName));
+      var cId = city._id;
+      var user = (await dbApi.userByEmail(uEmail));
+      var uId = user._id;
+      var curAvgRating = city.averageRating;
 
+      var curNumRatings = city.ratings.length;
+	    var newNumRatings = curNumRatings - 1;
+
+      var oldEntertainmentAvgRating;
+	    var oldNatureAvgRating;
+        var oldCostAvgRating;
+        var oldSafetyAvgRating;
+        var oldCultureAvgRating;
+        var oldTranspAvgRating;
+        var oldFoodAvgRating;
+
+      for (a of city.ratings)
+      {
+        if (a.userid == uId)
+        {
+          oldEntertainmentAvgRating = a.rating.entertainment;
+    	    oldNatureAvgRating = a.rating.nature;
+          oldCostAvgRating = a.rating.cost;
+          oldSafetyAvgRating = a.rating.safety;
+          oldCultureAvgRating = a.rating.culture;
+          oldTranspAvgRating = a.rating.transportation;
+          oldFoodAvgRating = a.rating.food;
+        }
+      }
+	    // Old Average ratings
+	    var curEntertainmentAvgRating = curAvgRating.entertainment;
+	    var curNatureAvgRating = curAvgRating.nature;
+        var curCostAvgRating = curAvgRating.cost;
+        var curSafetyAvgRating = curAvgRating.safety;
+        var curCultureAvgRating = curAvgRating.culture;
+        var curTranspAvgRating = curAvgRating.transportation;
+        var curFoodAvgRating = curAvgRating.food;
+
+	    // New user rating to add to new average
+        var userEntertainmentRating = uRating.entertainment;
+        var userNatureRating = uRating.nature;
+        var userCostRating = uRating.cost;
+        var userSafetyRating = uRating.safety;
+        var userCultureRating = uRating.culture;
+        var userTranspRating = uRating.transportation;
+        var userFoodRating = uRating.food;
+
+	    // Add new user rating to old average and compute new average
+        var newEntertainmentAvgRating = ((curEntertainmentAvgRating * curNumRatings) - oldEntertainmentRating) / newNumRatings;
+        var newNatureAvgRating = ((curNatureAvgRating * curNumRatings) - oldNatureRating) / newNumRatings;
+        var newCostAvgRating = ((curCostAvgRating * curNumRatings) - oldCostRating) / newNumRatings;
+        var newSafetyAvgRating = ((curSafetyAvgRating * curNumRatings) - oldSafetyRating) / newNumRatings;
+        var newCultureAvgRating = ((curCultureAvgRating * curNumRatings) - oldCultureRating) / newNumRatings;
+        var newTranspAvgRating = ((curTranspAvgRating * curNumRatings) - oldTranspRating) / newNumRatings;
+        var newFoodAvgRating = ((curFoodAvgRating * curNumRatings) - oldFoodRating) / newNumRatings;
+
+        newEntertainmentAvgRating = ((curEntertainmentAvgRating * curNumRatings) + userEntertainmentRating) / curNumRatings;
+        newNatureAvgRating = ((curNatureAvgRating * curNumRatings) + userNatureRating) / curNumRatings;
+        newCostAvgRating = ((curCostAvgRating * curNumRatings) + userCostRating) / curNumRatings;
+        newSafetyAvgRating = ((curSafetyAvgRating * curNumRatings) + userSafetyRating) /curNumRatings;
+        newCultureAvgRating = ((curCultureAvgRating * curNumRatings) + userCultureRating) / curNumRatings;
+        newTranspAvgRating = ((curTranspAvgRating * curNumRatings) + userTranspRating) / curNumRatings;
+        newFoodAvgRating = ((curFoodAvgRating * curNumRatings) + userFoodRating) / curNumRatings;
+
+	    var newAvgRating = mkRating(
+            newEntertainmentAvgRating,
+            newNatureAvgRating,
+            newCostAvgRating,
+            newSafetyAvgRating,
+            newCultureAvgRating,
+            newTranspAvgRating,
+            newFoodAvgRating
+          );
+
+
+
+        //var newAvgRating = curAvgRating;
+        UserProfile.findOneAndUpdate({email: uEmail}, {
+            $push: {ratings : {cityid: cId} }
+        }, ()=>{});
+        CityData.findOneAndUpdate({_id: cId}, {
+            averageRating: newAvgRating,
+            $push: {ratings : {
+                userid:       uId,
+                rating:       uRating,
+                description:  review,
+                time:         new Date().toISOString()
+            }}
+        }, ()=>{});
+
+    }*/
 
 }
 dbInit().catch(err => console.log(err));
