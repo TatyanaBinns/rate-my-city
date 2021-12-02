@@ -407,7 +407,7 @@ async function dbInit(){
             }}
         }, ()=>{});
     };
-    dbApi.editRating = async(uEmail, cityName, uRating, review) => {
+    /*dbApi.editRating = async(uEmail, cityName, uRating, review) => {
       var city = (await dbApi.cityByName(cityName));
       var cId = city._id;
       var user = (await dbApi.userByEmail(uEmail));
@@ -503,7 +503,7 @@ async function dbInit(){
             }}
         }, ()=>{});
 
-    }
+    }*/
 
 }
 dbInit().catch(err => console.log(err));
