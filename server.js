@@ -408,7 +408,7 @@ async function dbInit(){
             }}
         }, ()=>{});
     };
-    /*dbApi.editRating = async(uEmail, cityName, uRating, review) => {
+    dbApi.editRating = async(uEmail, cityName, uRating, review) => {
       var city = (await dbApi.cityByName(cityName));
       var cId = city._id;
       var user = (await dbApi.userByEmail(uEmail));
@@ -491,10 +491,10 @@ async function dbInit(){
           });
 
         //var newAvgRating = curAvgRating;
-        await UserProfile.findOneAndUpdate({email: uEmail}, {
+        UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
-        await CityData.findOneAndUpdate({_id: cId}, {
+        CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating,
             $push: {ratings : {
                 userid:       uId,
@@ -504,7 +504,7 @@ async function dbInit(){
             }}
         }, ()=>{});
 
-    }*/
+    }
 
 }
 dbInit().catch(err => console.log(err));
