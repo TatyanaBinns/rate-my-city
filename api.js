@@ -266,14 +266,17 @@ exports.setApp = function(app, dbApi)
 
     await dbApi.cityByName(name).lean().exec(function (err, city)
     {
+      if (err)
+      {
+        return res.json({message: err.message})
+      }
       if (city != null)
       {
         ret = {error: "This city has already been added to our database."};
         return res.status(200).json(ret);
       }
-      if (err)
-      {
-        return res.json({message: err.message})
+      else {
+        return res.status(200).json("about to add city")
       }
     });
 
