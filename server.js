@@ -234,7 +234,7 @@ async function dbInit(){
             name    : cName,
             state   : cState,
             country : cCountry,
-            averageRating  : mkBrRating(5)
+            averageRating  : mkBrRating(0)
         }).save();
     };
     dbApi.deleteRating = async (uEmail, cityName) => {
