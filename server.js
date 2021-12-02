@@ -565,7 +565,10 @@ app.get('/mkTestCitys', (req, res) => {
 })
 app.get('/getCityByName', (req, res) => {
     (async() =>
-        res.send(JSON.stringify(await dbApi.cityByName("Los Angeles")))
+        //res.send(JSON.stringify(await dbApi.cityByName("Los Angeles")))
+        var city = await dbApi.cityByName("Los Angeles");
+        if (city != null)
+        return res.json("City exists")
     )();
 })
 app.get('/addRating', (req, res) => {
