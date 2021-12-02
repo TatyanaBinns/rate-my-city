@@ -245,7 +245,7 @@ async function dbInit(){
 
 
         var curNumRatings = city.ratings.length;
-        var newNumRatings = curNumRatings + 1;
+        var newNumRatings = curNumRatings - 1;
 
         var oldEntertainmentAvgRating;
   	    var oldNatureAvgRating;
@@ -307,7 +307,6 @@ async function dbInit(){
                  newTranspAvgRating,
                  newFoodAvgRating
                );
-              return {ent: oldEntertainmentAvgRating, nat: oldNatureAvgRating, cost: oldCostAvgRating, num: newNumRatings};
           }
           else {
             newAvgRating = mkRating(
@@ -319,19 +318,18 @@ async function dbInit(){
                  0,
                  0
                );
-               return res.json("empty")
           }
 
         console.log("Attempting to pull rating from city "+cId+" by user "+uId);
 
-        /*CityData.updateOne({_id: cId}, {
+        CityData.updateOne({_id: cId}, {
             "$pull": { "ratings" : {userid: uId}}
         }, { safe: true, multi:true }, (err, obj)=>{
             console.log(err);
         });
         CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating
-        }, ()=>{});*/
+        }, ()=>{});
     };
 
     dbApi.addComment = async (cityName, ratingUserName, timePosted, uEmail, uComment) => {
