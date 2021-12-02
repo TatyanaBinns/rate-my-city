@@ -319,6 +319,7 @@ async function dbInit(){
                  0,
                  0
                );
+               return res.json("empty")
           }
 
         console.log("Attempting to pull rating from city "+cId+" by user "+uId);
