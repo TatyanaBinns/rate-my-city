@@ -91,11 +91,11 @@ exports.setApp = function(app, dbApi)
     }
       var hashed = bcrypt.hashSync(password, 10);
 
-      //var emailToken = crypto.randomBytes(64).toString('hex');
+      var emailToken = crypto.randomBytes(64).toString('hex');
 
-      await dbApi.createUser(firstName, lastName, userName, email, hashed); //emailToken,"false");
+      await dbApi.createUser(firstName, lastName, userName, email, hashed);//, emailToken,"false");
 
-    /*  var Transport = nodemailer.createTransport({
+      /*var Transport = nodemailer.createTransport({
         service: "Gmail",
         auth: {
           user: "",
@@ -129,9 +129,9 @@ exports.setApp = function(app, dbApi)
         }
       })*/
 
-      /*const newUser = await dbApi.userByEmail(email);
+      const newUser = await dbApi.userByEmail(email);
       ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
-      res.status(200).json(ret);*/
+      res.status(200).json(ret);
   });
 
   app.get('/verify-email/:uniqueString', async(req, res) => {
@@ -233,14 +233,14 @@ exports.setApp = function(app, dbApi)
     const { name, state, country, jwtToken } = req.body;
     var error = "";
 
-    dbApi.cityByName(name).lean().exec(function (err, city)
-    {
+     dbApi.cityByName(name).lean().exec(function (err, city)
+     {
        if (city != null)
        {
          ret = {error: "This city has already been added to our database."};
          return res.status(200).json(ret);
        }
-    });
+     });
 
     try
     {
