@@ -323,7 +323,7 @@ exports.setApp = function(app, dbApi)
     {
       console.log(e.message);
     }
-    var user = await dbApi.searchUsername(userid, city, state);
+    var user = await dbApi.search(userid, city, state);
     if (user != null)
     {
       return res.status(404).json("User already posted rating for this city.");
