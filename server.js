@@ -121,6 +121,43 @@ async function dbInit(){
           }
       return res;
     };
+    dbApi.search = async(userId, city, state) => {
+      var res =  await CityData.aggregate([
+          {
+          "$match": {
+           $and: [
+           {"ratings": {
+             "$elemMatch": {
+               "userid": userId
+             }
+           }},
+           {"name" : { "$regex": new RegExp(city, 'i' )}},
+           {"state" : {"$regex": new RegExp(state, 'i')}}
+          ]}
+          },
+          {
+          "$project": {
+           "name" : 1,
+           "state" : 1,
+           "averageRating" : 1,
+           "ratings": {
+             "$filter": {
+               "input": "$ratings",
+               "as": "ratings",
+               "cond": {
+                 "$eq": [
+                   "$$ratings.userid",
+                   userId
+                 ]
+               }
+             }
+           }
+          }
+          }
+      ])
+
+      return res;
+    }
     dbApi.searchUsername = async (userId, city, state)   => {
         /*let regex = new RegExp(query,'i');
         return CityData.find({$or: [{name: regex },
