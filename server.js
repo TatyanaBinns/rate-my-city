@@ -185,7 +185,7 @@ async function dbInit(){
         //Get the raw state data from Mongo
         var states = await CityData.find().select('state -_id').sort({"state": 1})
         var realStates = states.filter(function (e) {return e.state != null});
-        let arraySerialized = states.map(e => JSON.stringify(e));
+        let arraySerialized = realStates.map(e => JSON.stringify(e));
         const setSerialized = new Set(arraySerialized);
         const newArrSerialized = [...setSerialized];
         const newArr = newArrSerialized.map(e => JSON.parse(e));
