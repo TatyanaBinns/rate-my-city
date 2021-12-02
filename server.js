@@ -484,7 +484,7 @@ async function dbInit(){
             newFoodAvgRating
           );
 
-        await CityData.updateOne({_id: cId}, {
+        CityData.updateOne({_id: cId}, {
               "$pull": { "ratings" : {userid: uId}}
           }, { safe: true, multi:true }, (err, obj)=>{
               console.log(err);
