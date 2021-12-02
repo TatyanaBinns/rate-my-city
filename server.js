@@ -307,7 +307,7 @@ async function dbInit(){
                  newTranspAvgRating,
                  newFoodAvgRating
                );
-              return res.json({ent: oldEntertainmentAvgRating}, {nat: oldNatureAvgRating}, {cost: oldCostAvgRating}, {num: newNumRatings});
+              return {ent: oldEntertainmentAvgRating, nat: oldNatureAvgRating, cost: oldCostAvgRating, num: newNumRatings};
           }
           else {
             newAvgRating = mkRating(
