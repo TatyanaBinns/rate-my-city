@@ -238,9 +238,9 @@ async function dbInit(){
         }).save();
     };
     dbApi.deleteRating = async (uEmail, cityName) => {
-        var city = (await dbApi.cityByName(cityName));
+        var city = (dbApi.cityByName(cityName));
         var cId = city._id;
-        var user = (await dbApi.userByEmail(uEmail));
+        var user = (dbApi.userByEmail(uEmail));
         var uId = user._id;
         var curAvgRating = city.averageRating;
 
@@ -346,9 +346,9 @@ async function dbInit(){
     };
 
     dbApi.addRating = async (uEmail, cityName, uRating, review) => {
-        var city = (await dbApi.cityByName(cityName));
+        var city = (dbApi.cityByName(cityName));
         var cId = city._id;
-        var uId = (await dbApi.userByEmail(uEmail))._id;
+        var uId = (dbApi.userByEmail(uEmail))._id;
         var curAvgRating = city.averageRating;
 
 
