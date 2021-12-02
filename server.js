@@ -323,7 +323,7 @@ async function dbInit(){
 
         console.log("Attempting to pull rating from city "+cId+" by user "+uId);
 
-        await CityData.updateOne({_id: cId}, {
+        CityData.updateOne({_id: cId}, {
             "$pull": { "ratings" : {userid: uId}}
         }, { safe: true, multi:true }, (err, obj)=>{
             console.log(err);
@@ -395,7 +395,7 @@ async function dbInit(){
 
 
         //var newAvgRating = curAvgRating;
-        await UserProfile.findOneAndUpdate({email: uEmail}, {
+        UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
         await CityData.findOneAndUpdate({_id: cId}, {
