@@ -3,7 +3,8 @@ exports.setApp = function(app, dbApi)
 {
   const bcrypt = require('bcrypt');
   // Used to send email for verification and/or reset password
-  //const nodemailer = require('nodemailer');
+  const nodemailer = require('nodemailer');
+  const crypto = require('crypto');
 
   app.post('/api/login', async (req, res, next) =>
   {
@@ -16,6 +17,11 @@ exports.setApp = function(app, dbApi)
     await dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users != null)
       {
+        /*if (users.isVerified == "false")
+        {
+          var ret = {error: "Need to verify email"};
+          return res.json(ret);
+        }*/
         if (bcrypt.compareSync(password, users.pwhash))
         {
             try
@@ -85,17 +91,71 @@ exports.setApp = function(app, dbApi)
     }
       var hashed = bcrypt.hashSync(password, 10);
 
-      await dbApi.createUser(firstName, lastName, userName, email, hashed);
+      //var emailToken = crypto.randomBytes(64).toString('hex');
 
-      //ret = {error: ""};
-      const newUser = await dbApi.userByEmail(email);
+      await dbApi.createUser(firstName, lastName, userName, email, hashed); //emailToken,"false");
+
+    /*  var Transport = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: "",
+          pass: ""
+        }
+      });
+
+      var mailOptions;
+      let sender = "RateMyCity";
+      mailOptions = {
+        from: sender,
+        to: email,
+        subject: "Email Confirmation",
+        text: `Hello, Thanks for registering on our site.
+          Please copy and paste the address below to verify your account.
+          http://${req.headers.host}/verify-email?token=${emailToken}
+        `,
+        html: `<h1>Hello,</h1>
+          <p>thanks for registering on our site.</p>
+          <p>Please click the link below to verify your account.</p>
+          <a href="http://${req.headers.host}/verify-email/${emailToken}">Verify your account</a>`
+      };
+
+      Transport.sendMail(mailOptions, function(err, response) {
+        if (err) {
+          res.send({error: err.message})
+        }
+        else {
+          var ret = {message: "Message sent"}
+          res.status(200).json(ret);
+        }
+      })*/
+
+      /*const newUser = await dbApi.userByEmail(email);
       ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
-      res.status(200).json(ret);
-  }); 
+      res.status(200).json(ret);*/
+  });
+
+  app.get('/verify-email/:uniqueString', async(req, res) => {
+    const {uniqueString} = req.params;
+
+    // Add token function
+    const user = await dbApi.userByToken(uniqueString);
+
+    //Update user valid. add into function
+    if (user)
+    {
+      user.isValid = true;
+      await user.save();
+      res.redirect('/');
+    } else {
+      {
+        res.json('User not found');
+      }
+    }
+  })
 
   /*
   // Forgot password, reset
-  app.post('api/resetPassword', async (req, res) =>
+  app.post('/api/resetPassword', async (req, res) =>
   {
     if (req.body.email == '')
     {
@@ -173,14 +233,14 @@ exports.setApp = function(app, dbApi)
     const { name, state, country, jwtToken } = req.body;
     var error = "";
 
-    // dbApi.cityByName(name).lean().exec(function (err, city)
-    // {
-    //   if (city != null)
-    //   {
-    //     ret = {error: "This city has already been added to our database."};
-    //     return res.status(200).json(ret);
-    //   }
-    // });
+    dbApi.cityByName(name).exec(function (err, city)
+    {
+       if (city != null)
+       {
+         ret = {error: "This city has already been added to our database."};
+         return res.status(200).json(ret);
+       }
+    });
 
     try
     {
