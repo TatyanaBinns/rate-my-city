@@ -233,7 +233,7 @@ exports.setApp = function(app, dbApi)
     const { name, state, country, jwtToken } = req.body;
     var error = "";
 
-    dbApi.cityByName(name).exec(function (err, city)
+    dbApi.cityByName(name).lean().exec(function (err, city)
     {
        if (city != null)
        {
