@@ -291,7 +291,7 @@ exports.setApp = function(app, dbApi)
     // outgoing: error, refreshedToken
 
     var token = require('./createJWT.js');
-    const { email, city, rating, review, jwtToken } = req.body;
+    const { userid, email, city, state, rating, review, jwtToken } = req.body;
     var error = "";
 
     try
@@ -307,7 +307,11 @@ exports.setApp = function(app, dbApi)
     {
       console.log(e.message);
     }
-
+    var user = await dbApi.searchUsername(userid, city, state);
+    if (user != null)
+    {
+      return res.status(404).json("User already posted rating for this city.");
+    }
     (async() => {
       await dbApi.addRating(email, city, rating, review);
       error = "";
