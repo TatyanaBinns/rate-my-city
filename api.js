@@ -369,7 +369,8 @@ exports.setApp = function(app, dbApi)
     }
 
     (async() => {
-      await dbApi.editRating(email, city, rating, review);
+      await dbApi.deleteRating(email, city);
+      await dbApi.addRating(email, city, rating, review);
       error = "";
     })();
 
