@@ -324,9 +324,14 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
     var user = await dbApi.searchUsername(userid, city, state);
-    if (user != null)
+    if (user.length != 0)
     {
       return res.status(404).json(user);
+    }
+    else {
+      {
+        return res.status(200).json("User does not exist")
+      }
     }
     (async() => {
       await dbApi.addRating(email, city, rating, review);
