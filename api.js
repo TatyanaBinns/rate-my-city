@@ -328,6 +328,9 @@ exports.setApp = function(app, dbApi)
     {
       return res.status(404).json("User already posted rating for this city.");
     }
+    else {
+      return res.json(result);
+    }
     (async() => {
       await dbApi.addRating(email, city, rating, review);
       error = "";
