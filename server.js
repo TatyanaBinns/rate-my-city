@@ -484,7 +484,7 @@ async function dbInit(){
             newFoodAvgRating
           );
 
-          await CityData.updateOne({_id: cId}, {
+        await CityData.updateOne({_id: cId}, {
               "$pull": { "ratings" : {userid: uId}}
           }, { safe: true, multi:true }, (err, obj)=>{
               console.log(err);
@@ -494,7 +494,7 @@ async function dbInit(){
         UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
-        CityData.findOneAndUpdate({_id: cId}, {
+        await CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating,
             $push: {ratings : {
                 userid:       uId,
