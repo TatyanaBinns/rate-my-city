@@ -251,7 +251,7 @@ async function dbInit(){
     dbApi.addComment = async (cityName, ratingUserName, timePosted, uEmail, uComment) => {
         var uId = (await dbApi.userByEmail(uEmail))._id;
 
-        CityData.findOneAndUpdate({"name" : cityName, "ratings.userid" : rating_uId, "ratings.time" : timePosted}, {
+        CityData.findOneAndUpdate({$and: [{name : cityName}, {ratings.userid : uId}, {ratings.time : timePosted}]}, {
             $push: {comments : {
                 userid:     uId,
                 comment:    uComment,
