@@ -326,10 +326,7 @@ exports.setApp = function(app, dbApi)
     var user = await dbApi.searchUsername(userid, city, state);
     if (user != null)
     {
-      return res.status(404).json("User already posted rating for this city.");
-    }
-    else {
-      return res.json(result);
+      return res.status(404).json(user);
     }
     (async() => {
       await dbApi.addRating(email, city, rating, review);
