@@ -32,7 +32,6 @@ exports.setApp = function(app, dbApi)
               ret.lastName = users.lastName;
               ret.userName = users.userName;
               ret.id = users._id;
-              ret.emailToken = users.emailToken;
             }
             catch(e)
             {
