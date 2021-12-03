@@ -258,23 +258,6 @@ exports.setApp = function(app, dbApi)
     const { name, state, country, jwtToken } = req.body;
     var error = "";
 
-    /*(async() =>
-        const city = await dbApi.cityByName(name);
-        if (city != null)
-        {
-          ret = {error: "This city has already been added to our database."};
-          return res.status(200).json(ret);
-        }
-    )();*/
-     /*await dbApi.cityByName(name).lean().exec(function (err, city)
-     {
-       if (city != null)
-       {
-         ret = {error: "This city has already been added to our database."};
-         return res.status(200).json(ret);
-       }
-     });*/
-
     try
     {
       if (token.isExpired(jwtToken))
@@ -289,7 +272,7 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
-    /*await dbApi.cityByName(name).lean().exec(function (err, city)
+    try{await dbApi.cityByName(name).lean().exec(function (err, city)
     {
       if (err)
       {
@@ -303,12 +286,15 @@ exports.setApp = function(app, dbApi)
       else {
         return res.status(200).json("about to add city")
       }
-    });*/
+    });
 
-    (async() => {
+    /*(async() => {
       await dbApi.createCity(name, state, country);
       error = "";
-    })();
+    })();*/} catch(err)
+    {
+      res.json({message: err.message})
+    }
 
     var refreshedToken = null;
 
