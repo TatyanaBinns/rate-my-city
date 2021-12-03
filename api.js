@@ -12,24 +12,10 @@ exports.setApp = function(app, dbApi)
     // incoming: email, password
     // outgoing: token/error message
 
-    try{var ret;
-    const { email, password, emailToken } = req.body;
-    const user = await dbApi.userByToken(emailToken)
-    //Update user valid. add into function
-    if (user)
-    {
-      //await dbApi.updateByToken(emailToken, {isVerified: true}).clone();
-      //res.json({message: "updated"})
-      res.json({isVerified: user.isVerified})
-    } else {
-      {
-        res.status(404).json('User not found');
-      }
-    }}catch(err)
-    {
-      res.json({message: err.message})
-    }
-    /*await dbApi.userByEmail(email).lean().exec(function (err, users) {
+    var ret;
+    const { email, password } = req.body;
+
+    await dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users != null)
       {
         if (users.isVerified == false)
@@ -62,7 +48,7 @@ exports.setApp = function(app, dbApi)
         ret = {error : "Login/Password incorrect"};
       }
       res.status(200).json(ret);
-    });*/
+    });
   });
 
   app.post('/api/register', async (req, res, next) =>
@@ -173,20 +159,23 @@ exports.setApp = function(app, dbApi)
   });
 
   app.get('/verify', async(req, res) => {
+    try{
     const emailToken = req.query.emailToken;
 
-    // Add token function
-    const user = await dbApi.userByToken(emailToken);
-
+    const user = await dbApi.userByToken(emailToken)
     //Update user valid. add into function
     if (user)
     {
-      dbApi.updateByToken(emailToken, {isVerified: true});
-      res.redirect('/');
+      await dbApi.updateByToken(emailToken, {isVerified: true}).clone();
+      res.json({message: "updated"})
+      //res.json({isVerified: user.isVerified})
     } else {
       {
         res.status(404).json('User not found');
       }
+    }}catch(err)
+    {
+      res.json({message: err.message})
     }
   })
 
