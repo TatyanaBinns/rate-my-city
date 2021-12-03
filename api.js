@@ -127,7 +127,7 @@ exports.setApp = function(app, dbApi)
       // Send Email to user, or produce error
       await sgMail.send(message)
       .then(response => {
-        ret = {"Verification process sent to email. Please verify email before logging in."};
+        ret = {message: "Verification process sent to email. Please verify email before logging in."};
         res.status(200).send(ret);
       })
       .catch(error => res.send({error:error.message}))
