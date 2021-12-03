@@ -56,7 +56,7 @@ exports.setApp = function(app, dbApi)
     //incoming: firstName, lastName, userName, email, password, confirmpassword
     //outgoing: error message
 
-    try {var ret;
+    var ret;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
 
@@ -76,7 +76,7 @@ exports.setApp = function(app, dbApi)
       var user = await dbApi.userByEmail(email)
         if (user)
         {
-          ret = {error: "Email is being used in another account", email: user.email};
+          ret = {error: "Email is being used in another account"};
           return res.status(200).json(ret);
         }
         else {
@@ -108,7 +108,7 @@ exports.setApp = function(app, dbApi)
       {
         res.json({error: err.message})
       }*/
-    const message =
+    /*const message =
       {
       to: email,
       from: {
@@ -122,10 +122,7 @@ exports.setApp = function(app, dbApi)
       <p>thanks for registering on our site.</p>
       <p>Please click the link below to verify your account.</p>
              <a href="${req.protocol}://${req.headers.host}/verify/?Token=${emailToken}">Verify your account</a>`
-    };} catch(err)
-    {
-      res.json({message: err.message})
-    }
+    };
 
       // Send Email to user, or produce error
       await sgMail.send(message)
@@ -133,7 +130,7 @@ exports.setApp = function(app, dbApi)
         ret = {"Verification process sent to email. Please verify email before logging in."};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message}))
+      .catch(error => res.send({error:error.message})) */
   });
 
   app.get('/verify', async(req, res) => {
