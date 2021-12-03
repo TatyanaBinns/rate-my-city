@@ -75,7 +75,7 @@ exports.setApp = function(app, dbApi)
       var user = dbApi.userByEmail(email)
         if (user)
         {
-          ret = {error: "Email is being used in another account", {email: user.email}};
+          ret = {error: "Email is being used in another account", email: user.email};
           return res.status(200).json(ret);
         }
         else {
