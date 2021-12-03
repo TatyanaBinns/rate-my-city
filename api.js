@@ -18,7 +18,7 @@ exports.setApp = function(app, dbApi)
     //Update user valid. add into function
     if (user)
     {
-      await dbApi.updateByToken(emailToken, {isVerified: true});
+      await dbApi.updateByToken(emailToken, {isVerified: true}).clone();
       res.json({message: "updated"})
       //res.json({isVerified: user.isVerified})
     } else {
