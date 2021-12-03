@@ -117,7 +117,7 @@ exports.setApp = function(app, dbApi)
       },
       subject: `Verify your email`,
       text: `Hello, Thanks for registering on our site.
-      Please copy and paste the address below to verify your account. href="${req.protocol}://${req.headers.host}/verify/?Token=${user.emailToken}`,
+      Please copy and paste the address below to verify your account. ${req.protocol}://${req.headers.host}/verify/?Token=${user.emailToken}`,
       html: `<h1>Hello,</h1>
       <p>thanks for registering on our site.</p>
       <p>Please click the link below to verify your account.</p>
