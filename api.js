@@ -73,14 +73,14 @@ exports.setApp = function(app, dbApi)
       return res.status(200).json(ret);
     }
     else {
-      dbApi.userByEmail(email).lean().exec(function (err, user) {
+      await dbApi.userByEmail(email).lean().exec(function (err, user) {
         if (user != null)
         {
           ret = {error: "Email is being used in another account"};
           return res.status(200).json(ret);
         }
         else {
-          dbApi.userByUserName(userName).lean().exec(function (err, user) {
+          await dbApi.userByUserName(userName).lean().exec(function (err, user) {
             if (user != null)
             {
               ret = {error: "Username is taken."};
@@ -256,7 +256,7 @@ exports.setApp = function(app, dbApi)
     var city = await dbApi.cityByName(name);
 
     if (city)
-      return res.json("This is city it already listed on the website.")
+      return res.json("This city is already listed on the website.")
     else {
 
     (async() => {
