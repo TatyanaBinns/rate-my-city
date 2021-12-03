@@ -85,6 +85,8 @@ async function dbInit(){
     dbApi.userByEmail       = (e)    => UserProfile.findOne({email: e});
     dbApi.userByUserName    = (u)    => UserProfile.findOne({userName: u});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
+    dbApi.userByToken = (e) => UserProfile.findOne({emailToken: e});
+    dbApi.updateByToken = (e, u) => UserProfile.findOne({emailToken: e}, u, ()=>{});
     dbApi.updateUserBySetting = (id, u) => UserProfile.findOneAndUpdate({_id: id}, { "$set": u}, ()=>{});
     dbApi.createUser  = (f,l,u,e,pw, token)   => {
         const newUser = new UserProfile({
