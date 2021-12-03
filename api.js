@@ -108,7 +108,7 @@ exports.setApp = function(app, dbApi)
       {
         res.json({error: err.message})
       }*/
-      const message =
+      try {const message =
       {
       to: email,
       from: {
@@ -122,7 +122,10 @@ exports.setApp = function(app, dbApi)
       <p>thanks for registering on our site.</p>
       <p>Please click the link below to verify your account.</p>
              <a href="${req.protocol}://${req.headers.host}/verify/?Token=${emailToken}">Verify your account</a>`
-    };
+    };} catch(err)
+    {
+      res.json({message: err.message})
+    }
 
       // Send Email to user, or produce error
       await sgMail.send(message)
