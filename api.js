@@ -18,10 +18,10 @@ exports.setApp = function(app, dbApi)
     await dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users != null)
       {
-        if (users.isVerified == false)
-        {
-          return res.status(404).json("Email has not been verified yet");
-        }
+        //if (users.isVerified == false)
+        //{
+          //return res.status(404).json("Email has not been verified yet");
+        //}
         if (bcrypt.compareSync(password, users.pwhash))
         {
             try
