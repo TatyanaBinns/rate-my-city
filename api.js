@@ -5,7 +5,7 @@ exports.setApp = function(app, dbApi)
   // Used to send email for verification and/or reset password
   //const nodemailer = require('nodemailer');
   const crypto = require('crypto');
-  //const sgMail = require('@sendgrid/mail');
+  const sgMail = require('@sendgrid/mail');
 
   app.post('/api/login', async (req, res, next) =>
   {
@@ -130,10 +130,10 @@ exports.setApp = function(app, dbApi)
       })*/
 
       const newUser = await dbApi.userByEmail(email);
-      ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
-      res.status(200).json(ret);
-      /*const message =
-    {
+      //ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
+      //res.status(200).json(ret);
+      const message =
+      {
       to: email,
       from: {
         name:  `Rate My City`,
@@ -148,13 +148,13 @@ exports.setApp = function(app, dbApi)
              <a href="http://${req.headers.host}/api/verify/?jwtToken=${newUser.emailToken}">Verify your account</a>`
     };
 
-      // If email successfully sends to user, return empty error
+      // Send Email to user, or produce error
       await sgMail.send(message)
       .then(response => {
-        ret = {error: ''};
+        ret = {message: "sent message"};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message}))*/
+      .catch(error => res.send({error:error.message}))
   });
 
   app.get('/verify', async(req, res) => {
@@ -162,7 +162,7 @@ exports.setApp = function(app, dbApi)
     const emailToken = req.query.emailToken;
 
     const user = await dbApi.userByToken(emailToken)
-    //Update user valid. add into function
+    //Update isVerified tof user to true
     if (user)
     {
       await dbApi.updateByToken(emailToken, {isVerified: true}).clone();
