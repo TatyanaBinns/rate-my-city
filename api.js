@@ -12,19 +12,22 @@ exports.setApp = function(app, dbApi)
     // incoming: email, password
     // outgoing: token/error message
 
-    var ret;
+    try{var ret;
     const { email, password, emailToken } = req.body;
     const user = await dbApi.userByToken(emailToken)
     //Update user valid. add into function
     if (user)
     {
-      //dbApi.updateByToken(emailToken, {isVerified: true});
-      //res.json("updated")
-      res.json({isVerified: user.isVerified})
+      await dbApi.updateByToken(emailToken, {isVerified: true});
+      res.json({message: "updated"})
+      //res.json({isVerified: user.isVerified})
     } else {
       {
         res.status(404).json('User not found');
       }
+    }}catch(err)
+    {
+      res.json({message: err.message})
     }
     /*await dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users != null)
