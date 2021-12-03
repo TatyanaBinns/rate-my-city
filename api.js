@@ -272,30 +272,17 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
-    try{/*await dbApi.cityByName(name).lean().exec(function (err, city)
-    {
-      if (err)
-      {
-        return res.json({message: err.message})
-      }
-      if (city != null)
-      {
-        ret = {error: "This city has already been added to our database."};
-        return res.status(200).json(ret);
-      }
-      else {
-        return res.status(200).json("about to add city")
-      }
-    });*/
+    try{
     var city = await dbApi.cityByName(name);
 
     if (city)
-      return res.json("already")
+      return res.json("This is city it already listed on the website.")
+    else {
 
-    /*(async() => {
+    (async() => {
       await dbApi.createCity(name, state, country);
       error = "";
-    })();*/} catch(err)
+    })();}} catch(err)
     {
       res.json({message: err.message})
     }
