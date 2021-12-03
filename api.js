@@ -92,7 +92,7 @@ exports.setApp = function(app, dbApi)
     }
       var hashed = bcrypt.hashSync(password, 10);
 
-      var emailToken = crypto.randomBytes(64).toString('hex');
+      //var emailToken = crypto.randomBytes(64).toString('hex');
 
       await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
       /*var Transport = nodemailer.createTransport({
