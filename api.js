@@ -136,25 +136,47 @@ exports.setApp = function(app, dbApi)
       })*/
 
       const newUser = await dbApi.userByEmail(email);
-      ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
-      res.status(200).json(ret);
+      //ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
+      //res.status(200).json(ret);
+      /*const message =
+    {
+      to: email,
+      from: {
+        name:  `Rate My City`,
+        email: `ratemycitynoreply@gmail.com`,
+      },
+      subject: `Verify your email`,
+      text: `Hello, Thanks for registering on our site.
+      Please copy and paste the address below to verify your account. href="http://${req.headers.host}/api/verify/?jwtToken=${newUser.emailToken}`,
+      html: `<h1>Hello,</h1>
+      <p>thanks for registering on our site.</p>
+      <p>Please click the link below to verify your account.</p>
+             <a href="http://${req.headers.host}/api/verify/?jwtToken=${newUser.emailToken}">Verify your account</a>`
+    };
+
+      // If email successfully sends to user, return empty error
+      await sgMail.send(message)
+      .then(response => {
+        ret = {error: ''};
+        res.status(200).send(ret);
+      })
+      .catch(error => res.send({error:error.message}))*/
   });
 
-  app.get('/verify-email/:uniqueString', async(req, res) => {
-    const {uniqueString} = req.params;
+  app.get('/verify', async(req, res) => {
+    const emailToken = req.query.emailToken;
 
     // Add token function
-    const user = await dbApi.userByToken(uniqueString);
+    const user = await dbApi.userByToken(emailToken);
 
     //Update user valid. add into function
     if (user)
     {
-      user.isValid = true;
-      await user.save();
+      dbApi.updateByToken(emailToken, {isVerified: true});
       res.redirect('/');
     } else {
       {
-        res.json('User not found');
+        res.status(404).json('User not found');
       }
     }
   })
