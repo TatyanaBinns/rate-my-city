@@ -131,8 +131,14 @@ exports.setApp = function(app, dbApi)
       })*/
 
       const newUser = await dbApi.userByEmail(email);
+      if (newUser)
+      {
       ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
-      res.status(200).json(ret);} catch (err)
+      res.status(200).json(ret);
+      }
+      else {
+        res.json("user is null")
+      }} catch (err)
       {
         res.json({error: err.message})
       }
