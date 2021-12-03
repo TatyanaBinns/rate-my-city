@@ -98,6 +98,7 @@ async function dbInit(){
             isVerified: false,
             emailToken: token
         }).save();
+        return newUser
     };
 
     //dbApi.allCities    = ()        => CityData.find().sort({"name": 1});
