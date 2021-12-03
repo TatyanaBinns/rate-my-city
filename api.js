@@ -56,6 +56,7 @@ exports.setApp = function(app, dbApi)
     //incoming: firstName, lastName, userName, email, password, confirmpassword
     //outgoing: error message
 
+    try {
     var ret;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
@@ -92,7 +93,7 @@ exports.setApp = function(app, dbApi)
     }
       var hashed = bcrypt.hashSync(password, 10);
 
-      //var emailToken = crypto.randomBytes(64).toString('hex');
+      var emailToken = crypto.randomBytes(64).toString('hex');
 
       await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
       /*var Transport = nodemailer.createTransport({
@@ -131,7 +132,10 @@ exports.setApp = function(app, dbApi)
 
       const newUser = await dbApi.userByEmail(email);
       ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
-      res.status(200).json(ret);
+      res.status(200).json(ret);} catch (err)
+      {
+        res.json({error: err.message})
+      }
       /*const message =
       {
       to: email,
