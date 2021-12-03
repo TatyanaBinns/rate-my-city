@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/TatyanaBinns/rate-my-city#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "dotenv": "^10.0.0",
@@ -27,7 +28,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.11",
     "nodemailer": "^6.7.0",
-    "password-hash": "^1.2.2",
-    "sendgrid": "^5.2.3"
+    "password-hash": "^1.2.2"
   }
 }
