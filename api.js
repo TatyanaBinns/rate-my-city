@@ -272,7 +272,7 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
-    try{await dbApi.cityByName(name).lean().exec(function (err, city)
+    try{/*await dbApi.cityByName(name).lean().exec(function (err, city)
     {
       if (err)
       {
@@ -286,7 +286,11 @@ exports.setApp = function(app, dbApi)
       else {
         return res.status(200).json("about to add city")
       }
-    });
+    });*/
+    var city = await dbApi.cityByName(name);
+
+    if (city != null)
+      res.json("already")
 
     /*(async() => {
       await dbApi.createCity(name, state, country);
