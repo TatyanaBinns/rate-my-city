@@ -95,7 +95,7 @@ exports.setApp = function(app, dbApi)
       var emailToken = crypto.randomBytes(64).toString('hex');
 
       var user = await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
-      res.json({emailToken: user.emailToken})
+      //res.json({emailToken: user.emailToken})
       /*var newUser = await dbApi.userByEmail(email);
       if (newUser)
       {
@@ -108,7 +108,7 @@ exports.setApp = function(app, dbApi)
       {
         res.json({error: err.message})
       }*/
-    /*const message =
+    const message =
       {
       to: email,
       from: {
@@ -117,11 +117,11 @@ exports.setApp = function(app, dbApi)
       },
       subject: `Verify your email`,
       text: `Hello, Thanks for registering on our site.
-      Please copy and paste the address below to verify your account. href="${req.protocol}://${req.headers.host}/verify/?Token=${emailToken}`,
+      Please copy and paste the address below to verify your account. href="${req.protocol}://${req.headers.host}/verify/?Token=${user.emailToken}`,
       html: `<h1>Hello,</h1>
       <p>thanks for registering on our site.</p>
       <p>Please click the link below to verify your account.</p>
-             <a href="${req.protocol}://${req.headers.host}/verify/?Token=${emailToken}">Verify your account</a>`
+             <a href="${req.protocol}://${req.headers.host}/verify/?Token=${user.emailToken}">Verify your account</a>`
     };
 
       // Send Email to user, or produce error
@@ -130,7 +130,7 @@ exports.setApp = function(app, dbApi)
         ret = {"Verification process sent to email. Please verify email before logging in."};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message})) */
+      .catch(error => res.send({error:error.message}))
   });
 
   app.get('/verify', async(req, res) => {
