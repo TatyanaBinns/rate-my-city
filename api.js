@@ -127,8 +127,8 @@ exports.setApp = function(app, dbApi)
       // Send Email to user, or produce error
       await sgMail.send(message)
       .then(response => {
-        ret = {message: "Verification process sent to email. Please verify email before logging in."};
-        res.status(200).send(ret);
+        ret = "Verification process sent to email. Please verify email before logging in.";
+        res.status(200).json(ret);
       })
       .catch(error => res.send({error:error.message}))
   });
@@ -138,18 +138,18 @@ exports.setApp = function(app, dbApi)
     const emailToken = req.query.Token;
 
     var user = await dbApi.userByToken(emailToken)
-    const home = "https://"+req.headers.host+"/"
+    //const home = "https://"+req.headers.host+"/"
     //Update isVerified from user to true
     if (user)
     {
       var set = {isVerified: true, emailToken: null}
       await dbApi.updateByToken(emailToken, set).clone();
-      console.log("User has been verified")
-      res.redirect(home)
+      res.json("User has been verified");
+      //res.redirect(home)
     } else {
       {
-        console.log('User not found');
-        res.redirect(home)
+        res.json('User not found');
+        //res.redirect(home)
       }
     }}catch(err)
     {
