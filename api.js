@@ -63,7 +63,7 @@ exports.setApp = function(app, dbApi)
 
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
 
-    /*if (password != confirmpassword)
+    if (password != confirmpassword)
     {
       ret = {error : "Passwords do not match."};
       return res.status(200).json(ret);
@@ -90,47 +90,14 @@ exports.setApp = function(app, dbApi)
 
         }
 
-    }*/
+    }
       var hashed = bcrypt.hashSync(password, 10);
 
       var emailToken = crypto.randomBytes(64).toString('hex');
 
-      //await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
-      /*var Transport = nodemailer.createTransport({
-        service: "Gmail",
-        auth: {
-          user: "",
-          pass: ""
-        }
-      });
+      await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
 
-      var mailOptions;
-      let sender = "RateMyCity";
-      mailOptions = {
-        from: sender,
-        to: email,
-        subject: "Email Confirmation",
-        text: `Hello, Thanks for registering on our site.
-          Please copy and paste the address below to verify your account.
-          http://${req.headers.host}/verify-email?token=${emailToken}
-        `,
-        html: `<h1>Hello,</h1>
-          <p>thanks for registering on our site.</p>
-          <p>Please click the link below to verify your account.</p>
-          <a href="http://${req.headers.host}/verify-email/${emailToken}">Verify your account</a>`
-      };
-
-      Transport.sendMail(mailOptions, function(err, response) {
-        if (err) {
-          res.send({error: err.message})
-        }
-        else {
-          var ret = {message: "Message sent"}
-          res.status(200).json(ret);
-        }
-      })*/
-
-      const newUser = await dbApi.userByEmail(email);
+      /*const newUser = await dbApi.userByEmail(email);
       if (newUser)
       {
       ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
@@ -141,8 +108,8 @@ exports.setApp = function(app, dbApi)
       }} catch (err)
       {
         res.json({error: err.message})
-      }
-      /*const message =
+      }*/
+      const message =
       {
       to: email,
       from: {
@@ -151,36 +118,39 @@ exports.setApp = function(app, dbApi)
       },
       subject: `Verify your email`,
       text: `Hello, Thanks for registering on our site.
-      Please copy and paste the address below to verify your account. href="http://${req.headers.host}/api/verify/?jwtToken=${newUser.emailToken}`,
+      Please copy and paste the address below to verify your account. href="${req.protocol}://${req.headers.host}/verify/?Token=${newUser.emailToken}`,
       html: `<h1>Hello,</h1>
       <p>thanks for registering on our site.</p>
       <p>Please click the link below to verify your account.</p>
-             <a href="http://${req.headers.host}/api/verify/?jwtToken=${newUser.emailToken}">Verify your account</a>`
+             <a href="${req.protocol}://${req.headers.host}/verify/?Token=${newUser.emailToken}">Verify your account</a>`
     };
 
       // Send Email to user, or produce error
       await sgMail.send(message)
       .then(response => {
-        ret = {message: "sent message"};
+        ret = {"Verification process sent to email. Please verify email before logging in."};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message}))*/
+      .catch(error => res.send({error:error.message}))
   });
 
   app.get('/verify', async(req, res) => {
     try{
-    const emailToken = req.query.emailToken;
+    const emailToken = req.query.Token;
 
-    const user = await dbApi.userByToken(emailToken)
-    //Update isVerified tof user to true
+    var user = await dbApi.userByToken(emailToken)
+    const home = "https://"+req.headers.host+"/"
+    //Update isVerified from user to true
     if (user)
     {
-      await dbApi.updateByToken(emailToken, {isVerified: true}).clone();
-      res.json({message: "updated"})
-      //res.json({isVerified: user.isVerified})
+      var set = {isVerified: true, emailToken: null}
+      await dbApi.updateByToken(emailToken, set).clone();
+      console.log("User has been verified")
+      res.redirect(home)
     } else {
       {
-        res.status(404).json('User not found');
+        console.log('User not found');
+        res.redirect(home)
       }
     }}catch(err)
     {
@@ -601,8 +571,6 @@ exports.setApp = function(app, dbApi)
       return res.status(200).json({error: err.message})
     }
 
-    const updatedUser = await dbApi.userByEmail(email);
-
     var refreshedToken = null;
 
     try
@@ -614,7 +582,13 @@ exports.setApp = function(app, dbApi)
       console.log(e.message);
     }
 
-    ret = {error: "", id: updatedUser._id, firstName: updatedUser.firstName, lastName: updatedUser.lastName, userName: updatedUser.userName, email: updatedUser.email, jwtToken: refreshedToken };
-    return res.status(200).json(ret);
+    try {
+      const updatedUser = await dbApi.userByEmail(email);
+      ret = {error: "", id: updatedUser._id, firstName: updatedUser.firstName, lastName: updatedUser.lastName, userName: updatedUser.userName, email: updatedUser.email, jwtToken: refreshedToken };
+      return res.status(200).json(ret);
+    } catch (err)
+    {
+      return res.json({error: err.message})
+    }
   });
 }
