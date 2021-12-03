@@ -94,8 +94,8 @@ exports.setApp = function(app, dbApi)
 
       var emailToken = crypto.randomBytes(64).toString('hex');
 
-      await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
-
+      var user = await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
+      res.json({emailToken: user.emailToken})
       /*var newUser = await dbApi.userByEmail(email);
       if (newUser)
       {
