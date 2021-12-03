@@ -73,21 +73,22 @@ exports.setApp = function(app, dbApi)
       return res.status(200).json(ret);
     }
     else {
-      var user = await dbApi.userByEmail(email)
-        if (user)
+      dbApi.userByEmail(email).lean().exec(function (err, user) {
+        if (user != null)
         {
-          ret = {error: "Email is being used in another account", email: user.email};
+          ret = {error: "Email is being used in another account"};
           return res.status(200).json(ret);
         }
         else {
-          var otherUser = await dbApi.userByUserName(userName)
-            if (otherUser != null)
+          dbApi.userByUserName(userName).lean().exec(function (err, user) {
+            if (user != null)
             {
               ret = {error: "Username is taken."};
               return res.status(200).json(ret);
             }
-
+          });
         }
+      });
 
     }
       var hashed = bcrypt.hashSync(password, 10);
