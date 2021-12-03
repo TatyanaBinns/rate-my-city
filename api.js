@@ -72,29 +72,29 @@ exports.setApp = function(app, dbApi)
       return res.status(200).json(ret);
     }
     else {
-      dbApi.userByEmail(email).lean().exec(function (err, user) {
-        if (user != null)
+      var user = dbApi.userByEmail(email)
+        if (user)
         {
           ret = {error: "Email is being used in another account"};
           return res.status(200).json(ret);
         }
         else {
-          dbApi.userByUserName(userName).lean().exec(function (err, user) {
-            if (user != null)
+          var otherUser = dbApi.userByUserName(userName)
+            if (otherUser != null)
             {
               ret = {error: "Username is taken."};
               return res.status(200).json(ret);
             }
-          });
+
         }
-      });
+
     }
       var hashed = bcrypt.hashSync(password, 10);
 
       var emailToken = crypto.randomBytes(64).toString('hex');
 
-      await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
-
+      //await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
+      res.json("okay")
       /*var Transport = nodemailer.createTransport({
         service: "Gmail",
         auth: {
@@ -132,7 +132,7 @@ exports.setApp = function(app, dbApi)
       const newUser = await dbApi.userByEmail(email);
       //ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
       //res.status(200).json(ret);
-      const message =
+      /*const message =
       {
       to: email,
       from: {
@@ -154,7 +154,7 @@ exports.setApp = function(app, dbApi)
         ret = {message: "sent message"};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message}))
+      .catch(error => res.send({error:error.message}))*/
   });
 
   app.get('/verify', async(req, res) => {
