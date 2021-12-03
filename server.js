@@ -12,6 +12,14 @@ let uri = process.env.MONGODB_URI;
 if (uri == null || uri == "")
   uri = "mongodb://localhost:27017/rate-my-city";
 
+let sendgridKey = process.env.SENDGRID_API_KEY;
+if (sendgridKey == null || sendgridKey == "")
+  sendgridKey = "noKeySet";
+
+let accessToken = process.env.ACCESS_TOKEN_SECRET;
+if (accessToken == null || accessToken == "")
+  accessToken = "noKeySet";
+
 
 function mkBrRating(v){
     return mkRating(v, v, v, v, v, v, v);
