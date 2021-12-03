@@ -95,11 +95,8 @@ exports.setApp = function(app, dbApi)
       var emailToken = crypto.randomBytes(64).toString('hex');
 
       await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
-      res.json("okay")} catch(err)
-      {
-        res.json({mes: err.message})
-      }
-      /*const newUser = await dbApi.userByEmail(email);
+
+      var newUser = await dbApi.userByEmail(email);
       if (newUser)
       {
       ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
@@ -110,7 +107,7 @@ exports.setApp = function(app, dbApi)
       }} catch (err)
       {
         res.json({error: err.message})
-      }*/
+      }
       /*const message =
       {
       to: email,
