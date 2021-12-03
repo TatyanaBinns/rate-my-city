@@ -14,20 +14,20 @@ exports.setApp = function(app, dbApi)
 
     var ret;
     const { email, password, emailToken } = req.body;
-    const user = await dbApi.userByToken(emailToken);
+    //const user = await dbApi.userByToken(emailToken);
 
     //Update user valid. add into function
-    if (user)
-    {
+    //if (user)
+    //{
       await dbApi.updateByToken(emailToken, {isVerified: true});
       const newUser = await dbApi.userByToken(emailToken);
       ret = {isVerified: newUser.isVerified};
       res.json(ret);
-    } else {
-      {
+    //} else {
+      /*{
         res.status(404).json('User not found');
       }
-    }
+    }*/
     /*await dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users != null)
       {
