@@ -289,7 +289,7 @@ exports.setApp = function(app, dbApi)
     });*/
     var city = await dbApi.cityByName(name);
 
-    if (city != null)
+    if (city)
       return res.json("already")
 
     /*(async() => {
