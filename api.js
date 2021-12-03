@@ -19,9 +19,8 @@ exports.setApp = function(app, dbApi)
     if (user)
     {
       await dbApi.updateByToken(emailToken, {isVerified: true});
-      const newUser = await dbApi.userbyEmail(email);
-      ret = {isVerified: newUser.isVerified};
-      res.json(ret);
+
+      res.json("updated");
     } else {
       {
         res.status(404).json('User not found');
