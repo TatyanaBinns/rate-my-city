@@ -12,14 +12,6 @@ let uri = process.env.MONGODB_URI;
 if (uri == null || uri == "")
   uri = "mongodb://localhost:27017/rate-my-city";
 
-let sendgridKey = process.env.SENDGRID_API_KEY;
-if (sendgridKey == null || sendgridKey == "")
-  sendgridKey = "noKeySet";
-
-let accessToken = process.env.ACCESS_TOKEN_SECRET;
-if (accessToken == null || accessToken == "")
-  accessToken = "noKeySet";
-
 
 function mkBrRating(v){
     return mkRating(v, v, v, v, v, v, v);
@@ -94,7 +86,7 @@ async function dbInit(){
     dbApi.userByUserName    = (u)    => UserProfile.findOne({userName: u});
     dbApi.updateUserByEmail = (e, u) => UserProfile.findOneAndUpdate({email: e}, u, ()=>{});
     dbApi.updateUserBySetting = (id, u) => UserProfile.findOneAndUpdate({_id: id}, { "$set": u}, ()=>{});
-    dbApi.createUser  = (f,l,u,e,pw)   => {
+    dbApi.createUser  = (f,l,u,e,pw, token)   => {
         const newUser = new UserProfile({
             firstName: f,
             lastName : l,
@@ -102,7 +94,7 @@ async function dbInit(){
             email    : e,
             pwhash   : pw,
             isVerified: false,
-            emailToken: null
+            emailToken: token
         }).save();
     };
 
