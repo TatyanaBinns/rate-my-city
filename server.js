@@ -36,12 +36,14 @@ dbApi = {};
 async function dbInit(){
     await mongoose.connect(uri);
     const UserProfile = mongoose.model('UserProfile', new mongoose.Schema({
-       firstName: String,
-       lastName : String,
-       userName : String,
-       email    : String,
-       pwhash   : String,
-       ratings  : [{cityid: String}]
+       firstName : String,
+       lastName  : String,
+       userName  : String,
+       email     : String,
+       pwhash    : String,
+       ratings   : [{cityid: String}],
+       isVerified: Boolean,
+       emailToken: String
     }));
     const CityData = mongoose.model('CityData', new mongoose.Schema({
        name    : String,
@@ -90,7 +92,9 @@ async function dbInit(){
             lastName : l,
             userName : u,
             email    : e,
-            pwhash   : pw
+            pwhash   : pw,
+            isVerified: false,
+            emailToken: null
         }).save();
     };
 
