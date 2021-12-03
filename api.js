@@ -16,6 +16,7 @@ exports.setApp = function(app, dbApi)
     const { email, password, emailToken } = req.body;
     const user = await dbApi.userByEmail(email);
     var ret = {emailToken: user.emailToken};
+    res.json(ret);
     //Update user valid. add into function
     /*if (user)
     {
