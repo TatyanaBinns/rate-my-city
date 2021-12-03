@@ -13,16 +13,23 @@ exports.setApp = function(app, dbApi)
     // outgoing: token/error message
 
     var ret;
-    const { email, password } = req.body;
+    const { email, password, emailToken } = req.body;
+    const user = await dbApi.userByToken(emailToken);
 
-    await dbApi.userByEmail(email).lean().exec(function (err, users) {
+    //Update user valid. add into function
+    if (user)
+    {
+      await dbApi.updateByToken(emailToken, {isVerified: true});
+      const newUser = await dbApi.userByToken(emailToken);
+      var ret = {isVerified: newUser.isVerified};
+    } else {
+      {
+        res.status(404).json('User not found');
+      }
+    }
+    /*await dbApi.userByEmail(email).lean().exec(function (err, users) {
       if (users != null)
       {
-        /*if (users.isVerified == "false")
-        {
-          var ret = {error: "Need to verify email"};
-          return res.json(ret);
-        }*/
         if (users.isVerified == false)
         {
           return res.status(404).json("Email has not been verified yet");
@@ -53,7 +60,7 @@ exports.setApp = function(app, dbApi)
         ret = {error : "Login/Password incorrect"};
       }
       res.status(200).json(ret);
-    });
+    });*/
   });
 
   app.post('/api/register', async (req, res, next) =>
