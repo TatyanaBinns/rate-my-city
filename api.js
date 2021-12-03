@@ -20,7 +20,7 @@ exports.setApp = function(app, dbApi)
     {
       //await dbApi.updateByToken(emailToken, {isVerified: true});
 
-      res.json({emailToken: user.emailToken});
+      res.json({isVerified: user.isVerified});
     } else {
       {
         res.status(404).json('User not found');
