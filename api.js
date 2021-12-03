@@ -3,8 +3,9 @@ exports.setApp = function(app, dbApi)
 {
   const bcrypt = require('bcrypt');
   // Used to send email for verification and/or reset password
-  const nodemailer = require('nodemailer');
+  //const nodemailer = require('nodemailer');
   const crypto = require('crypto');
+  const sgMail = require('@sendgrid/mail');
 
   app.post('/api/login', async (req, res, next) =>
   {
