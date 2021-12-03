@@ -32,6 +32,7 @@ exports.setApp = function(app, dbApi)
               ret.lastName = users.lastName;
               ret.userName = users.userName;
               ret.id = users._id;
+              ret.emailToken = users.emailToken;
             }
             catch(e)
             {
@@ -56,7 +57,7 @@ exports.setApp = function(app, dbApi)
     //outgoing: error message
 
     var ret;
-    // ADD EMAIL VERIFICATION
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
 
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
@@ -93,7 +94,7 @@ exports.setApp = function(app, dbApi)
 
       var emailToken = crypto.randomBytes(64).toString('hex');
 
-      await dbApi.createUser(firstName, lastName, userName, email, hashed);//, emailToken,"false");
+      await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
 
       /*var Transport = nodemailer.createTransport({
         service: "Gmail",
@@ -130,7 +131,7 @@ exports.setApp = function(app, dbApi)
       })*/
 
       const newUser = await dbApi.userByEmail(email);
-      ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, error: ""};
+      ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
       res.status(200).json(ret);
   });
 
