@@ -340,16 +340,32 @@ async function dbInit(){
     };
 
     dbApi.addComment = async (cityName, ratingUserName, timePosted, uEmail, uComment) => {
+        // User that wants to comment.
         var uId = (await dbApi.userByEmail(uEmail))._id;
+        // User that already made a rating.
+        var rating_uId = (await dbApi.userByUserName(ratingUserName))._id;
+        var cId = (await dbApi.cityByName(cityName))._id;
 
-        CityData.findOneAndUpdate({"name" : cityName, "ratings.userid" : rating_uId, "ratings.time" : timePosted}, {
-            $push: {comments : {
-                userid:     uId,
-                comment:    uComment,
-                time:       new Date().toISOString()
-            }}
-        }, ()=>{});
+        CityData.findOneAndUpdate({_id: cId, "ratings.userid": rating_uId}, {
+            $push: {
+                "ratings.0.comments": {
+                    "userid":   uId,
+                    "comment":  uComment,
+                    "time":     new Date().toISOString()
+                }
+            }
+        });
     };
+        
+
+    //     CityData.findOneAndUpdate({"name" : cityName, "ratings.userid" : rating_uId, "ratings.time" : timePosted}, {
+    //         $push: {comments : {
+    //             userid:     uId,
+    //             comment:    uComment,
+    //             time:       new Date().toISOString()
+    //         }}
+    //     }, ()=>{});
+    // };
 
     dbApi.addRating = async (uEmail, cityName, uRating, review) => {
         var city = (await dbApi.cityByName(cityName));
