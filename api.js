@@ -95,7 +95,6 @@ exports.setApp = function(app, dbApi)
       var emailToken = crypto.randomBytes(64).toString('hex');
 
       await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
-      res.json("okay")
       /*var Transport = nodemailer.createTransport({
         service: "Gmail",
         auth: {
@@ -131,8 +130,8 @@ exports.setApp = function(app, dbApi)
       })*/
 
       const newUser = await dbApi.userByEmail(email);
-      //ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
-      //res.status(200).json(ret);
+      ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
+      res.status(200).json(ret);
       /*const message =
       {
       to: email,
