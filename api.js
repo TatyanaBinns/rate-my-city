@@ -138,14 +138,14 @@ exports.setApp = function(app, dbApi)
     const emailToken = req.query.Token;
 
     var user = await dbApi.userByToken(emailToken)
-    //const home = "https://"+req.headers.host+"/"
+    const home = "https://"+req.headers.host+"/"
     //Update isVerified from user to true
     if (user)
     {
       var set = {isVerified: true, emailToken: null}
       await dbApi.updateByToken(emailToken, set).clone();
       res.json("User has been verified");
-      //res.redirect(home)
+      res.redirect(home)
     } else {
       {
         res.json('User not found');
