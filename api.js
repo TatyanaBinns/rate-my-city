@@ -290,7 +290,7 @@ exports.setApp = function(app, dbApi)
     var city = await dbApi.cityByName(name);
 
     if (city != null)
-      res.json("already")
+      return res.json("already")
 
     /*(async() => {
       await dbApi.createCity(name, state, country);
