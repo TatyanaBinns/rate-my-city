@@ -145,7 +145,7 @@ exports.setApp = function(app, dbApi)
       var set = {isVerified: true, emailToken: null}
       await dbApi.updateByToken(emailToken, set).clone();
       res.json("User has been verified");
-      res.redirect(home)
+      //res.redirect(home)
     } else {
       {
         res.json('User not found');
