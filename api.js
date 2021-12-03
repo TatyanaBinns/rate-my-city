@@ -102,19 +102,7 @@ exports.setApp = function(app, dbApi)
       {
         res.json({error: err.message})
       }
-      //res.json({emailToken: user.emailToken})
-      /*var newUser = await dbApi.userByEmail(email);
-      if (newUser)
-      {
-      ret = {userId: newUser._id, firstName: newUser.firstName, lastName: newUser.lastName, userName: newUser.userName, email: newUser.email, emailToken: newUser.emailToken, error: ""};
-      res.status(200).json(ret);
-      }
-      else {
-        res.json("user is null")
-      }} catch (err)
-      {
-        res.json({error: err.message})
-      }*/
+
   /*  const message =
       {
       to: email,
@@ -164,10 +152,11 @@ exports.setApp = function(app, dbApi)
     }
   })
 
-  /*
+
   // Forgot password, reset
-  app.post('/api/resetPassword', async (req, res) =>
+  /*app.post('/api/resetPassword', async (req, res) =>
   {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     if (req.body.email == '')
     {
       ret = {error: "Email is required to reset password."};
@@ -232,8 +221,7 @@ exports.setApp = function(app, dbApi)
         }
       });
     }
-  });
-  */
+  });*/
 
   app.post('/api/createCity', async (req, res, next) =>
   {
