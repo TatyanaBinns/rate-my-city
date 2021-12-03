@@ -56,7 +56,7 @@ exports.setApp = function(app, dbApi)
     //outgoing: error message
 
     var ret;
-    //sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
 
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
