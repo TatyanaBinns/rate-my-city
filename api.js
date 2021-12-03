@@ -23,6 +23,10 @@ exports.setApp = function(app, dbApi)
           var ret = {error: "Need to verify email"};
           return res.json(ret);
         }*/
+        if (users.isVerified == false)
+        {
+          return res.status(404).json("Email has not been verified yet");
+        }
         if (bcrypt.compareSync(password, users.pwhash))
         {
             try
