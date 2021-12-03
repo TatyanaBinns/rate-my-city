@@ -63,7 +63,7 @@ exports.setApp = function(app, dbApi)
 
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
 
-    if (password != confirmpassword)
+    /*if (password != confirmpassword)
     {
       ret = {error : "Passwords do not match."};
       return res.status(200).json(ret);
@@ -90,12 +90,12 @@ exports.setApp = function(app, dbApi)
 
         }
 
-    }
+    }*/
       var hashed = bcrypt.hashSync(password, 10);
 
       var emailToken = crypto.randomBytes(64).toString('hex');
 
-      await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
+      //await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
       /*var Transport = nodemailer.createTransport({
         service: "Gmail",
         auth: {
