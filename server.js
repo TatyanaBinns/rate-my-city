@@ -421,7 +421,7 @@ async function dbInit(){
         UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
-        CityData.findOneAndUpdate({_id: cId}, {
+        await CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating,
             $push: {ratings : {
                 userid:       uId,
