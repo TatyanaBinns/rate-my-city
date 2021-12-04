@@ -168,7 +168,7 @@ exports.setApp = function(app, dbApi)
     }
 
 
-    var jwtToken = token.createToken(user.firstName, user.lastName, user._id);
+    var jwtToken = token.createToken(user.firstName, user.lastName, user._id, user.email);
 
     var other = jwt.verify( nice.accessToken, process.env.ACCESS_TOKEN_SECRET)
 
