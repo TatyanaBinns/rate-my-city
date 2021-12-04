@@ -137,6 +137,7 @@ async function dbInit(){
          });*/
         var res =  await CityData.aggregate([
             {
+            {"$unwind" : "$ratings"},
             "$match": {
              $and: [
              {"ratings": {
@@ -152,7 +153,9 @@ async function dbInit(){
             "$project": {
              "name" : 1,
              "state" : 1,
-             "averageRating": "no",
+             "averageRating": {
+               "$avg" : "$ratings.entertainment"
+             },
              "ratings": {
                "$filter": {
                  "input": "$ratings",
