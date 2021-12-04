@@ -152,19 +152,7 @@ async function dbInit(){
             "$project": {
              "name" : 1,
              "state" : 1,
-             "averageRating": {
-               {"$unwind": "$ratings"},
-               {
-                 "entertainment" : {"$avg": "$ratings.entertainment"},
-                 "nature"        : {"$avg": "$ratings.nature"},
-                 "cost"          : {"$avg": "$ratings.cost"},
-                 "safety"        : {"$avg": "$ratings.safety"},
-                 "culture"       : {"$avg": "$ratings.culture"},
-                 "transportation":{"$avg": "$ratings.transportation"},
-                 "food"          : {"$avg": "$ratings.food"}
-               }
-
-              },
+             "averageRating": 1,
              "ratings": {
                "$filter": {
                  "input": "$ratings",
