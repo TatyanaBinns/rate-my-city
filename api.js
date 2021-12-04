@@ -170,14 +170,35 @@ exports.setApp = function(app, dbApi)
 
     var jwtToken = token.createToken(user.firstName, user.lastName, user._id, user.email);
 
-    var other = jwt.verify( jwtToken.accessToken, process.env.ACCESS_TOKEN_SECRET)
+    /*var other = jwt.verify( jwtToken.accessToken, process.env.ACCESS_TOKEN_SECRET)
 
     res.json({id: other.userId, name: other.firstName, last: other.lastName, email: other.email})} catch (err)
     {
       res.json({message: err.message})
-    }
+    }*/
 
+        const message =
+            {
+            to: email,
+            from: {
+              name:  `Rate My City`,
+              email: `ratemycitynoreply@gmail.com`,
+            },
+            subject: `Reset Password`,
+            text: `Hello, You have asked to reset your password.
+            Please click the link below to verify your account. ${req.protocol}://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}`,
+            html: `<h1>Hello,</h1>
+            <p>You have asked to reset your password.</p>
+            <p>Please click the link below to verify your account.</p>
+                   <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}">Verify your account</a>`
+          };
 
+          await sgMail.send(message)
+          .then(response => {
+            ret = "Reset process sent to email. Please verify email before logging in.";
+            res.status(200).json(ret);
+          })
+          .catch(error => res.send({error:error.message}))
   /*const message =
     {
       to: email,
