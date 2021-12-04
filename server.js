@@ -423,12 +423,12 @@ async function dbInit(){
         /*CityData.findOneAndUpdate({_id: cId}, {
          averageRating: newAvgRating
        }, ()=>{})*/
-       /*var city2 = await CityData.findOne({name: cityName});
+       var city2 = await CityData.findOne({name: cityName});
         city2.averageRating = newAvgRating;
-        city2.save();*/
-        return newAvgRating;
+        city2.save();
+        //return newAvgRating;
 
-         /*CityData.findOneAndUpdate({_id: cId}, {
+         CityData.findOneAndUpdate({_id: cId}, {
             //averageRating: newAvgRating,
             $push: {ratings : {
                 userid:       uId,
@@ -436,7 +436,7 @@ async function dbInit(){
                 description:  review,
                 time:         new Date().toISOString()
             }}
-        }, ()=>{});*/
+        }, ()=>{});
 
         /*CityData.findOneAndUpdate({_id: cId}, {"$set" :
         {averageRating: newAvgRating,
