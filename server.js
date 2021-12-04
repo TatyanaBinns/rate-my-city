@@ -166,19 +166,18 @@ async function dbInit(){
           "ratings": { "$cond": [
             { "$eq": [{ "$size": { "$ifNull": [ "$ratings",[]] }}, 0] },
             { "$ifNull": [ "$ratings", [] ] },
-            1}
-            /*{ "$setDifference": [
+            { "$setDifference": [
                 { "$map": {
                     "input": "$ratings",
                     "as": "i",
                     "in": { "$cond": [
-                        { "$eq": [ "$$i", null ] },
+                        { "$eq": [ "$$i.userid", null ] },
                         "$$i",
                         false
                     ]}
                 }},
                 [false]
-            ]}*/
+            ]}
           ]}
         }
         }
