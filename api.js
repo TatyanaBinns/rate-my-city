@@ -6,6 +6,7 @@ exports.setApp = function(app, dbApi)
   //const nodemailer = require('nodemailer');
   const crypto = require('crypto');
   const sgMail = require('@sendgrid/mail');
+  const jwt = require("jsonwebtoken")
 
   app.post('/api/login', async (req, res, next) =>
   {
@@ -154,74 +155,69 @@ exports.setApp = function(app, dbApi)
 
 
   // Forgot password, reset
-  /*app.post('/api/resetPassword', async (req, res) =>
+  app.post('/api/resetPassword', async (req, res) =>
   {
+    const {email} = req.body;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    if (req.body.email == '')
+    const user = await dbApi.userByEmail(email);
+    if (!user)
     {
-      ret = {error: "Email is required to reset password."};
-      res.status(400).json(ret);
-      // or res.status(400).send(ret);
+      return res.json("User does not exist");
     }
 
-    var user = (await dbApi.userByEmail(req.body.email));
 
-    if (user == null)
-    {
-      ret = {error: "Email was not found in our records."};
-      res.status(400).json(ret);
-      console.log("email not found in database.");
-    }
+    var jwtToken = token.createToken(user.firstName, user.lastName, user._id);
 
-    else
+//var other = jwt.verify( nice.accessToken, process.env.ACCESS_TOKEN_SECRET)
+
+    //res.send({id: other.userId, name: other.firstName, last: other.lastName})
+
+
+    const message =
     {
-      var crypto;
-      try
+      to: email,
+      from: {
+        name:  `Rate My City`,
+        email: `ratemycitynoreply@gmail.com`,
+      },
+      subject: `Reset Password`,
+      text: `Hello,
+      Please copy and paste the address below to reset your password. http://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}`,
+      html: `<h1>Hello,</h1>
+      <p>Please click the link below to verify your account.</p>
+             <a href="http://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}">Verify your account</a>`
+    };
+
+      // If email successfully sends to user, return empty error
+      await sgMail.send(message)
+      .then(response => {
+        ret = {message: "Sent successfully", emailToken: jwtToken.accessToken};
+        res.status(200).send(ret);
+      })
+      .catch(error => res.send({error:error.message});
+
+  });
+
+  app.post('/api/reset', async(req, res, next) =>
+  {
+    try {
+      const {emailToken, password} = req.body;
+     var hashed = bcrypt.hashSync(password, 10);
+      if (token.isExpired(emailToken))
       {
-        crypto = await import('crypto');
+        return res.status(401).json("Link expired");
       }
-      catch (e)
-      {
-        console.log('crypto support is disabled.');
-      }
 
-      const token = crypto.randomBytes(20).toString('hex');
-      user.update(
-        {
-          resetPasswordToken: token,
-          resetPasswordExpires: Date.now() + 400000,
-        });
+      var verifiedToken = jwt.verify( emailToken, process.env.ACCESS_TOKEN_SECRET)
 
-      const transporter = nodemailer.createTransport(
-        {
-          service: 'gmail',
-          auth:
-          {
-            user: `${process.env.EMAIL_ADDRESS}`,
-            pass: `${process.env.EMAIL_PASSWORD}`,
-          },
-        });
+      await dbApi.updateUserByEmail(verifiedToken.email, {pwhash: hashed} );
 
-      const mailOptions =
-            {
-              from: 'rate-my-city-admin@gmail.com',
-              to: `${user.email}`,
-              subject: 'Reset your Password for Rate-My-City',
-              text:
-                'Insert message here to reset your password........\n\n'
-                + '`http://localhost:3000/reset/${token}\n\n`'
-                + 'Link might not work right now.',
-            };
-
-      transporter.sendMail(mailOptions, (err, response) =>
-      {
-        if (err)
-        {
-          console.log('Error occurred: ', err);
-        }
-      });
+      res.json("Successfully reseted")
+    } catch(err)
+    {
+      res.json({message: err.message})
     }
-  });*/
+  } )
 
   app.post('/api/createCity', async (req, res, next) =>
   {
