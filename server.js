@@ -116,7 +116,7 @@ async function dbInit(){
           "$group": {
            "_id" : "$name",
            "state" : {"$first" : "$state"},
-           "averageEntertainment": {
+           /*"averageEntertainment": {
              "$avg" : "$ratings.rating.entertainment"
            },
            "averageNature" : {
@@ -136,7 +136,7 @@ async function dbInit(){
            },
            "averageFood" : {
              "$avg" : "$ratings.rating.food"
-           },
+           },*/
            "ratings" : {"$push" : "$ratings"}
            /*"ratings": {
              "$filter": {
