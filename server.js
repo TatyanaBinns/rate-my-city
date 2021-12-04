@@ -174,7 +174,7 @@ async function dbInit(){
              "averageFood" : {
                "$avg" : "$ratings.rating.food"
              },
-             "ratings" : "$ratings"
+             "ratings" : {"$push" : "$ratings"}
              /*"ratings": {
                "$filter": {
                  "input": "$ratings",
