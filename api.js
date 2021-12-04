@@ -346,12 +346,14 @@ exports.setApp = function(app, dbApi)
     }
 
     (async() => {
-      //await dbApi.deleteRating(email, city);
+      await dbApi.deleteRating(email, city);
       //await dbApi.addRating(email, city, rating, review);
-      await dbApi.editRating(email, city, rating, review);
+      //await dbApi.editRating(email, city, rating, review);
       error = "";
     })();
-
+  (async() => {
+    await dbApi.addRating(email, city, rating, review);
+    })();
     var refreshedToken = null;
 
     try
