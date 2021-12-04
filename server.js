@@ -534,9 +534,9 @@ async function dbInit(){
         /*CityData.findOneAndUpdate({_id: cId}, {
          averageRating: newAvgRating
        }, ()=>{})*/
-       var city2 = await CityData.findOne({_id: cId});
+       /*var city2 = await CityData.findOne({_id: cId});
         city2.averageRating = newAvgRating;
-        city2.save();
+        city2.save();*/
         //return newAvgRating;
 
         UserProfile.findOneAndUpdate({email: uEmail}, {
