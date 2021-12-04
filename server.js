@@ -450,9 +450,9 @@ async function dbInit(){
         }, { safe: true, multi:true }, (err, obj)=>{
             console.log(err);
         });
-         CityData.findOneAndUpdate({_id: cId}, {
+         /*CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating
-        }, ()=>{});
+        }, ()=>{});*/
     };
 
     dbApi.addComment = async (cityName, ratingUserName, timePosted, uEmail, uComment) => {
@@ -648,7 +648,7 @@ async function dbInit(){
              $push: {ratings : {cityid: cId} }
          }, ()=>{});
          await CityData.findOneAndUpdate({_id: cId}, {
-             averageRating: newAvgRating,
+             //averageRating: newAvgRating,
              $push: {ratings : {
                  userid:       uId,
                  rating:       uRating,
