@@ -103,7 +103,77 @@ async function dbInit(){
 
     //dbApi.allCities    = ()        => CityData.find().sort({"name": 1});
     dbApi.searchCityAndState = async (city, state) => {
-      var res = await CityData.find({$and: [
+      var res =  await CityData.aggregate([
+          {
+          "$match": {
+           $and: [
+           {"name" : { "$regex": new RegExp(city, 'i' )}},
+           {"state" : {"$regex": new RegExp(state, 'i')}}
+          ]}
+          },
+          {"$unwind" : "$ratings"},
+          {
+          "$group": {
+           "_id" : "$name",
+           "state" : {"$first" : "$state"},
+           "averageEntertainment": {
+             "$avg" : "$ratings.rating.entertainment"
+           },
+           "averageNature" : {
+             "$avg" : "$ratings.rating.nature"
+           },
+           "averageCost" : {
+             "$avg" : "$ratings.rating.cost"
+           },
+           "averageSafety" : {
+             "$avg" : "$ratings.rating.safety"
+           },
+           "averageCulture" : {
+             "$avg" : "$ratings.rating.culture"
+           },
+           "averageTransportation" : {
+             "$avg" : "$ratings.rating.transportation"
+           },
+           "averageFood" : {
+             "$avg" : "$ratings.rating.food"
+           },
+           "ratings" : {"$push" : "$ratings"}
+           /*"ratings": {
+             "$filter": {
+               "input": "$ratings",
+               "as": "ratings",
+               "cond": {
+                 "$eq": [
+                   "$$ratings.userid",
+                   userId
+                 ]
+               }
+             }
+           }*/
+          }
+        }
+      }
+      ])
+      for (city of res)
+        for (rating of city.ratings){
+            var userid = rating.userid;
+            console.log("Finding user with id "+userid);
+            var user = await UserProfile.findOne({_id: userid}).lean();
+            console.log("Result: "+JSON.stringify(user));
+            if(user == null)
+                rating.userdetails = {
+                   firstName: "",
+                   lastName: "",
+                   userName: ""
+                };
+            else
+                rating.userdetails = {
+                   firstName: user.firstName,
+                   lastName: user.lastName,
+                   userName: user.userName
+                };
+        }
+      /*var res = await CityData.find({$and: [
                             {name: {$regex: new RegExp(city, 'i')}},
                             {state: {$regex: new RegExp(state, 'i')}}
                             ]}).lean();
@@ -125,7 +195,7 @@ async function dbInit(){
                      lastName: user.lastName,
                      userName: user.userName
                   };
-          }
+          }*/
       return res;
     };
 
