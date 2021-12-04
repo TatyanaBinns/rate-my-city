@@ -190,6 +190,15 @@ async function dbInit(){
             }
           },
           {"$project" : {
+            "_id" : 1,
+            "state" : 1,
+            "averageEntertainment": 1,
+            "averageNature" : 1,
+            "averageCost" : 1,
+            "averageSafety" : 1,
+            "averageCulture" :1,
+            "averageTransportation" : 1,
+            "averageFood" : 1,
             "ratings": {
               "$filter": {
                 "input": "$ratings",
