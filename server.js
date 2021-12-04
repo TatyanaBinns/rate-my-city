@@ -202,19 +202,19 @@ async function dbInit(){
                    userName: user.userName
                 };
         }
-        /*for (city of res)
+        for (city of res)
         {
           if (city.ratings.length == 0)
           {
-            city.averageEntertainment: 0,
-            city.averageNature : 0,
-            city.averageCost : 0,
-            city.averageSafety : 0,
-            city.averageCulture :,
-            city.averageTransportation : 0,
-            city.averageFood : 0
+            city.averageEntertainment = 0,
+            city.averageNature = 0,
+            city.averageCost = 0,
+            city.averageSafety = 0,
+            city.averageCulture = 0,
+            city.averageTransportation = 0,
+            city.averageFood = 0
           }
-        }*/
+        }
       /*var res = await CityData.find({$and: [
                             {name: {$regex: new RegExp(city, 'i')}},
                             {state: {$regex: new RegExp(state, 'i')}}
