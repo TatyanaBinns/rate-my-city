@@ -163,7 +163,7 @@ async function dbInit(){
           "averageCulture" :1,
           "averageTransportation" : 1,
           "averageFood" : 1,
-          "ratings": { "$cond": [
+          /*"ratings": { "$cond": [
             { "$eq": [{ "$size": { "$ifNull": [ "$ratings",[]] }}, 0] },
             { "$ifNull": [ "$ratings", [] ] },
             { "$setDifference": [
@@ -178,7 +178,9 @@ async function dbInit(){
                 }},
                 [false]
             ]}
-          ]}
+          ]}*/
+          "ratings" :
+           { $sort : { ratings : 1 } }
         }
         }
 
