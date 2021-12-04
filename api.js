@@ -157,7 +157,7 @@ exports.setApp = function(app, dbApi)
   // Forgot password, reset
   app.post('/api/resetPassword', async (req, res) =>
   {
-    try {const {email} = req.body;
+    const {email} = req.body;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const user = await dbApi.userByEmail(email);
     if (!user)
@@ -166,7 +166,7 @@ exports.setApp = function(app, dbApi)
     }
 
 
-    var jwtToken = token.createToken(user.firstName, user.lastName, user._id);
+    /*var jwtToken = token.createToken(user.firstName, user.lastName, user._id);
 
 //var other = jwt.verify( nice.accessToken, process.env.ACCESS_TOKEN_SECRET)
 
@@ -186,10 +186,7 @@ exports.setApp = function(app, dbApi)
       html: `<h1>Hello,</h1>
       <p>Please click the link below to verify your account.</p>
              <a href="http://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}">Verify your account</a>`
-    };} catch (err)
-    {
-      res.json({message: err.message})
-    }
+    };
 
       // If email successfully sends to user, return empty error
       await sgMail.send(message)
@@ -197,7 +194,7 @@ exports.setApp = function(app, dbApi)
         ret = {message: "Sent successfully", emailToken: jwtToken.accessToken};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message});
+      .catch(error => res.send({error:error.message});*/
 
   });
 
