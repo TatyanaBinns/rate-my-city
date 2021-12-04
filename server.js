@@ -156,7 +156,7 @@ async function dbInit(){
              "averageRating": {
                "$avg" : "$ratings.entertainment"
              },
-             "ratings": {
+             /*"ratings": {
                "$filter": {
                  "input": "$ratings",
                  "as": "ratings",
@@ -167,7 +167,7 @@ async function dbInit(){
                    ]
                  }
                }
-             }
+             }*/
             }
             }
         ])
