@@ -415,7 +415,13 @@ async function dbInit(){
             newFoodAvgRating
           );
 
-          return curNumRatings
+          return {newEntertainmentAvgRating : newEntertainmentAvgRating,
+          newNatureAvgRating : newNatureAvgRating,
+          newCostAvgRating : newCostAvgRating,
+          newSafetyAvgRating : newSafetyAvgRating,
+          newCultureAvgRating :newCultureAvgRating,
+          newTranspAvgRating : newTranspAvgRating,
+          newFoodAvgRating : newFoodAvgRating}
 
         //var newAvgRating = curAvgRating;
         /*UserProfile.findOneAndUpdate({email: uEmail}, {
