@@ -152,7 +152,7 @@ async function dbInit(){
             {
             "$group": {
              "_id" : "$name",
-             //"state" : 1,
+             "state" : "$state",
              "averageRating": {
                "$avg" : "$ratings.rating.entertainment"
              }
