@@ -148,22 +148,6 @@ async function dbInit(){
              {"state" : {"$regex": new RegExp(state, 'i')}}
             ]}
             },
-            {
-              "$project" : {
-                "ratings": {
-                  "$filter": {
-                    "input": "$ratings",
-                    "as": "ratings",
-                    "cond": {
-                      "$eq": [
-                        "$$ratings.userid",
-                        userId
-                      ]
-                    }
-                  }
-                }
-              }
-            },
             {"$unwind" : "$ratings"},
             {
             "$group": {
@@ -189,8 +173,8 @@ async function dbInit(){
              },
              "averageFood" : {
                "$avg" : "$ratings.rating.food"
-             }
-             /*"ratings": {
+             },
+             "ratings": {
                "$filter": {
                  "input": "$ratings",
                  "as": "ratings",
@@ -201,7 +185,7 @@ async function dbInit(){
                    ]
                  }
                }
-             }*/
+             }
             }
             }
         ])
