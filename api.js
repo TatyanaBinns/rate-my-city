@@ -99,11 +99,11 @@ exports.setApp = function(app, dbApi)
 
       var user = await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
 
-      ret = {userId: user._id, firstName: user.firstName, lastName: user.lastName, userName: user.userName, email: user.email, emailToken: user.emailToken, error: ""};
+      /*ret = {userId: user._id, firstName: user.firstName, lastName: user.lastName, userName: user.userName, email: user.email, emailToken: user.emailToken, error: ""};
       res.status(200).json(ret);} catch (err)
       {
         res.json({error: err.message})
-      }
+      }*/
 
     const message =
       {
