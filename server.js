@@ -171,7 +171,7 @@ async function dbInit(){
             }
             }
         ])
-        for (city of res)
+        /*for (city of res)
           for (rating of city.ratings){
               var userid = rating.userid;
               console.log("Finding user with id "+userid);
@@ -189,7 +189,7 @@ async function dbInit(){
                      lastName: user.lastName,
                      userName: user.userName
                   };
-          }
+          }*/
       return res;
     };
     dbApi.allStates   = async ()   => {
