@@ -212,7 +212,7 @@ exports.setApp = function(app, dbApi)
       html: `<h1>Hello,</h1>
       <p>Please click the link below to reset your password.</p>
              <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${accessToken}">Verify your account</a>`
-    };*/
+    };
 
       // If email successfully sends to user, return empty error
       await sgMail.send(message)
@@ -220,7 +220,7 @@ exports.setApp = function(app, dbApi)
         ret = {message: "Sent successfully", emailToken: jwtToken.accessToken};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message});
+      .catch(error => res.send({error:error.message});*/
 
   });
 
