@@ -421,15 +421,14 @@ async function dbInit(){
         UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
-        await CityData.findOneAndUpdate({_id: cId}, {
-            averageRating: newAvgRating,
+        CityData.findOneAndUpdate({_id: cId}, {
+          "$set" : {  averageRating: newAvgRating,
             $push: {ratings : {
                 userid:       uId,
                 rating:       uRating,
                 description:  review,
                 time:         new Date().toISOString()
-            }}
-        }, ()=>{});
+              }}}}, ()=>{})
     };
     dbApi.editRating = async(uEmail, cityName, uRating, review) => {
       var city = (await dbApi.cityByName(cityName));
