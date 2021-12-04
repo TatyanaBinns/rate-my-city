@@ -170,7 +170,7 @@ exports.setApp = function(app, dbApi)
 
     var jwtToken = token.createToken(user.firstName, user.lastName, user._id, user.email);
 
-    var other = jwt.verify( nice.accessToken, process.env.ACCESS_TOKEN_SECRET)
+    var other = jwt.verify( jwtToken.accessToken, process.env.ACCESS_TOKEN_SECRET)
 
     res.json({id: other.userId, name: other.firstName, last: other.lastName, email: other.email})} catch (err)
     {
