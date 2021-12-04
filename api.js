@@ -177,6 +177,7 @@ exports.setApp = function(app, dbApi)
       res.json({message: err.message})
     }*/
     var access = jwtToken.accessToken;
+    res.json(access)
         /*const message =
             {
             to: email,
