@@ -335,7 +335,7 @@ exports.setApp = function(app, dbApi)
         //error = ""
     })();
 
-    var refreshedToken = null;
+    /*var refreshedToken = null;
 
     try
     {
@@ -348,7 +348,7 @@ exports.setApp = function(app, dbApi)
 
     var ret = { error: error, jwtToken: refreshedToken };
 
-    res.status(200).json(ret);
+    res.status(200).json(ret);*/
   });
 
   app.post('/api/editRating', async(req, res, next) => {
