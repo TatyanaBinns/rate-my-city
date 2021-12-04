@@ -154,7 +154,6 @@ async function dbInit(){
              "state" : 1,
              "averageRating": {
                {$unwind: "$ratings"},
-               {$group:
                {
                  entertainment : {$avg: "$ratings.entertainment"},
                  nature        : {$avg: "$ratings.nature"},
@@ -164,7 +163,7 @@ async function dbInit(){
                  transportation:{$avg: "$ratings.transportation"},
                  food          : {$avg: "$ratings.food"}
                }
-             }
+
               },
              "ratings": {
                "$filter": {
