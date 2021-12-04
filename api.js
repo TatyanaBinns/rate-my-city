@@ -208,10 +208,10 @@ exports.setApp = function(app, dbApi)
       },
       subject: `Reset Password`,
       text: `Hello,
-      Please click the link below to reset your password. ${req.protocol}://${req.headers.host}/api/reset/?emailToken=${accessToken}`,
+      Please click the link below to reset your password. ${req.protocol}://${req.headers.host}/api/reset/?emailToken=${access}`,
       html: `<h1>Hello,</h1>
       <p>Please click the link below to reset your password.</p>
-             <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${accessToken}">Verify your account</a>`
+             <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${access}">Verify your account</a>`
     };
 
       // If email successfully sends to user, return empty error
