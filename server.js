@@ -137,7 +137,6 @@ async function dbInit(){
          });*/
         var res =  await CityData.aggregate([
             {
-            {"$unwind" : "$ratings"},
             "$match": {
              $and: [
              {"ratings": {
@@ -149,6 +148,7 @@ async function dbInit(){
              {"state" : {"$regex": new RegExp(state, 'i')}}
             ]}
             },
+            {"$unwind" : "$ratings"},
             {
             "$project": {
              "name" : 1,
