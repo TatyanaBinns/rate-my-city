@@ -165,8 +165,8 @@ async function dbInit(){
           "averageFood" : 1,
           "ratings": { "$cond": [
             { "$eq": [{ "$size": { "$ifNull": [ "$ratings",[]] }}, 0] },
-            { "$ifNull": [ "$ratings", [] ] },
-            { "$setDifference": [
+            { "$ifNull": [ "$ratings", [] ] }
+            /*{ "$setDifference": [
                 { "$map": {
                     "input": "$ratings",
                     "as": "i",
@@ -177,7 +177,7 @@ async function dbInit(){
                     ]}
                 }},
                 [false]
-            ]}
+            ]}*/
           ]}
         }
         }
