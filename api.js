@@ -498,7 +498,7 @@ exports.setApp = function(app, dbApi)
     //res.json({id: user._id})
     try{
       const result = await dbApi.searchUsername(id, city, state);
-      res.json({rating: result.averageEntertainment});
+      res.json(result);
     }
     catch (err) {
       res.json({message: err.message});
