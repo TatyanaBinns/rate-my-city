@@ -208,10 +208,10 @@ exports.setApp = function(app, dbApi)
       },
       subject: `Reset Password`,
       text: `Hello,
-      Please click the link below to reset your password. Link expires in 24 hours. ${req.protocol}://${req.headers.host}/api/reset/?emailToken=${access}`,
+      Please click the link below to reset your password. Link expires in 24 hours. ${req.protocol}://${req.headers.host}/Reset/?emailToken=${access}`,
       html: `<h1>Hello,</h1>
       <p>Please click the link below to reset your password. Link expires in 24 hours.</p>
-             <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${access}">Reset your password</a>`
+             <a href="${req.protocol}://${req.headers.host}/Reset/?emailToken=${access}">Reset your password</a>`
     };
 
       // If email successfully sends to user, return empty error
@@ -224,7 +224,7 @@ exports.setApp = function(app, dbApi)
 
   });
 
-  app.post('/api/reset', async(req, res, next) =>
+  app.post('/Reset', async(req, res, next) =>
   {
     try {
       const {emailToken, password, confirmpassword} = req.body;
