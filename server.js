@@ -222,7 +222,7 @@ async function dbInit(){
             "$group": {
              "_id" : "$name",
              "state" : {"$first" : "$state"},
-             /*"averageEntertainment": {
+             "averageEntertainment": {
                "$avg" : "$ratings.rating.entertainment"
              },
              "averageNature" : {
@@ -242,7 +242,7 @@ async function dbInit(){
              },
              "averageFood" : {
                "$avg" : "$ratings.rating.food"
-             },*/
+             },
              "ratings" : {"$push" : "$ratings"}
              /*"ratings": {
                "$filter": {
@@ -261,16 +261,13 @@ async function dbInit(){
           {"$project" : {
             "_id" : 1,
             "state" : 1,
-            /*"averageEntertainment": {"$cond":
-             { if: { "$eq": [ "$aver", 0 ] },
-                   then: null,
-                   else: "$valueToAvg" }}
+            "averageEntertainment": 1,
             "averageNature" : 1,
             "averageCost" : 1,
             "averageSafety" : 1,
             "averageCulture" :1,
             "averageTransportation" : 1,
-            "averageFood" : 1,*/
+            "averageFood" : 1,
             "ratings": {
               "$filter": {
                 "input": "$ratings",
