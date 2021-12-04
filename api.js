@@ -177,7 +177,7 @@ exports.setApp = function(app, dbApi)
       res.json({message: err.message})
     }*/
 
-        const message =
+        /*const message =
             {
             to: email,
             from: {
@@ -198,7 +198,7 @@ exports.setApp = function(app, dbApi)
             ret = "Reset process sent to email. Please verify email before logging in.";
             res.status(200).json(ret);
           })
-          .catch(error => res.send({error:error.message}))
+          .catch(error => res.send({error:error.message}))*/
   /*const message =
     {
       to: email,
