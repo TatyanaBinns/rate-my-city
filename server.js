@@ -422,7 +422,7 @@ async function dbInit(){
 
         /*CityData.findOneAndUpdate({_id: cId}, {
          averageRating: newAvgRating
-       }, ()=>{})
+       }, ()=>{})*/
          CityData.findOneAndUpdate({_id: cId}, {
             //averageRating: newAvgRating,
             $push: {ratings : {
@@ -431,16 +431,16 @@ async function dbInit(){
                 description:  review,
                 time:         new Date().toISOString()
             }}
-        }, ()=>{});*/
+        }, ()=>{});
 
-        CityData.findOneAndUpdate({_id: cId}, {"$set" :
+        /*CityData.findOneAndUpdate({_id: cId}, {"$set" :
         {averageRating: newAvgRating,
         $push: {ratings : {
             userid:       uId,
             rating:       uRating,
             description:  review,
             time:         new Date().toISOString()
-          }}}}, ()=>{});
+          }}}}, ()=>{});*/
     };
     dbApi.editRating = async(uEmail, cityName, uRating, review) => {
       var city = (await dbApi.cityByName(cityName));
