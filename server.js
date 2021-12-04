@@ -152,7 +152,20 @@ async function dbInit(){
             "$project": {
              "name" : 1,
              "state" : 1,
-             "averageRating" : 1,
+             "averageRating": {
+               {$unwind: "$ratings"},
+               {$group:
+               {
+                 entertainment : {$avg: "$ratings.entertainment"},
+                 nature        : {$avg: "$ratings.nature"},
+                 cost          : {$avg: "$ratings.cost"},
+                 safety        : {$avg: "$ratings.safety"},
+                 culture       : {$avg: "$ratings.culture"},
+                 transportation:{$avg: "$ratings.transportation"},
+                 food          : {$avg: "$ratings.food"}
+               }
+             }
+              },
              "ratings": {
                "$filter": {
                  "input": "$ratings",
@@ -423,9 +436,9 @@ async function dbInit(){
         /*CityData.findOneAndUpdate({_id: cId}, {
          averageRating: newAvgRating
        }, ()=>{})*/
-       var city2 = await CityData.findOne({name: cityName});
+      /* var city2 = await CityData.findOne({name: cityName});
         city2.averageRating = newAvgRating;
-        city2.save();
+        city2.save();*/
         //return newAvgRating;
 
          CityData.findOneAndUpdate({_id: cId}, {
