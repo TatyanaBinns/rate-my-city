@@ -174,7 +174,7 @@ exports.setApp = function(app, dbApi)
     //res.send({id: other.userId, name: other.firstName, last: other.lastName})
 
 
-    const message =
+    /*const message =
     {
       to: email,
       from: {
@@ -195,7 +195,7 @@ exports.setApp = function(app, dbApi)
         ret = {message: "Sent successfully", emailToken: jwtToken.accessToken};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message});
+      .catch(error => res.send({error:error.message});*/
 
   });
 
