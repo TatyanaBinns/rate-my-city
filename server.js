@@ -152,7 +152,6 @@ async function dbInit(){
            }*/
           }
         }
-      }
       ])
       for (city of res)
         for (rating of city.ratings){
