@@ -332,6 +332,7 @@ exports.setApp = function(app, dbApi)
     (async() => {
         var num = await dbApi.addRating(email, city, rating, review);
         return res.json(num)
+        //error = ""
     })();
 
     var refreshedToken = null;
