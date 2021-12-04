@@ -171,7 +171,7 @@ async function dbInit(){
                     "input": "$ratings",
                     "as": "i",
                     "in": { "$cond": [
-                        { "$eq": [ "$$i.userid", null ] },
+                         { "$$i": { $exists: true } } ,
                         "$$i",
                         false
                     ]}
