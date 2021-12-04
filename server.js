@@ -153,8 +153,26 @@ async function dbInit(){
             "$group": {
              "_id" : "$name",
              "state" : {"$first" : "$state"},
-             "averageRating": {
+             "averageEntertainment": {
                "$avg" : "$ratings.rating.entertainment"
+             },
+             "averageNature" : {
+               "$avg" : "$ratings.rating.nature"
+             },
+             "averageCost" : {
+               "$avg" : "$ratings.rating.cost"
+             },
+             "averageSafety" : {
+               "$avg" : "$ratings.rating.safety"
+             },
+             "averageCulture" : {
+               "$avg" : "$ratings.rating.culture"
+             },
+             "averageTransportation" : {
+               "$avg" : "$ratings.rating.transportation"
+             },
+             "averageFood" : {
+               "$avg" : "$ratings.rating.food"
              }
              /*"ratings": {
                "$filter": {
