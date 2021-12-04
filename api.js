@@ -28,10 +28,11 @@ exports.setApp = function(app, dbApi)
             try
             {
               const token = require("./createJWT.js");
-              ret = token.createToken( users.firstName, users.lastName, users._id );
+              ret = token.createToken( users.firstName, users.lastName, users._id, users.email );
               ret.firstName = users.firstName;
               ret.lastName = users.lastName;
               ret.userName = users.userName;
+              ret.email = users.email;
               ret.id = users._id;
               ret.emailToken = users.emailToken
             }
@@ -169,9 +170,9 @@ exports.setApp = function(app, dbApi)
 
     var jwtToken = token.createToken(user.firstName, user.lastName, user._id);
 
-//var other = jwt.verify( nice.accessToken, process.env.ACCESS_TOKEN_SECRET)
+    var other = jwt.verify( nice.accessToken, process.env.ACCESS_TOKEN_SECRET)
 
-    //res.send({id: other.userId, name: other.firstName, last: other.lastName})
+    res.send({id: other.userId, name: other.firstName, last: other.lastName})
 
 
   /*const message =
