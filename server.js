@@ -163,24 +163,22 @@ async function dbInit(){
           "averageCulture" :1,
           "averageTransportation" : 1,
           "averageFood" : 1,
-          /*"ratings": { "$cond": [
+          "ratings": { "$cond": [
             { "$eq": [{ "$size": { "$ifNull": [ "$ratings",[]] }}, 0] },
             { "$ifNull": [ "$ratings", [] ] },
             { "$setDifference": [
                 { "$map": {
                     "input": "$ratings",
                     "as": "i",
-                    "in": { "$cond": [
-                         { "i": { $exists: true } } ,
-                        "$$i",
+                    "in": "$$i"/*{ "$cond": [
+                      { "$eq": [ "$$i.deleted", null ] },
+                     "$$i",
                         false
-                    ]}
+                    ]}*/
                 }},
                 [false]
             ]}
-          ]}*/
-          "ratings" :
-           { $sort : { ratings : 1 } }
+          ]}
         }
         }
 
