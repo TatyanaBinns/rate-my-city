@@ -210,8 +210,8 @@ exports.setApp = function(app, dbApi)
       text: `Hello,
       Please click the link below to reset your password. ${req.protocol}://${req.headers.host}/api/reset/?emailToken=${access}`,
       html: `<h1>Hello,</h1>
-      <p>Please click the link below to reset your password.</p>
-             <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${access}">Verify your account</a>`
+      <p>Please click the link below to reset your password. Link expires in 24 hours</p>
+             <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${access}">Reset your password</a>`
     };
 
       // If email successfully sends to user, return empty error
