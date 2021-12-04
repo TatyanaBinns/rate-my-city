@@ -172,7 +172,7 @@ exports.setApp = function(app, dbApi)
 
     var other = jwt.verify( nice.accessToken, process.env.ACCESS_TOKEN_SECRET)
 
-    res.send({id: other.userId, name: other.firstName, last: other.lastName})
+    res.send({id: other.userId, name: other.firstName, last: other.lastName, email: other.email})
 
 
   /*const message =
