@@ -151,8 +151,8 @@ async function dbInit(){
             {"$unwind" : "$ratings"},
             {
             "$group": {
-             "name" : 1,
-             "state" : 1,
+             "name" : "$name",
+             "state" : "$state",
              "averageRating": {
                "$avg" : "$ratings.entertainment"
              },
