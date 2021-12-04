@@ -163,7 +163,7 @@ async function dbInit(){
                   }
                 }
               }
-            }
+            },
             {"$unwind" : "$ratings"},
             {
             "$group": {
