@@ -152,7 +152,7 @@ async function dbInit(){
             "$project": {
              "name" : 1,
              "state" : 1,
-             "averageRating": 1,
+             "averageRating": "no",
              "ratings": {
                "$filter": {
                  "input": "$ratings",
