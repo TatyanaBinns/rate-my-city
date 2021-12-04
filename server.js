@@ -330,12 +330,12 @@ async function dbInit(){
 
         console.log("Attempting to pull rating from city "+cId+" by user "+uId);
 
-        CityData.updateOne({_id: cId}, {
+        await CityData.updateOne({_id: cId}, {
             "$pull": { "ratings" : {userid: uId}}
         }, { safe: true, multi:true }, (err, obj)=>{
             console.log(err);
         });
-        CityData.findOneAndUpdate({_id: cId}, {
+        await CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating
         }, ()=>{});
     };
@@ -418,7 +418,7 @@ async function dbInit(){
 
 
         //var newAvgRating = curAvgRating;
-        UserProfile.findOneAndUpdate({email: uEmail}, {
+        await UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
         await CityData.findOneAndUpdate({_id: cId}, {
@@ -507,19 +507,19 @@ async function dbInit(){
             newFoodAvgRating
           );
 
-        await CityData.updateOne({_id: cId}, {
+        /*await CityData.updateOne({_id: cId}, {
               "$pull": { "ratings" : {userid: uId}}
           }, { safe: true, multi:true }, (err, obj)=>{
               console.log(err);
-          });
+          });*/
 
         //var newAvgRating = curAvgRating;
-        await UserProfile.findOneAndUpdate({email: uEmail}, {
+        /*await UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
-        }, ()=>{});
+        }, ()=>{});*/
         await CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating,
-            $push: {ratings : {
+            $set: {ratings : {
                 userid:       uId,
                 rating:       uRating,
                 description:  review,
