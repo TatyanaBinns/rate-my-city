@@ -200,7 +200,7 @@ exports.setApp = function(app, dbApi)
             res.status(200).json(ret);
           })
           .catch(error => res.send({error:error.message}))*/
-  const message =
+  /*const message =
     {
       to: email,
       from: {
@@ -209,10 +209,10 @@ exports.setApp = function(app, dbApi)
       },
       subject: `Reset Password`,
       text: `Hello,
-      Please click the link below to reset your password. ${req.protocol}://${req.headers.host}/api/reset/`,//?emailToken=${access}`,
+      Please click the link below to reset your password. ${req.protocol}://${req.headers.host}/api/reset/?emailToken=${access}`,
       html: `<h1>Hello,</h1>
       <p>Please click the link below to reset your password.</p>
-             <a href="${req.protocol}://${req.headers.host}/api/reset/">Verify your account </a>`//?emailToken=${access}">Verify your account</a>`
+             <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${access}">Verify your account</a>`
     };
 
       // If email successfully sends to user, return empty error
@@ -221,7 +221,7 @@ exports.setApp = function(app, dbApi)
         ret = {message: "Sent successfully", emailToken: jwtToken.accessToken};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message});
+      .catch(error => res.send({error:error.message});*/
 
   });
 
