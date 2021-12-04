@@ -163,18 +163,23 @@ async function dbInit(){
           "averageCulture" :1,
           "averageTransportation" : 1,
           "averageFood" : 1,
-          "ratings": {
-            "$filter": {
-              "input": "$filter",
-              "as": "ratings",
-              "cond": {
-                "$eq": [
-                  "$$ratings",
-                  null
-                ]
-              }
-            }
-          }
+          "ratings": { "$cond": [
+            { "$eq": [{ "$size": { "$ifNull": [ "$ratings",[]] }}, 0] },
+            { "$ifNull": [ "$ratings", [] ] },
+            { "$setDifference": [
+                { "$map": {
+                    "input": "$ratings",
+                    "as": "i",
+                    "in": { "$cond": [
+                        { "$eq": [ "$$i", null ] },
+                        "$$i",
+                        false
+                    ]}
+                }},
+                [false]
+            ]}
+          ]}
+        ]}
         }
       }
 
