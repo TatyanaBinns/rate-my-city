@@ -158,7 +158,7 @@ exports.setApp = function(app, dbApi)
   // Forgot password, reset
   app.post('/api/resetPassword', async (req, res) =>
   {
-    try {const {email} = req.body;
+    const {email} = req.body;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const token = require("./createJWT.js");
     const user = await dbApi.userByEmail(email);
@@ -177,7 +177,7 @@ exports.setApp = function(app, dbApi)
       res.json({message: err.message})
     }*/
     var access = jwtToken.accessToken;
-        /*const message =
+        const message =
             {
             to: email,
             from: {
@@ -198,7 +198,7 @@ exports.setApp = function(app, dbApi)
             ret = "Reset process sent to email. Please verify email before logging in.";
             res.status(200).json(ret);
           })
-          .catch(error => res.send({error:error.message}))*/
+          .catch(error => res.send({error:error.message}))
   /*const message =
     {
       to: email,
