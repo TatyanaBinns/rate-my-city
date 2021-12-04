@@ -199,7 +199,7 @@ exports.setApp = function(app, dbApi)
             res.status(200).json(ret);
           })
           .catch(error => res.send({error:error.message}))*/
-  const message =
+  /*const message =
     {
       to: email,
       from: {
@@ -212,7 +212,7 @@ exports.setApp = function(app, dbApi)
       html: `<h1>Hello,</h1>
       <p>Please click the link below to reset your password.</p>
              <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${accessToken}">Verify your account</a>`
-    };
+    };*/
 
       // If email successfully sends to user, return empty error
       await sgMail.send(message)
