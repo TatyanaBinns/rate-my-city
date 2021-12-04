@@ -111,7 +111,8 @@ async function dbInit(){
            {"state" : {"$regex": new RegExp(state, 'i')}}
           ]}
           },
-          {"$unwind" : "$ratings"},
+          {"$unwind" : {"path": "$ratings",
+            "preserveNullAndEmptyArrays": true}},
           {
           "$group": {
            "_id" : "$name",
