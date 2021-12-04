@@ -335,7 +335,7 @@ async function dbInit(){
         }, { safe: true, multi:true }, (err, obj)=>{
             console.log(err);
         });
-        await CityData.findOneAndUpdate({_id: cId}, {
+         CityData.findOneAndUpdate({_id: cId}, {
             averageRating: newAvgRating
         }, ()=>{});
     };
