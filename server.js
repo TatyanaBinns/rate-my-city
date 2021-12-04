@@ -188,7 +188,22 @@ async function dbInit(){
                }
              }*/
             }
+          },
+          {"$project" : {
+            "ratings": {
+              "$filter": {
+                "input": "$ratings",
+                "as": "ratings",
+                "cond": {
+                  "$eq": [
+                    "$$ratings.userid",
+                    userId
+                  ]
+                }
+              }
             }
+          }
+        }
         ])
         for (city of res)
           for (rating of city.ratings){
