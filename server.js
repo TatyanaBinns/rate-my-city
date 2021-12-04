@@ -543,7 +543,7 @@ async function dbInit(){
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
 
-         CityData.findOneAndUpdate({_id: cId}, {
+         await CityData.findOneAndUpdate({_id: cId}, {
             //averageRating: newAvgRating,
             $push: {ratings : {
                 userid:       uId,
