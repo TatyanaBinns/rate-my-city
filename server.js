@@ -179,9 +179,8 @@ async function dbInit(){
                 [false]
             ]}
           ]}
-        ]}
         }
-      }
+        }
 
       ])
       for (city of res)
