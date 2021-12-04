@@ -423,6 +423,10 @@ async function dbInit(){
         /*CityData.findOneAndUpdate({_id: cId}, {
          averageRating: newAvgRating
        }, ()=>{})*/
+       var city2 = await CityData.findOne({name: cityName});
+        city2.averageRating = newAvgRating;
+        city2.save();
+        
          CityData.findOneAndUpdate({_id: cId}, {
             //averageRating: newAvgRating,
             $push: {ratings : {
