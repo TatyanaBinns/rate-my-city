@@ -202,7 +202,7 @@ async function dbInit(){
                    userName: user.userName
                 };
         }
-        for (city of res)
+        /*for (city of res)
         {
           if (city.ratings.length == 0)
           {
@@ -214,7 +214,7 @@ async function dbInit(){
             city.averageTransportation : 0,
             city.averageFood : 0
           }
-        }
+        }*/
       /*var res = await CityData.find({$and: [
                             {name: {$regex: new RegExp(city, 'i')}},
                             {state: {$regex: new RegExp(state, 'i')}}
