@@ -199,7 +199,7 @@ exports.setApp = function(app, dbApi)
             res.status(200).json(ret);
           })
           .catch(error => res.send({error:error.message}))*/
-  /*const message =
+  const message =
     {
       to: email,
       from: {
@@ -218,9 +218,9 @@ exports.setApp = function(app, dbApi)
       await sgMail.send(message)
       .then(response => {
         ret = {message: "Sent successfully", emailToken: jwtToken.accessToken};
-        res.status(200).send(ret);
+        res.status(200).json(ret);
       })
-      .catch(error => res.send({error:error.message});*/
+      .catch(error => res.send({error:error.message});
 
   });
 
