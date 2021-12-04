@@ -416,10 +416,6 @@ async function dbInit(){
           );
 
         //var newAvgRating = curAvgRating;
-        UserProfile.findOneAndUpdate({email: uEmail}, {
-            $push: {ratings : {cityid: cId} }
-        }, ()=>{});
-
         /*CityData.findOneAndUpdate({_id: cId}, {
          averageRating: newAvgRating
        }, ()=>{})*/
@@ -427,6 +423,10 @@ async function dbInit(){
         city2.averageRating = newAvgRating;
         city2.save();
         //return newAvgRating;
+
+        UserProfile.findOneAndUpdate({email: uEmail}, {
+            $push: {ratings : {cityid: cId} }
+        }, ()=>{});
 
          CityData.findOneAndUpdate({_id: cId}, {
             //averageRating: newAvgRating,
