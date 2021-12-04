@@ -150,13 +150,12 @@ async function dbInit(){
             },
             {"$unwind" : "$ratings"},
             {
-            "$group": {
-              "_id" : "$name",
-             //"name" : {"$first": "$name"},
-             //"state" : {"$first": "$state"},
+            "$project": {
+             "name" : 1,
+             "state" : 1,
              "averageRating": {
-               "$avg" : "$ratings.entertainment"
-             },
+               "$avg" : "$ratings.rating.entertainment"
+             }
              /*"ratings": {
                "$filter": {
                  "input": "$ratings",
