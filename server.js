@@ -174,7 +174,8 @@ async function dbInit(){
              "averageFood" : {
                "$avg" : "$ratings.rating.food"
              },
-             "ratings": {
+             "ratings": { $push:  { "item": "$ratings.rating.userid" }
+             /*"ratings": {
                "$filter": {
                  "input": "$ratings",
                  "as": "ratings",
@@ -185,7 +186,7 @@ async function dbInit(){
                    ]
                  }
                }
-             }
+             }*/
             }
             }
         ])
