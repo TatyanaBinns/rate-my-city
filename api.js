@@ -237,7 +237,7 @@ exports.setApp = function(app, dbApi)
 
       var verifiedToken = jwt.verify( emailToken, process.env.ACCESS_TOKEN_SECRET)
 
-      await dbApi.updateUserByEmail(verifiedToken.email, {pwhash: hashed} );
+      await dbApi.updateUserByEmail(verifiedToken.email, {pwhash: hashed} ).clone();
 
       res.json("Successfully reseted")
     } catch(err)
