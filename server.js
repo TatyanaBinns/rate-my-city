@@ -415,19 +415,14 @@ async function dbInit(){
             newFoodAvgRating
           );
 
-          return {newEntertainmentAvgRating : newEntertainmentAvgRating,
-          newNatureAvgRating : newNatureAvgRating,
-          newCostAvgRating : newCostAvgRating,
-          newSafetyAvgRating : newSafetyAvgRating,
-          newCultureAvgRating :newCultureAvgRating,
-          newTranspAvgRating : newTranspAvgRating,
-          newFoodAvgRating : newFoodAvgRating}
-
         //var newAvgRating = curAvgRating;
-        /*UserProfile.findOneAndUpdate({email: uEmail}, {
+        UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
 
+        CityData.findOneAndUpdate({_id: cId}, {
+         averageRating: newAvgRating
+       }, ()=>{})
          CityData.findOneAndUpdate({_id: cId}, {
             //averageRating: newAvgRating,
             $push: {ratings : {
@@ -437,9 +432,6 @@ async function dbInit(){
                 time:         new Date().toISOString()
             }}
         }, ()=>{});
-         CityData.findOneAndUpdate({_id: cId}, {
-          averageRating: newAvgRating
-        }, ()=>{}).clone()*/
     };
     dbApi.editRating = async(uEmail, cityName, uRating, review) => {
       var city = (await dbApi.cityByName(cityName));
