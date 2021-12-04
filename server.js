@@ -415,10 +415,10 @@ async function dbInit(){
             newFoodAvgRating
           );
 
-
+          return curNumRatings
 
         //var newAvgRating = curAvgRating;
-        UserProfile.findOneAndUpdate({email: uEmail}, {
+        /*UserProfile.findOneAndUpdate({email: uEmail}, {
             $push: {ratings : {cityid: cId} }
         }, ()=>{});
 
@@ -433,7 +433,7 @@ async function dbInit(){
         }, ()=>{});
          CityData.findOneAndUpdate({_id: cId}, {
           averageRating: newAvgRating
-        }, ()=>{}).clone()
+        }, ()=>{}).clone()*/
     };
     dbApi.editRating = async(uEmail, cityName, uRating, review) => {
       var city = (await dbApi.cityByName(cityName));
