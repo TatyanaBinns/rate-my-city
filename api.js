@@ -158,7 +158,7 @@ exports.setApp = function(app, dbApi)
   // Forgot password, reset
   app.post('/api/resetPassword', async (req, res) =>
   {
-    const {email} = req.body;
+    try {const {email} = req.body;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const token = require("./createJWT.js");
     const user = await dbApi.userByEmail(email);
@@ -172,7 +172,10 @@ exports.setApp = function(app, dbApi)
 
     var other = jwt.verify( nice.accessToken, process.env.ACCESS_TOKEN_SECRET)
 
-    res.send({id: other.userId, name: other.firstName, last: other.lastName, email: other.email})
+    res.json({id: other.userId, name: other.firstName, last: other.lastName, email: other.email})} catch (err)
+    {
+      res.json({message: err.message})
+    }
 
 
   /*const message =
