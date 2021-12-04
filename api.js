@@ -330,8 +330,8 @@ exports.setApp = function(app, dbApi)
     }
 
     (async() => {
-      await dbApi.addRating(email, city, rating, review);
-      error = "";
+      var num = await dbApi.addRating(email, city, rating, review);
+      error = num;
     })();
 
     var refreshedToken = null;
