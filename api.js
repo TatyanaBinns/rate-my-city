@@ -227,12 +227,26 @@ exports.setApp = function(app, dbApi)
   app.post('/api/reset', async(req, res, next) =>
   {
     try {
-      const {emailToken, password} = req.body;
+      const {emailToken, password, confirmpassword} = req.body;
      var hashed = bcrypt.hashSync(password, 10);
      const token = require("./createJWT.js");
+
       if (token.isExpired(emailToken))
       {
         return res.status(401).json("Link expired");
+      }
+
+      var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
+
+      if (password != confirmpassword)
+      {
+        ret = {error : "Passwords do not match."};
+        return res.status(200).json(ret);
+      }
+      else if (password.length < 8 || regex.test(password) === false)
+      {
+        ret = {error: "Password requirements not met. Please check requirements below."};
+        return res.status(200).json(ret);
       }
 
       var verifiedToken = jwt.verify( emailToken, process.env.ACCESS_TOKEN_SECRET)
