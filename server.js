@@ -507,25 +507,24 @@ async function dbInit(){
             newFoodAvgRating
           );
 
-         CityData.updateOne({_id: cId}, {
-              "$pull": { "ratings" : {userid: uId}}
-          }, { safe: true, multi:true }, (err, obj)=>{
-              console.log(err);
-          });*/
-
-        //var newAvgRating = curAvgRating;
+          CityData.updateOne({_id: cId}, {
+               "$pull": { "ratings" : {userid: uId}}
+           }, { safe: true, multi:true }, (err, obj)=>{
+               console.log(err);
+           });
+         //var newAvgRating = curAvgRating;
          UserProfile.findOneAndUpdate({email: uEmail}, {
-            $push: {ratings : {cityid: cId} }
-        }, ()=>{});
+             $push: {ratings : {cityid: cId} }
+         }, ()=>{});
          await CityData.findOneAndUpdate({_id: cId}, {
-            averageRating: newAvgRating,
-            $set: {ratings : {
-                userid:       uId,
-                rating:       uRating,
-                description:  review,
-                time:         new Date().toISOString()
-            }}
-        }, ()=>{});
+             averageRating: newAvgRating,
+             $push: {ratings : {
+                 userid:       uId,
+                 rating:       uRating,
+                 description:  review,
+                 time:         new Date().toISOString()
+             }}
+         }, ()=>{});
 
     }
 
