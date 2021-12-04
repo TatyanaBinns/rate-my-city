@@ -364,7 +364,7 @@ async function dbInit(){
         var cId = city._id;
         var user = (await dbApi.userByEmail(uEmail));
         var uId = user._id;
-        var curAvgRating = city.averageRating;
+        /*var curAvgRating = city.averageRating;
 
 
         var curNumRatings = city.ratings.length;
@@ -442,7 +442,7 @@ async function dbInit(){
                  0
                );
           }
-
+          */
         console.log("Attempting to pull rating from city "+cId+" by user "+uId);
 
         CityData.updateOne({_id: cId}, {
@@ -487,7 +487,7 @@ async function dbInit(){
         var city = (await dbApi.cityByName(cityName));
         var cId = city._id;
         var uId = (await dbApi.userByEmail(uEmail))._id;
-        var curAvgRating = city.averageRating;
+        /*var curAvgRating = city.averageRating;
 
 
 	    var curNumRatings = city.ratings.length;
@@ -528,7 +528,7 @@ async function dbInit(){
             newCultureAvgRating,
             newTranspAvgRating,
             newFoodAvgRating
-          );
+          );*/
 
         //var newAvgRating = curAvgRating;
         /*CityData.findOneAndUpdate({_id: cId}, {
@@ -569,7 +569,7 @@ async function dbInit(){
       var uId = user._id;
       var curAvgRating = city.averageRating;
 
-      var curNumRatings = city.ratings.length;
+      /*var curNumRatings = city.ratings.length;
 	    var newNumRatings = curNumRatings - 1;
 
       var oldEntertainmentAvgRating;
@@ -636,7 +636,7 @@ async function dbInit(){
             newCultureAvgRating,
             newTranspAvgRating,
             newFoodAvgRating
-          );
+          );*/
 
           CityData.updateOne({_id: cId}, {
                "$pull": { "ratings" : {userid: uId}}
