@@ -157,7 +157,7 @@ exports.setApp = function(app, dbApi)
   // Forgot password, reset
   app.post('/api/resetPassword', async (req, res) =>
   {
-    const {email} = req.body;
+    try {const {email} = req.body;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const user = await dbApi.userByEmail(email);
     if (!user)
@@ -186,7 +186,10 @@ exports.setApp = function(app, dbApi)
       html: `<h1>Hello,</h1>
       <p>Please click the link below to verify your account.</p>
              <a href="http://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}">Verify your account</a>`
-    };
+    };} catch (err)
+    {
+      res.json({message: err.message})
+    }
 
       // If email successfully sends to user, return empty error
       await sgMail.send(message)
