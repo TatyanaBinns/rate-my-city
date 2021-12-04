@@ -113,7 +113,7 @@ exports.setApp = function(app, dbApi)
       },
       subject: `Verify your email`,
       text: `Hello, Thanks for registering on our site.
-      Please copy and paste the address below to verify your account. ${req.protocol}://${req.headers.host}/verify/?Token=${user.emailToken}`,
+      Please click the link below to verify your account. ${req.protocol}://${req.headers.host}/verify/?Token=${user.emailToken}`,
       html: `<h1>Hello,</h1>
       <p>thanks for registering on our site.</p>
       <p>Please click the link below to verify your account.</p>
@@ -174,7 +174,7 @@ exports.setApp = function(app, dbApi)
     //res.send({id: other.userId, name: other.firstName, last: other.lastName})
 
 
-    /*const message =
+    const message =
     {
       to: email,
       from: {
@@ -183,10 +183,10 @@ exports.setApp = function(app, dbApi)
       },
       subject: `Reset Password`,
       text: `Hello,
-      Please copy and paste the address below to reset your password. http://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}`,
+      Please click the link below to reset your password. ${req.protocol}://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}`,
       html: `<h1>Hello,</h1>
-      <p>Please click the link below to verify your account.</p>
-             <a href="http://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}">Verify your account</a>`
+      <p>Please click the link below to reset your password.</p>
+             <a href="${req.protocol}://${req.headers.host}/api/reset/?emailToken=${jwtToken.accessToken}">Verify your account</a>`
     };
 
       // If email successfully sends to user, return empty error
@@ -195,7 +195,7 @@ exports.setApp = function(app, dbApi)
         ret = {message: "Sent successfully", emailToken: jwtToken.accessToken};
         res.status(200).send(ret);
       })
-      .catch(error => res.send({error:error.message});*/
+      .catch(error => res.send({error:error.message});
 
   });
 
