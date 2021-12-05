@@ -116,10 +116,10 @@ exports.setApp = function(app, dbApi)
       .catch(error => res.send({error:error.message}))
   });
 
-  app.post ('/api/cities', async (req, res) =>
+  app.get ('/api/cities', async (req, res) =>
 {
   try {
-    const {city} = req.body;
+    const city = req.query.city;
     const result = await dbApi.cities(city);
     res.json(result);
   } catch (err)
