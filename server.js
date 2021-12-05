@@ -710,11 +710,18 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 // Serve up static content from the public subdirectory
-app.use(express.static("public"));
+//app.use(express.static("public"));
 
 var api = require('./api.js');
 api.setApp( app, dbApi );
 
+//if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static(path.join(__dirname, '..', 'web', 'build')));
+    app.get('/*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '..', 'web', 'build', 'index.html'));
+    });
+//}
 
 app.get('/', (req, res) => {
      res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
