@@ -349,8 +349,101 @@ async function dbInit(){
       return res;
     };
     dbApi.cities = async(city) =>{
-      var results = await CityData.findOne({name: city});
-      return results;
+      var res =  await CityData.aggregate([
+          {
+           {"name" : { "$regex": new RegExp(city, 'i' )}}
+
+          },
+          {"$unwind" : "$ratings"},
+          {
+          "$group": {
+           "_id" : "$name",
+           "state" : {"$first" : "$state"},
+           "averageEntertainment": {
+             "$avg" : "$ratings.rating.entertainment"
+           },
+           "averageNature" : {
+             "$avg" : "$ratings.rating.nature"
+           },
+           "averageCost" : {
+             "$avg" : "$ratings.rating.cost"
+           },
+           "averageSafety" : {
+             "$avg" : "$ratings.rating.safety"
+           },
+           "averageCulture" : {
+             "$avg" : "$ratings.rating.culture"
+           },
+           "averageTransportation" : {
+             "$avg" : "$ratings.rating.transportation"
+           },
+           "averageFood" : {
+             "$avg" : "$ratings.rating.food"
+           },
+           "ratings" : {"$push" : "$ratings"}
+           /*"ratings": {
+             "$filter": {
+               "input": "$ratings",
+               "as": "ratings",
+               "cond": {
+                 "$eq": [
+                   "$$ratings.userid",
+                   userId
+                 ]
+               }
+             }
+           }*/
+          }
+        },
+        {"$project" : {
+          "_id" : 1,
+          "state" : 1,
+          "averageEntertainment": 1,
+          "averageNature" : 1,
+          "averageCost" : 1,
+          "averageSafety" : 1,
+          "averageCulture" :1,
+          "averageTransportation" : 1,
+          "averageFood" : 1,
+          "ratings": { "$cond": [
+            { "$eq": [{ "$size": { "$ifNull": [ "$ratings",[]] }}, 0] },
+            { "$ifNull": [ "$ratings", [] ] },
+            { "$setDifference": [
+                { "$map": {
+                    "input": "$ratings",
+                    "as": "i",
+                    "in": "$$i"/*{ "$cond": [
+                      { "$eq": [ "$$i.deleted", null ] },
+                     "$$i",
+                        false
+                    ]}*/
+                }},
+                [false]
+            ]}
+          ]}
+        }
+      }
+      ])
+      for (city of res)
+        for (rating of city.ratings){
+            var userid = rating.userid;
+            console.log("Finding user with id "+userid);
+            var user = await UserProfile.findOne({_id: userid}).lean();
+            console.log("Result: "+JSON.stringify(user));
+            if(user == null)
+                rating.userdetails = {
+                   firstName: "",
+                   lastName: "",
+                   userName: ""
+                };
+            else
+                rating.userdetails = {
+                   firstName: user.firstName,
+                   lastName: user.lastName,
+                   userName: user.userName
+                };
+        }
+    return res;
     };
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
