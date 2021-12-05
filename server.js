@@ -351,8 +351,9 @@ async function dbInit(){
     dbApi.cities = async(city) =>{
       var res =  await CityData.aggregate([
           {
-           {"name" : { "$regex": new RegExp(city, 'i' )}}
-
+            "$match": {
+             {"name" : { "$regex": new RegExp(city, 'i' )}}
+            }
           },
           {"$unwind" : "$ratings"},
           {
