@@ -214,8 +214,8 @@ exports.setApp = function(app, dbApi)
   app.post('/ResetPwd', async(req, res, next) =>
   {
     try {
-      const {/*emailToken,*/ password, confirmpassword} = req.body;
-      const emailToken = req.query.emailToken;
+      const {emailToken, password, confirmpassword} = req.body;
+      //const emailToken = req.query.emailToken;
      var hashed = bcrypt.hashSync(password, 10);
      const token = require("./createJWT.js");
 
