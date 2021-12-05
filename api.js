@@ -120,7 +120,7 @@ exports.setApp = function(app, dbApi)
 {
   try {
     var results = await dbApi.cities();
-    res.json(results);
+    res.send(JSON.stringify(results));
   } catch (err)
   {
     res.json({err: err.message})
