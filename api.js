@@ -116,7 +116,7 @@ exports.setApp = function(app, dbApi)
       .catch(error => res.send({error:error.message}))
   });
 
-  /*app.post ('/cities', async (req, res) =>
+  app.post ('/cities', async (req, res) =>
 {
   try {
     const {city} = req.body;
@@ -150,7 +150,7 @@ exports.setApp = function(app, dbApi)
     {
       res.json({message: err.message})
     }
-  })*/
+  })
 
 
   // Forgot password, reset
