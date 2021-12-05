@@ -120,9 +120,8 @@ exports.setApp = function(app, dbApi)
 {
   try {
     const {city} = req.body;
-    (async() =>
-        res.send(JSON.stringify(await dbApi.cities(city)))
-    )();
+    const result = await dbApi.cities(city);
+    res.json(result)
   } catch (err)
   {
     res.json({err: err.message})
