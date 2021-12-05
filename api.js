@@ -58,7 +58,7 @@ exports.setApp = function(app, dbApi)
     //incoming: firstName, lastName, userName, email, password, confirmpassword
     //outgoing: error message
 
-try {
+
       var ret;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
@@ -103,11 +103,9 @@ try {
       res.status(200).json(ret);} catch (err)
       {
         res.json({error: err.message})
-      }} catch (err) {
-        res.json({message : err.message})
       }
 
-    /*const message =
+    const message =
       {
       to: email,
       from: {
@@ -129,7 +127,7 @@ try {
         ret = "Verification process sent to email. Please verify email before logging in.";
         res.status(200).json(ret);
       })
-      .catch(error => res.send({error:error.message}))*/
+      .catch(error => res.send({error:error.message}))
   });
 
   app.get('/verify', async(req, res) => {
