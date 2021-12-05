@@ -57,14 +57,10 @@ exports.setApp = function(app, dbApi)
   {
     //incoming: firstName, lastName, userName, email, password, confirmpassword
     //outgoing: error message
-
-
       var ret;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
-
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
-
     if (password != confirmpassword)
     {
       ret = {error : "Passwords do not match."};
@@ -89,23 +85,17 @@ exports.setApp = function(app, dbApi)
               ret = {error: "Username is taken."};
               return res.status(200).json(ret);
             }
-
         }
-
     }
       var hashed = bcrypt.hashSync(password, 10);
-
       var emailToken = crypto.randomBytes(64).toString('hex');
-
       var user = await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
-
       ret = {userId: user._id, firstName: user.firstName, lastName: user.lastName, userName: user.userName, email: user.email, emailToken: user.emailToken, error: ""};
       res.status(200).json(ret);} catch (err)
       {
         res.json({error: err.message})
       }
-
-    const message =
+    /*const message =
       {
       to: email,
       from: {
@@ -120,15 +110,15 @@ exports.setApp = function(app, dbApi)
       <p>Please click the link below to verify your account.</p>
              <a href="${req.protocol}://${req.headers.host}/verify/?Token=${user.emailToken}">Verify your account</a>`
     };
-
       // Send Email to user, or produce error
       await sgMail.send(message)
       .then(response => {
         ret = "Verification process sent to email. Please verify email before logging in.";
         res.status(200).json(ret);
       })
-      .catch(error => res.send({error:error.message}))
+      .catch(error => res.send({error:error.message}))*/
   });
+
 
   app.get('/verify', async(req, res) => {
     try{
