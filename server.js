@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
@@ -705,6 +706,8 @@ async function dbInit(){
 }
 dbInit().catch(err => console.log(err));
 
+//Add CORS to parser
+app.use(cors());
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
