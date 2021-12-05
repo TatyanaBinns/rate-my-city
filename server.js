@@ -351,11 +351,14 @@ async function dbInit(){
     dbApi.cities = async(city) =>{
       var res =  await CityData.aggregate([
           {
-            "$match": {
-             {"name" : { "$regex": new RegExp(city, 'i' )}}
-            }
+          "$match": {
+           $and: [
+           {"name" : { "$regex": new RegExp(city, 'i' )}},
+           {"state" : {"$regex": new RegExp("", 'i')}}
+          ]}
           },
-          {"$unwind" : "$ratings"},
+          {"$unwind" : {"path": "$ratings",
+            "preserveNullAndEmptyArrays": true}},
           {
           "$group": {
            "_id" : "$name",
@@ -382,6 +385,18 @@ async function dbInit(){
              "$avg" : "$ratings.rating.food"
            },
            "ratings" : {"$push" : "$ratings"}
+           /*"ratings": {
+             "$filter": {
+               "input": "$ratings",
+               "as": "ratings",
+               "cond": {
+                 "$eq": [
+                   "$$ratings.userid",
+                   userId
+                 ]
+               }
+             }
+           }*/
           }
         },
         {"$project" : {
@@ -401,13 +416,18 @@ async function dbInit(){
                 { "$map": {
                     "input": "$ratings",
                     "as": "i",
-                    "in": "$$i"
+                    "in": "$$i"/*{ "$cond": [
+                      { "$eq": [ "$$i.deleted", null ] },
+                     "$$i",
+                        false
+                    ]}*/
                 }},
                 [false]
             ]}
           ]}
         }
-      }
+        }
+
       ])
       for (city of res)
         for (rating of city.ratings){
@@ -428,7 +448,20 @@ async function dbInit(){
                    userName: user.userName
                 };
         }
-    return res;
+        for (city of res)
+        {
+          if (city.ratings.length == 0)
+          {
+            city.averageEntertainment = 0,
+            city.averageNature = 0,
+            city.averageCost = 0,
+            city.averageSafety = 0,
+            city.averageCulture = 0,
+            city.averageTransportation = 0,
+            city.averageFood = 0
+          }
+        }
+      return res;
   };
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
