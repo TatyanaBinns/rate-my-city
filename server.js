@@ -348,7 +348,7 @@ async function dbInit(){
           }
       return res;
     };
-    dbApi.cities = async(city) =>{
+    /*dbApi.cities = async(city) =>{
       var res =  await CityData.aggregate([
           {
            {"name" : { "$regex": new RegExp(city, 'i' )}}
@@ -381,18 +381,6 @@ async function dbInit(){
              "$avg" : "$ratings.rating.food"
            },
            "ratings" : {"$push" : "$ratings"}
-           /*"ratings": {
-             "$filter": {
-               "input": "$ratings",
-               "as": "ratings",
-               "cond": {
-                 "$eq": [
-                   "$$ratings.userid",
-                   userId
-                 ]
-               }
-             }
-           }*/
           }
         },
         {"$project" : {
@@ -412,11 +400,7 @@ async function dbInit(){
                 { "$map": {
                     "input": "$ratings",
                     "as": "i",
-                    "in": "$$i"/*{ "$cond": [
-                      { "$eq": [ "$$i.deleted", null ] },
-                     "$$i",
-                        false
-                    ]}*/
+                    "in": "$$i"
                 }},
                 [false]
             ]}
@@ -444,7 +428,7 @@ async function dbInit(){
                 };
         }
     return res;
-    };
+  };*/
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
         var states = await CityData.find().select('state -_id').sort({"state": 1})
