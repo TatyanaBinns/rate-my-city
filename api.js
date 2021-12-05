@@ -90,9 +90,9 @@ exports.setApp = function(app, dbApi)
       var hashed = bcrypt.hashSync(password, 10);
       var emailToken = crypto.randomBytes(64).toString('hex');
       var user = await dbApi.createUser(firstName, lastName, userName, email, hashed, emailToken);
-      ret = {userId: user._id, firstName: user.firstName, lastName: user.lastName, userName: user.userName, email: user.email, emailToken: user.emailToken, error: ""};
-      res.status(200).json(ret);
-    /*const message =
+      /*ret = {userId: user._id, firstName: user.firstName, lastName: user.lastName, userName: user.userName, email: user.email, emailToken: user.emailToken, error: ""};
+      res.status(200).json(ret);*/
+    const message =
       {
       to: email,
       from: {
@@ -113,7 +113,7 @@ exports.setApp = function(app, dbApi)
         ret = "Verification process sent to email. Please verify email before logging in.";
         res.status(200).json(ret);
       })
-      .catch(error => res.send({error:error.message}))*/
+      .catch(error => res.send({error:error.message}))
   });
 
 
