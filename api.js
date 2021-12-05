@@ -138,9 +138,9 @@ app.post ('/api/states', async (req, res) => {
   }
 })
 
-app.post ('/api/usernames', async (req, res) => {
+app.get ('/api/usernames', async (req, res) => {
   try {
-    const {userName} = req.body;
+    const userName = url.searchParams.get("userName");
 
     const user = await dbApi.userByUserName(userName);
     if (user == null)
