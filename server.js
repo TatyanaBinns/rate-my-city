@@ -581,7 +581,7 @@ async function dbInit(){
         {"$unwind" : "$ratings"},
         {
         "$group": {
-         "_id" : "$name",
+         "city" : "$name",
          "state" : {"$first" : "$state"},
          "averageEntertainment": {
            "$avg" : "$ratings.rating.entertainment"
@@ -608,7 +608,7 @@ async function dbInit(){
         }
       },
       {"$project" : {
-        "_id" : 1,
+        "city" : 1,
         "state" : 1,
         "averageEntertainment": 1,
         "averageNature" : 1,
