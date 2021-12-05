@@ -348,8 +348,8 @@ async function dbInit(){
           }
       return res;
     };
-    dbApi.cities = async() =>{
-      var results = await CityData.find();
+    dbApi.cities = async(city) =>{
+      var results = await CityData.findOne({name: city});
       return results;
     };
     dbApi.allStates   = async ()   => {
