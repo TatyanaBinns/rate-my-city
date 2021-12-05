@@ -147,7 +147,7 @@ app.post ('/api/usernames', async (req, res) => {
     {
       return res.json({error: "User does not exist"})
     }
-    const id = user._id;
+    const id = String(user._id);
     //res.json({id: user._id})
     try{
       const result = await dbApi.usernames(id);
