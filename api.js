@@ -128,9 +128,9 @@ exports.setApp = function(app, dbApi)
   }
 })
 
-app.post ('/api/states', async (req, res) => {
+app.get ('/api/states', async (req, res) => {
   try {
-    const {state} = req.body;
+    const state = req.query.state;
     const result = await dbApi.states(state);
     res.json(result);
   } catch (err) {
