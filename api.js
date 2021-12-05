@@ -53,7 +53,7 @@ exports.setApp = function(app, dbApi)
     });
   });
 
-  app.post('/api/register', async (req, res, next) =>
+  /*app.post('/api/register', async (req, res, next) =>
   {
     //incoming: firstName, lastName, userName, email, password, confirmpassword
     //outgoing: error message
@@ -128,7 +128,7 @@ exports.setApp = function(app, dbApi)
         res.status(200).json(ret);
       })
       .catch(error => res.send({error:error.message}))
-  });
+  });*/
 
   app.get('/verify', async(req, res) => {
     try{
