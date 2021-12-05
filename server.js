@@ -469,8 +469,8 @@ async function dbInit(){
         {
         "$match": {
           $and: [
-          {"name" : { "$regex": new RegExp(city, 'i' )}},
-          {"state" : {"$regex": new RegExp("", 'i')}}
+          {"name" : { "$regex": new RegExp("", 'i' )}},
+          {"state" : {"$regex": new RegExp(state, 'i')}}
          ]}
         },
         {"$unwind" : {"path": "$ratings",
@@ -528,7 +528,7 @@ async function dbInit(){
       }
 
     ])
-    /*for (city of res)
+    for (city of res)
       for (rating of city.ratings){
           var userid = rating.userid;
           console.log("Finding user with id "+userid);
@@ -559,7 +559,7 @@ async function dbInit(){
           city.averageTransportation = 0,
           city.averageFood = 0
         }
-      }*/
+      }
     return res;
   };
 
