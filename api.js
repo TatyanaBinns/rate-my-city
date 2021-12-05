@@ -119,8 +119,9 @@ exports.setApp = function(app, dbApi)
   app.get ('/cities', async (req, res) =>
 {
   try {
-    var results = await dbApi.cities();
-    res.send(JSON.stringify(results));
+    (async() =>
+        res.send(JSON.stringify(await dbApi.cities()))
+    )();
   } catch (err)
   {
     res.json({err: err.message})
