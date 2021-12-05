@@ -104,7 +104,7 @@ try {
       {
         res.json({error: err.message})
       }} catch (err) {
-        res.json({err.message})
+        res.json({message : err.message})
       }
 
     /*const message =
