@@ -716,9 +716,9 @@ var api = require('./api.js');
 api.setApp( app, dbApi );
 
 
-app.get('/', (req, res) => {
-     res.json({ message: "Welcom to a simple hello-world application.", additional: "This is additional text."});
-})
+app.get('/*', (req, res) => {
+     res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
 
 
 
