@@ -116,7 +116,7 @@ exports.setApp = function(app, dbApi)
       .catch(error => res.send({error:error.message}))
   });
 
-  app.post ('/cities', async (req, res) =>
+  app.post ('/api/cities', async (req, res) =>
 {
   try {
     const {city} = req.body;
