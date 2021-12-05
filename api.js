@@ -257,8 +257,8 @@ app.get ('/api/usernames', async (req, res) => {
   app.post('/ResetPwd', async(req, res, next) =>
   {
     try {
-      const {password, confirmpassword} = req.body;
-      const emailToken = req.query.emailToken;
+      const {emailToken, password, confirmpassword} = req.body;
+      //const emailToken = req.query.emailToken;
       //const emailToken = req.query.emailToken;
      var hashed = bcrypt.hashSync(password, 10);
      const token = require("./createJWT.js");
