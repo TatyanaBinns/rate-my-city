@@ -468,9 +468,10 @@ async function dbInit(){
     var res =  await CityData.aggregate([
         {
         "$match": {
-         {"name" : { "$regex": new RegExp("", 'i' )}},
-         {"state" : {"$regex": new RegExp(state, 'i')}}
-        }
+          $and: [
+          {"name" : { "$regex": new RegExp(city, 'i' )}},
+          {"state" : {"$regex": new RegExp("", 'i')}}
+         ]}
         },
         {"$unwind" : {"path": "$ratings",
           "preserveNullAndEmptyArrays": true}},
