@@ -116,6 +116,16 @@ exports.setApp = function(app, dbApi)
       .catch(error => res.send({error:error.message}))
   });
 
+  app.get ('/cities', async (req, res) =>
+{
+  try {
+    var results = await dbApi.cities();
+    res.json(results);
+  } catch (err)
+  {
+    res.json({err: err.message})
+  }
+})
 
   app.get('/verify', async(req, res) => {
     try{
