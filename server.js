@@ -519,7 +519,8 @@ async function dbInit(){
           { "$setDifference": [
               { "$map": {
                   "input": "$ratings",
-                  "as": "i"
+                  "as": "i",
+                  "in" : "$$i"
               }},
               [false]
           ]}
