@@ -224,7 +224,7 @@ exports.setApp = function(app, dbApi)
 
   });
 
-  app.get('/reset', async(req, res, next) =>
+  app.post('/reset', async(req, res, next) =>
   {
     try {
       const {emailToken, password, confirmpassword} = req.body;
