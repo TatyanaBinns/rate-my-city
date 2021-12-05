@@ -138,6 +138,28 @@ app.post ('/api/states', async (req, res) => {
   }
 })
 
+app.post ('/api/usernames', async (req, res) => {
+  try {
+    const {userName} = req.body;
+
+    const user = await dbApi.userByUserName(userName);
+    if (user == null)
+    {
+      return res.json({error: "User does not exist"})
+    }
+    const id = user._id;
+    //res.json({id: user._id})
+    try{
+      const result = await dbApi.usernames(id);
+      res.json(result);
+    }
+    catch (err) {
+      res.json({message: err.message});
+    }
+  } catch (err) {
+    res.json({err: err.message})
+  }
+})
   app.get('/verify', async(req, res) => {
     try{
     const emailToken = req.query.Token;
