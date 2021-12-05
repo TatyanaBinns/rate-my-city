@@ -58,7 +58,7 @@ exports.setApp = function(app, dbApi)
     //incoming: firstName, lastName, userName, email, password, confirmpassword
     //outgoing: error message
 
-
+try {
       var ret;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const {firstName, lastName, userName, email, password, confirmpassword} = req.body;
@@ -103,6 +103,8 @@ exports.setApp = function(app, dbApi)
       res.status(200).json(ret);} catch (err)
       {
         res.json({error: err.message})
+      }} catch (err) {
+        res.json({err.message})
       }
 
     /*const message =
