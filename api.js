@@ -121,9 +121,19 @@ exports.setApp = function(app, dbApi)
   try {
     const {city} = req.body;
     const result = await dbApi.cities(city);
-    res.json(result)
+    res.json(result);
   } catch (err)
   {
+    res.json({err: err.message})
+  }
+})
+
+app.post ('/api/states', async (req, res) => {
+  try {
+    const {state} = req.body;
+    const result = await dbApi.states(state);
+    res.json(result);
+  } catch (err) {
     res.json({err: err.message})
   }
 })
