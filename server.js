@@ -463,6 +463,104 @@ async function dbInit(){
         }
       return res;
   };
+
+  dbApi.states = async (state) => {
+    var res =  await CityData.aggregate([
+        {
+        "$match": {
+         {"state" : {"$regex": new RegExp(state, 'i')}}
+        }
+        },
+        {"$unwind" : {"path": "$ratings",
+          "preserveNullAndEmptyArrays": true}},
+        {
+        "$group": {
+         "_id" : "$name",
+         "state" : {"$first" : "$state"},
+         "averageEntertainment": {
+           "$avg" : "$ratings.rating.entertainment"
+         },
+         "averageNature" : {
+           "$avg" : "$ratings.rating.nature"
+         },
+         "averageCost" : {
+           "$avg" : "$ratings.rating.cost"
+         },
+         "averageSafety" : {
+           "$avg" : "$ratings.rating.safety"
+         },
+         "averageCulture" : {
+           "$avg" : "$ratings.rating.culture"
+         },
+         "averageTransportation" : {
+           "$avg" : "$ratings.rating.transportation"
+         },
+         "averageFood" : {
+           "$avg" : "$ratings.rating.food"
+         },
+         "ratings" : {"$push" : "$ratings"}
+        }
+      },
+      {"$project" : {
+        "_id" : 1,
+        "state" : 1,
+        "averageEntertainment": 1,
+        "averageNature" : 1,
+        "averageCost" : 1,
+        "averageSafety" : 1,
+        "averageCulture" :1,
+        "averageTransportation" : 1,
+        "averageFood" : 1,
+        "ratings": { "$cond": [
+          { "$eq": [{ "$size": { "$ifNull": [ "$ratings",[]] }}, 0] },
+          { "$ifNull": [ "$ratings", [] ] },
+          { "$setDifference": [
+              { "$map": {
+                  "input": "$ratings",
+                  "as": "i"
+              }},
+              [false]
+          ]}
+        ]}
+      }
+      }
+
+    ])
+    for (city of res)
+      for (rating of city.ratings){
+          var userid = rating.userid;
+          console.log("Finding user with id "+userid);
+          var user = await UserProfile.findOne({_id: userid}).lean();
+          console.log("Result: "+JSON.stringify(user));
+          if(user == null)
+              rating.userdetails = {
+                 firstName: "",
+                 lastName: "",
+                 userName: ""
+              };
+          else
+              rating.userdetails = {
+                 firstName: user.firstName,
+                 lastName: user.lastName,
+                 userName: user.userName
+              };
+      }
+      for (city of res)
+      {
+        if (city.ratings.length == 0)
+        {
+          city.averageEntertainment = 0,
+          city.averageNature = 0,
+          city.averageCost = 0,
+          city.averageSafety = 0,
+          city.averageCulture = 0,
+          city.averageTransportation = 0,
+          city.averageFood = 0
+        }
+      }
+    return res;
+  };
+
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
         var states = await CityData.find().select('state -_id').sort({"state": 1})
