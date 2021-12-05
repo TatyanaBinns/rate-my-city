@@ -140,7 +140,7 @@ app.post ('/api/states', async (req, res) => {
 
 app.get ('/api/usernames', async (req, res) => {
   try {
-    const userName = url.searchParams.get("userName");
+    const userName = req.query.userName;
 
     const user = await dbApi.userByUserName(userName);
     if (user == null)
