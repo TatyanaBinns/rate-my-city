@@ -348,6 +348,10 @@ async function dbInit(){
           }
       return res;
     };
+    dbApi.cities = async() =>{
+      var results = await CityData.find();
+      return results;
+    };
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
         var states = await CityData.find().select('state -_id').sort({"state": 1})
