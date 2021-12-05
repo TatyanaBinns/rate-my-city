@@ -116,7 +116,7 @@ exports.setApp = function(app, dbApi)
       .catch(error => res.send({error:error.message}))
   });
 
-  /*app.get ('/cities', async (req, res) =>
+  app.post ('/cities', async (req, res) =>
 {
   try {
     const {city} = req.body;
@@ -126,7 +126,7 @@ exports.setApp = function(app, dbApi)
   {
     res.json({err: err.message})
   }
-})*/
+})
 
   app.get('/verify', async(req, res) => {
     try{
