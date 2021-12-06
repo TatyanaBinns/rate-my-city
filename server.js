@@ -402,13 +402,13 @@ async function dbInit(){
         {"$project" : {
           "_id" : 1,
           "state" : 1,
-          "body": 1,
-          //"averageNature" : 1,
-          //"averageCost" : 1,
-          //"averageSafety" : 1,
-          //"averageCulture" :1,
-          //"averageTransportation" : 1,
-          //"averageFood" : 1,
+          "averageEntertainment": 1,
+          "averageNature" : 1,
+          "averageCost" : 1,
+          "averageSafety" : 1,
+          "averageCulture" :1,
+          "averageTransportation" : 1,
+          "averageFood" : 1,
           /*"ratings": { "$cond": [
             { "$eq": [{ "$size": { "$ifNull": [ "$ratings",[]] }}, 0] },
             { "$ifNull": [ "$ratings", [] ] },
@@ -444,24 +444,26 @@ async function dbInit(){
                    userName: user.userName
                 };
         }*/
-        /*for (city of res)
+        for (city of res)
         {
           if (city.ratings.length == 0)
           {
-            city.averageEntertainment = 0,
-            city.averageNature = 0,
-            city.averageCost = 0,
-            city.averageSafety = 0,
-            city.averageCulture = 0,
-            city.averageTransportation = 0,
-            city.averageFood = 0
+            city.averageEntertainment = "0",
+            city.averageNature = "0",
+            city.averageCost = "0",
+            city.averageSafety = "0",
+            city.averageCulture = "0",
+            city.averageTransportation = "0",
+            city.averageFood = "0"
           }
-        }*/
-        for (city of res)
-        {
-          if (city.body == null)
-          {
-            city.body = 0;
+          else {
+            city.averageEntertainment = city.averageEntertainment.toString(),
+            city.averageNature =   city.averageNature.toString(),
+            city.averageCost = city.averageCost.toString(),
+            city.averageSafety = city.averageSafety.toString(),
+            city.averageCulture = city.averageCulture.toString(),
+            city.averageTransportation = city.averageTransportation.toString(),
+            city.averageFood = city.averageFood.toString()
           }
         }
       return res;
