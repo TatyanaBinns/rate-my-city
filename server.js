@@ -110,7 +110,8 @@ async function dbInit(){
            $and: [
            {"name" : { "$regex": new RegExp(city, 'i' )}},
            {"state" : {"$regex": new RegExp(state, 'i')}}
-          ]}
+         ]},
+         { "$sort" : { "name" : 1, "_id": 1 } }
           },
           {"$unwind" : {"path": "$ratings",
             "preserveNullAndEmptyArrays": true}},
