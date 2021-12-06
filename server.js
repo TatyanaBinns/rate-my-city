@@ -671,6 +671,18 @@ async function dbInit(){
                  userName: user.userName
               };
       }
+      for (city of res)
+        for (rating of city.ratings){
+            for (in of rating) {
+              rating.entertainment = rating.rating.entertainment;
+              rating.nature = rating.rating.nature;
+              rating.cost = rating.rating.cost;
+              rating.safety = rating.rating.safety,
+              rating.culture = rating.rating.culture,
+              rating.transportation = rating.rating.transportation,
+              rating.food = rating.rating.food
+            }
+        }
   return res;
   };
 
