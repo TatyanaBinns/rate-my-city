@@ -174,10 +174,8 @@ app.get ('/api/usernames', async (req, res) => {
       res.json("User has been verified");
       //res.redirect(home)
     } else {
-      {
         res.json('User not found');
         //res.redirect(home)
-      }
     }}catch(err)
     {
       res.json({message: err.message})
