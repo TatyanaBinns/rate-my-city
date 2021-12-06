@@ -457,6 +457,16 @@ async function dbInit(){
             city.averageFood = city.averageFood.toString()
           }
         }
+        for (city of res)
+          for (rating of city.ratings){
+                rating.entertainment = rating.rating.entertainment;
+                rating.nature = rating.rating.nature;
+                rating.cost = rating.rating.cost;
+                rating.safety = rating.rating.safety,
+                rating.culture = rating.rating.culture,
+                rating.transportation = rating.rating.transportation,
+                rating.food = rating.rating.food
+          }
       return res;
   };
 
@@ -580,6 +590,16 @@ async function dbInit(){
           city.averageFood = city.averageFood.toString()
         }
       }
+      for (city of res)
+        for (rating of city.ratings){
+              rating.entertainment = rating.rating.entertainment;
+              rating.nature = rating.rating.nature;
+              rating.cost = rating.rating.cost;
+              rating.safety = rating.rating.safety,
+              rating.culture = rating.rating.culture,
+              rating.transportation = rating.rating.transportation,
+              rating.food = rating.rating.food
+        }
     return res;
   };
 
