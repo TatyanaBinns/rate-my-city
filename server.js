@@ -448,15 +448,15 @@ async function dbInit(){
         {
           if (city.averageEntertainment == null)
           {
-            city.averageEntertainment = "0",
-            city.averageNature = "0",
-            city.averageCost = "0",
-            city.averageSafety = "0",
-            city.averageCulture = "0",
-            city.averageTransportation = "0",
-            city.averageFood = "0"
+            city.averageEntertainment = 0,
+            city.averageNature = 0,
+            city.averageCost = 0,
+            city.averageSafety = 0,
+            city.averageCulture = 0,
+            city.averageTransportation = 0,
+            city.averageFood = 0
           }
-          else {
+          /*else {
             city.averageEntertainment = city.averageEntertainment.toString(),
             city.averageNature =   city.averageNature.toString(),
             city.averageCost = city.averageCost.toString(),
@@ -464,7 +464,7 @@ async function dbInit(){
             city.averageCulture = city.averageCulture.toString(),
             city.averageTransportation = city.averageTransportation.toString(),
             city.averageFood = city.averageFood.toString()
-          }
+          }*/
         }
       return res;
   };
