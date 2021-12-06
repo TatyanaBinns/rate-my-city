@@ -363,7 +363,7 @@ async function dbInit(){
           "$group": {
            "_id" : "$name",
            "state" : {"$first" : "$state"},
-           "averageEntertainment": {
+           "body": {
              "$avg" : "$ratings.rating.entertainment"
            },
            "averageNature" : {
@@ -402,7 +402,7 @@ async function dbInit(){
         {"$project" : {
           "_id" : 1,
           "state" : 1,
-          "averageEntertainment": 1,
+          "body": 1,
           //"averageNature" : 1,
           //"averageCost" : 1,
           //"averageSafety" : 1,
@@ -459,9 +459,9 @@ async function dbInit(){
         }*/
         for (city of res)
         {
-          if (city.averageEntertainment == null)
+          if (city.body == null)
           {
-            city.averageEntertainment = 0;
+            city.body = 0;
           }
         }
       return res;
