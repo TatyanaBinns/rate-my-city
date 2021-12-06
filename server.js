@@ -385,18 +385,6 @@ async function dbInit(){
              "$avg" : "$ratings.rating.food"
            },
            "ratings" : {"$push" : "$ratings"}
-           "ratings": {
-             "$filter": {
-               "input": "$ratings",
-               "as": "ratings",
-               "cond": {
-                 "$eq": [
-                   "$$ratings.userid",
-                   userId
-                 ]
-               }
-             }
-           }
           }
         },
         {"$project" : {
