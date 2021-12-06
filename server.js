@@ -673,7 +673,6 @@ async function dbInit(){
       }
       for (city of res)
         for (rating of city.ratings){
-            for (in of rating) {
               rating.entertainment = rating.rating.entertainment;
               rating.nature = rating.rating.nature;
               rating.cost = rating.rating.cost;
@@ -681,7 +680,6 @@ async function dbInit(){
               rating.culture = rating.rating.culture,
               rating.transportation = rating.rating.transportation,
               rating.food = rating.rating.food
-            }
         }
   return res;
   };
