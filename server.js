@@ -443,8 +443,8 @@ async function dbInit(){
                    lastName: user.lastName,
                    userName: user.userName
                 };
-        }
-        for (city of res)
+        }*/
+        /*for (city of res)
         {
           if (city.ratings.length == 0)
           {
@@ -457,6 +457,13 @@ async function dbInit(){
             city.averageFood = 0
           }
         }*/
+        for (city of res)
+        {
+          if (city.averageEntertainment == null)
+          {
+            city.averageEntertainment = 0;
+          }
+        }
       return res;
   };
 
