@@ -112,7 +112,6 @@ async function dbInit(){
            {"state" : {"$regex": new RegExp(state, 'i')}}
          ]}
           },
-          { "$sort" : { "state" : 1, "_id": 1 } },
           {"$unwind" : {"path": "$ratings",
             "preserveNullAndEmptyArrays": true}},
           {
@@ -155,6 +154,7 @@ async function dbInit(){
            }*/
           }
         },
+        { "$sort" : { "_id" : 1} },
         {"$project" : {
           "_id" : 1,
           "state" : 1,
