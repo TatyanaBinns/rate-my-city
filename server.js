@@ -520,7 +520,7 @@ async function dbInit(){
         "averageCulture" :1,
         "averageTransportation" : 1,
         "averageFood" : 1,
-        /*"ratings": { "$cond": [
+        "ratings": { "$cond": [
           { "$eq": [{ "$size": { "$ifNull": [ "$ratings",[]] }}, 0] },
           { "$ifNull": [ "$ratings", [] ] },
           { "$setDifference": [
@@ -531,12 +531,12 @@ async function dbInit(){
               }},
               [false]
           ]}
-        ]}*/
+        ]}
       }
       }
 
     ])
-    /*for (city of res)
+    for (city of res)
       for (rating of city.ratings){
           var userid = rating.userid;
           console.log("Finding user with id "+userid);
@@ -567,7 +567,7 @@ async function dbInit(){
           city.averageTransportation = 0,
           city.averageFood = 0
         }
-      }*/
+      }
       for (city of res)
       {
         if (city.averageEntertainment == null)
