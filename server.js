@@ -303,6 +303,7 @@ async function dbInit(){
              }*/
             }
           },
+          { "$sort" : { "_id" : 1} },
           {"$project" : {
             "_id" : 1,
             "state" : 1,
@@ -388,6 +389,7 @@ async function dbInit(){
            "ratings" : {"$push" : "$ratings"}
           }
         },
+        { "$sort" : { "_id" : 1} },
         {"$project" : {
           "_id" : 1,
           "state" : 1,
@@ -497,6 +499,7 @@ async function dbInit(){
          "ratings" : {"$push" : "$ratings"}
         }
       },
+      { "$sort" : { "_id" : 1} },
       {"$project" : {
         "_id" : 1,
         "state" : 1,
@@ -623,6 +626,7 @@ async function dbInit(){
          "ratings" : {"$push" : "$ratings"}
         }
       },
+      { "$sort" : { "_id" : 1} },
       {"$project" : {
         "_id" : 1,
         "state" : 1,
