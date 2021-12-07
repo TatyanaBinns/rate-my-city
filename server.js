@@ -483,8 +483,8 @@ async function dbInit(){
           "preserveNullAndEmptyArrays": true}},
         {
         "$group": {
-         "_id" : "$name",
-         "state" : {"$first" : "$state"},
+         "_id" : "$state",
+         "city" : {"$first" : "$city"},
          "averageEntertainment": {
            "$avg" : "$ratings.rating.entertainment"
          },
