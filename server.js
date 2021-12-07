@@ -437,7 +437,7 @@ async function dbInit(){
         }
         for (city of res)
         {
-          if (city.averageEntertainment == 0)
+          if (city.averageEntertainment == null)
           {
             city.averageEntertainment = "0";
             city.averageNature = "0";
