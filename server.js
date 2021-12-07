@@ -484,7 +484,7 @@ async function dbInit(){
         {
         "$group": {
          "_id" : "$state",
-         "city" : {"$push" : "$name"}//{"$first" : "$name"},
+         "city" : {"$first" : "$name"},
          "averageEntertainment": {
            "$avg" : "$ratings.rating.entertainment"
          },
