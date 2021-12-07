@@ -701,16 +701,16 @@ async function dbInit(){
           rating.tran = rating.rating.transportation,
           rating.f = rating.rating.food
         }
-        for (city of res)
+        /*for (city of res)
         {
 
-          /*city.averageEntertainment = Math.round(city.averageEntertainment * 10) / 10;
+          city.averageEntertainment = Math.round(city.averageEntertainment * 10) / 10;
           city.averageNature = Math.round(city.averageNature * 10) / 10;
           city.averageCost = Math.round(city.averageCost * 10) / 10;
           city.averageSafety = Math.round(city.averageSafety * 10) / 10;
           city.averageCulture = Math.round(city.averageCulture * 10) / 10;
           city.averageTransportation = Math.round(city.averageTransportation * 10) / 10;
-          city.averageFood = Math.round(city.averageFood * 10) / 10;*/
+          city.averageFood = Math.round(city.averageFood * 10) / 10;
 
           city.averageEntertainment = city.averageEntertainment.toFixed(1);
           city.averageNature = city.averageNature.toFixed(1);
@@ -718,8 +718,8 @@ async function dbInit(){
           city.averageSafety = city.averageSafety.toFixed(1);
           city.averageCulture = city.averageCulture.toFixed(1);
           city.averageTransportation = city.averageTransportation.toFixed(1);
-          city.averageFood = city.averageFood.toFixed(1); 
-        }
+          city.averageFood = city.averageFood.toFixed(1);
+        }*/
   return res;
   };
 
