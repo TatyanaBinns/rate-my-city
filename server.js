@@ -670,13 +670,13 @@ async function dbInit(){
       {"$project" : {
         "_id" : 1,
         "state" : 1,
-        "averageEntertainment": { "$round": [ "$averageEntertainment", 2 ] }
-        "averageNature" : { "$round": [ "$averageNature", 2 ] }
-        "averageCost" : { "$round": [ "$averageCost", 1 ] }
-        "averageSafety" : { "$round": [ "$averageSafety", 1 ] }
-        "averageCulture" : { "$round": [ "$averageCulture", 1 ] }
-        "averageTransportation" : { "$round": [ "$averageTransportation", 1 ] }
-        "averageFood" : { "$round": [ "$averageFood", 1 ] }
+        "averageEntertainment": 1,
+        "averageNature" : 1,
+        "averageCost" : 1,
+        "averageSafety" : 1,
+        "averageCulture" :1,
+        "averageTransportation" : 1,
+        "averageFood" : 1,
         "ratings": {
           "$filter": {
             "input": "$ratings",
@@ -721,7 +721,7 @@ async function dbInit(){
           rating.tran = rating.rating.transportation,
           rating.f = rating.rating.food
         }
-        /*for (city of res)
+        for (city of res)
         {
 
           city.averageEntertainment = Math.round(city.averageEntertainment * 10) / 10;
@@ -732,14 +732,14 @@ async function dbInit(){
           city.averageTransportation = Math.round(city.averageTransportation * 10) / 10;
           city.averageFood = Math.round(city.averageFood * 10) / 10;
 
-          parseFloat(city.averageEntertainment.toFixed(2))
-          parseFloat(city.averageNature.toFixed(2))
-          parseFloat(city.averageCost.toFixed(2))
-          parseFloat(city.averageSafety.toFixed(2))
-          parseFloat(city.averageCulture.toFixed(2))
-          parseFloat(city.averageTransportation.toFixed(2))
-          parseFloat(city.averageFood.toFixed(2))
-        }*/
+          city.averageEntertainment = city.averageEntertainment.toFixed(1);
+          city.averageNature = city.averageNature.toFixed(1);
+          city.averageCost = city.averageCost.toFixed(1);
+          city.averageSafety = city.averageSafety.toFixed(1);
+          city.averageCulture = city.averageCulture.toFixed(1);
+          city.averageTransportation = city.averageTransportation.toFixed(1);
+          city.averageFood = city.averageFood.toFixed(1);
+        }
   return res;
   };
 
