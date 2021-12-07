@@ -670,13 +670,13 @@ async function dbInit(){
       {"$project" : {
         "_id" : 1,
         "state" : 1,
-        "averageEntertainment": 1,
-        "averageNature" : 1,
-        "averageCost" : 1,
-        "averageSafety" : 1,
-        "averageCulture" :1,
-        "averageTransportation" : 1,
-        "averageFood" : 1,
+        "averageEntertainment": { "$round": [ "$averageEntertainment", 1 ] }
+        "averageNature" : { "$round": [ "$averageNature", 1 ] }
+        "averageCost" : { "$round": [ "$averageCost", 1 ] }
+        "averageSafety" : { "$round": [ "$averageSafety", 1 ] }
+        "averageCulture" : { "$round": [ "$averageCulture", 1 ] }
+        "averageTransportation" : { "$round": [ "$averageTransportation", 1 ] }
+        "averageFood" : { "$round": [ "$averageFood", 1 ] }
         "ratings": {
           "$filter": {
             "input": "$ratings",
@@ -721,7 +721,7 @@ async function dbInit(){
           rating.tran = rating.rating.transportation,
           rating.f = rating.rating.food
         }
-        for (city of res)
+        /*for (city of res)
         {
 
           city.averageEntertainment = Math.round(city.averageEntertainment * 10) / 10;
@@ -739,7 +739,7 @@ async function dbInit(){
           parseFloat(city.averageCulture.toFixed(2))
           parseFloat(city.averageTransportation.toFixed(2))
           parseFloat(city.averageFood.toFixed(2))
-        }
+        }*/
   return res;
   };
 
