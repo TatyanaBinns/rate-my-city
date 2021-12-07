@@ -723,6 +723,14 @@ async function dbInit(){
         }
         for (city of res)
         {
+          parseFloat(city.averageEntertainment.toFixed(2))
+          parseFloat(city.averageNature.toFixed(2))
+          parseFloat(city.averageCost.toFixed(2))
+          parseFloat(city.averageSafety.toFixed(2))
+          parseFloat(city.averageCulture.toFixed(2))
+          parseFloat(city.averageTransportation.toFixed(2))
+          parseFloat(city.averageFood.toFixed(2))
+
           city.averageEntertainment = Math.round(city.averageEntertainment * 10) / 10;
           city.averageNature = Math.round(city.averageNature * 10) / 10;
           city.averageCost = Math.round(city.averageCost * 10) / 10;
