@@ -670,8 +670,8 @@ async function dbInit(){
       {"$project" : {
         "_id" : 1,
         "state" : 1,
-        "averageEntertainment": { "$round": [ "$averageEntertainment", 1 ] }
-        "averageNature" : { "$round": [ "$averageNature", 1 ] }
+        "averageEntertainment": { "$round": [ "$averageEntertainment", 2 ] }
+        "averageNature" : { "$round": [ "$averageNature", 2 ] }
         "averageCost" : { "$round": [ "$averageCost", 1 ] }
         "averageSafety" : { "$round": [ "$averageSafety", 1 ] }
         "averageCulture" : { "$round": [ "$averageCulture", 1 ] }
