@@ -350,7 +350,7 @@ async function dbInit(){
           }
       return res;
     };
-    dbApi.cities = async(city) =>{
+    /*dbApi.cities = async(city) =>{
       var res =  await CityData.aggregate([
           {
           "$match": {
@@ -602,7 +602,7 @@ async function dbInit(){
         }
     return res;
   };
-
+*/
   /*dbApi.usernames = async (userId) => {
     var res =  await CityData.aggregate([
         {
