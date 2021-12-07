@@ -580,7 +580,7 @@ async function dbInit(){
           city.averageTransportation = "0";
           city.averageFood = "0";
         }
-        else {
+        /*else {
           city.averageEntertainment = city.averageEntertainment.toString();
           city.averageNature =   city.averageNature.toString();
           city.averageCost = city.averageCost.toString();
@@ -588,7 +588,14 @@ async function dbInit(){
           city.averageCulture = city.averageCulture.toString();
           city.averageTransportation = city.averageTransportation.toString();
           city.averageFood = city.averageFood.toString();
-        }
+        }*/
+        city.averageEntertainment = city.averageEntertainment.toFixed(1);
+        city.averageNature =   city.averageNature.toFixed(1);
+        city.averageCost = city.averageCost.toFixed(1);
+        city.averageSafety = city.averageSafety.toFixed(1);
+        city.averageCulture = city.averageCulture.toFixed(1);
+        city.averageTransportation = city.averageTransportation.toFixed(1);
+        city.averageFood = city.averageFood.toFixed(1);
       }
       for (city of res)
         for (rating of city.ratings){
