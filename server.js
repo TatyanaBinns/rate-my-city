@@ -512,7 +512,7 @@ async function dbInit(){
       { "$sort" : { "_id" : 1} },
       {"$project" : {
         "_id" : 1,
-        "state" : 1,
+        "city" : 1,
         "averageEntertainment": 1,
         "averageNature" : 1,
         "averageCost" : 1,
