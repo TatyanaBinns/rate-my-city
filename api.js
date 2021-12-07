@@ -34,7 +34,7 @@ exports.setApp = function(app, dbApi)
               ret.userName = users.userName;
               ret.email = users.email;
               ret.id = users._id;
-              ret.emailToken = users.emailToken
+              //ret.emailToken = users.emailToken
             }
             catch(e)
             {
