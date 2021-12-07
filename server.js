@@ -738,6 +738,14 @@ async function dbInit(){
           city.averageCulture = Math.round(city.averageCulture * 10) / 10;
           city.averageTransportation = Math.round(city.averageTransportation * 10) / 10;
           city.averageFood = Math.round(city.averageFood * 10) / 10;
+
+          parseFloat(city.averageEntertainment.toFixed(2))
+          parseFloat(city.averageNature.toFixed(2))
+          parseFloat(city.averageCost.toFixed(2))
+          parseFloat(city.averageSafety.toFixed(2))
+          parseFloat(city.averageCulture.toFixed(2))
+          parseFloat(city.averageTransportation.toFixed(2))
+          parseFloat(city.averageFood.toFixed(2))
         }
   return res;
   };
