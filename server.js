@@ -459,7 +459,7 @@ async function dbInit(){
         }
         for (city of res)
           for (rating of city.ratings){
-                rating.entertainment = rating.rating.entertainment;
+                rating.ent = rating.rating.entertainment;
                 rating.nature = rating.rating.nature;
                 rating.cost = rating.rating.cost;
                 rating.safety = rating.rating.safety,
