@@ -437,35 +437,35 @@ async function dbInit(){
         }
         for (city of res)
         {
-          if (city.averageEntertainment == null)
+          if (city.averageEntertainment == 0)
           {
-            city.averageEntertainment = "0",
-            city.averageNature = "0",
-            city.averageCost = "0",
-            city.averageSafety = "0",
-            city.averageCulture = "0",
-            city.averageTransportation = "0",
-            city.averageFood = "0"
+            city.averageEntertainment = "0";
+            city.averageNature = "0";
+            city.averageCost = "0";
+            city.averageSafety = "0";
+            city.averageCulture = "0";
+            city.averageTransportation = "0";
+            city.averageFood = "0";
           }
           else {
-            city.averageEntertainment = city.averageEntertainment.toString(),
-            city.averageNature =   city.averageNature.toString(),
-            city.averageCost = city.averageCost.toString(),
-            city.averageSafety = city.averageSafety.toString(),
-            city.averageCulture = city.averageCulture.toString(),
-            city.averageTransportation = city.averageTransportation.toString(),
-            city.averageFood = city.averageFood.toString()
+            city.averageEntertainment = city.averageEntertainment.toString();
+            city.averageNature =   city.averageNature.toString();
+            city.averageCost = city.averageCost.toString();
+            city.averageSafety = city.averageSafety.toString();
+            city.averageCulture = city.averageCulture.toString();
+            city.averageTransportation = city.averageTransportation.toString();
+            city.averageFood = city.averageFood.toString();
           }
         }
         for (city of res)
           for (rating of city.ratings){
-                rating.ent = rating.rating.entertainment;
-                rating.nat = rating.rating.nature;
-                rating.co = rating.rating.cost;
-                rating.saf = rating.rating.safety,
-                rating.cult = rating.rating.culture,
-                rating.tran = rating.rating.transportation,
-                rating.f = rating.rating.food
+            rating.ent = rating.rating.entertainment;
+            rating.nat = rating.rating.nature;
+            rating.co = rating.rating.cost;
+            rating.saf = rating.rating.safety;
+            rating.cult = rating.rating.culture;
+            rating.tran = rating.rating.transportation;
+            rating.f = rating.rating.food;
           }
       return res;
   };
@@ -570,24 +570,24 @@ async function dbInit(){
       }
       for (city of res)
       {
-        if (city.averageEntertainment == null)
+        if (city.averageEntertainment == 0)
         {
-          city.averageEntertainment = "0",
-          city.averageNature = "0",
-          city.averageCost = "0",
-          city.averageSafety = "0",
-          city.averageCulture = "0",
-          city.averageTransportation = "0",
-          city.averageFood = "0"
+          city.averageEntertainment = "0";
+          city.averageNature = "0";
+          city.averageCost = "0";
+          city.averageSafety = "0";
+          city.averageCulture = "0";
+          city.averageTransportation = "0";
+          city.averageFood = "0";
         }
         else {
-          city.averageEntertainment = city.averageEntertainment.toString(),
-          city.averageNature =   city.averageNature.toString(),
-          city.averageCost = city.averageCost.toString(),
-          city.averageSafety = city.averageSafety.toString(),
-          city.averageCulture = city.averageCulture.toString(),
-          city.averageTransportation = city.averageTransportation.toString(),
-          city.averageFood = city.averageFood.toString()
+          city.averageEntertainment = city.averageEntertainment.toString();
+          city.averageNature =   city.averageNature.toString();
+          city.averageCost = city.averageCost.toString();
+          city.averageSafety = city.averageSafety.toString();
+          city.averageCulture = city.averageCulture.toString();
+          city.averageTransportation = city.averageTransportation.toString();
+          city.averageFood = city.averageFood.toString();
         }
       }
       for (city of res)
@@ -595,10 +595,10 @@ async function dbInit(){
           rating.ent = rating.rating.entertainment;
           rating.nat = rating.rating.nature;
           rating.co = rating.rating.cost;
-          rating.saf = rating.rating.safety,
-          rating.cult = rating.rating.culture,
-          rating.tran = rating.rating.transportation,
-          rating.f = rating.rating.food
+          rating.saf = rating.rating.safety;
+          rating.cult = rating.rating.culture;
+          rating.tran = rating.rating.transportation;
+          rating.f = rating.rating.food;
         }
     return res;
   };
@@ -695,10 +695,10 @@ async function dbInit(){
           rating.ent = rating.rating.entertainment;
           rating.nat = rating.rating.nature;
           rating.co = rating.rating.cost;
-          rating.saf = rating.rating.safety,
-          rating.cult = rating.rating.culture,
-          rating.tran = rating.rating.transportation,
-          rating.f = rating.rating.food
+          rating.saf = rating.rating.safety;
+          rating.cult = rating.rating.culture;
+          rating.tran = rating.rating.transportation;
+          rating.f = rating.rating.food;
         }
         /*for (city of res)
         {
