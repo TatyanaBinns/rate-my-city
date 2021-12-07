@@ -350,7 +350,7 @@ async function dbInit(){
           }
       return res;
     };
-    /*dbApi.cities = async(city) =>{
+    dbApi.cities = async(city) =>{
       var res =  await CityData.aggregate([
           {
           "$match": {
@@ -602,8 +602,7 @@ async function dbInit(){
         }
     return res;
   };
-*/
-  /*dbApi.usernames = async (userId) => {
+  dbApi.usernames = async (userId) => {
     var res =  await CityData.aggregate([
         {
         "$match": {
@@ -721,7 +720,7 @@ async function dbInit(){
           city.averageFood = city.averageFood.toFixed(1);
         }
   return res;
-};*/
+};
 
     dbApi.allStates   = async ()   => {
         //Get the raw state data from Mongo
