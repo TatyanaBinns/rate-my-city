@@ -116,7 +116,7 @@ exports.setApp = function(app, dbApi)
       .catch(error => res.send({error:error.message}))
   });
 
-  /*app.get ('/api/cities', async (req, res) =>
+  app.get ('/api/cities', async (req, res) =>
 {
   try {
     const city = req.query.city;
@@ -159,7 +159,7 @@ app.get ('/api/usernames', async (req, res) => {
   } catch (err) {
     res.json({err: err.message})
   }
-})*/
+})
   app.get('/verify', async(req, res) => {
     try{
     const emailToken = req.query.Token;
