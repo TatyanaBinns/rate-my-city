@@ -718,7 +718,7 @@ async function dbInit(){
           city.averageSafety = city.averageSafety.toFixed(1);
           city.averageCulture = city.averageCulture.toFixed(1);
           city.averageTransportation = city.averageTransportation.toFixed(1);
-          city.averageFood = city.averageFood.toFixed(1);
+          city.averageFood = city.averageFood.toFixed(1); 
         }
   return res;
   };
