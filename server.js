@@ -460,12 +460,12 @@ async function dbInit(){
         for (city of res)
           for (rating of city.ratings){
                 rating.ent = rating.rating.entertainment;
-                rating.nature = rating.rating.nature;
-                rating.cost = rating.rating.cost;
-                rating.safety = rating.rating.safety,
-                rating.culture = rating.rating.culture,
-                rating.transportation = rating.rating.transportation,
-                rating.food = rating.rating.food
+                rating.nat = rating.rating.nature;
+                rating.co = rating.rating.cost;
+                rating.saf = rating.rating.safety,
+                rating.cult = rating.rating.culture,
+                rating.tran = rating.rating.transportation,
+                rating.f = rating.rating.food
           }
       return res;
   };
@@ -592,13 +592,13 @@ async function dbInit(){
       }
       for (city of res)
         for (rating of city.ratings){
-              rating.entertainment = rating.rating.entertainment;
-              rating.nature = rating.rating.nature;
-              rating.cost = rating.rating.cost;
-              rating.safety = rating.rating.safety,
-              rating.culture = rating.rating.culture,
-              rating.transportation = rating.rating.transportation,
-              rating.food = rating.rating.food
+          rating.ent = rating.rating.entertainment;
+          rating.nat = rating.rating.nature;
+          rating.co = rating.rating.cost;
+          rating.saf = rating.rating.safety,
+          rating.cult = rating.rating.culture,
+          rating.tran = rating.rating.transportation,
+          rating.f = rating.rating.food
         }
     return res;
   };
@@ -693,13 +693,13 @@ async function dbInit(){
       }
       for (city of res)
         for (rating of city.ratings){
-              rating.entertainment = rating.rating.entertainment;
-              rating.nature = rating.rating.nature;
-              rating.cost = rating.rating.cost;
-              rating.safety = rating.rating.safety,
-              rating.culture = rating.rating.culture,
-              rating.transportation = rating.rating.transportation,
-              rating.food = rating.rating.food
+          rating.ent = rating.rating.entertainment;
+          rating.nat = rating.rating.nature;
+          rating.co = rating.rating.cost;
+          rating.saf = rating.rating.safety,
+          rating.cult = rating.rating.culture,
+          rating.tran = rating.rating.transportation,
+          rating.f = rating.rating.food
         }
   return res;
   };
