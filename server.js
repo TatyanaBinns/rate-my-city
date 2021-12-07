@@ -13,7 +13,7 @@ let uri = process.env.MONGODB_URI;
 if (uri == null || uri == "")
   uri = "mongodb://localhost:27017/rate-my-city";
 
-
+//testing
 function mkBrRating(v){
     return mkRating(v, v, v, v, v, v, v);
 }
