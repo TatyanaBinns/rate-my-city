@@ -1,5 +1,4 @@
 # Rate-my-city
-# CNT4714_Projects_vanderzalm
 <div id="top"></div>
 
 ### About The Project
